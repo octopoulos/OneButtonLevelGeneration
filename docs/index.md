@@ -1,6 +1,9 @@
 ---
 title: Home
 layout: home
+description: A bare-minimum template to create a Jekyll site that uses the Just the Docs theme.
+tags: [template, jekyll, just-the-docs]
+permalink: /
 ---
 
 This is a *bare-minimum* template to create a Jekyll site that uses the [Just the Docs] theme. You can easily set the created site to be published on [GitHub Pages] – the [README] file explains how to do that, along with other details.

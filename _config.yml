@@ -1,8 +1,21 @@
-title: Just the Docs Template
-description: A starter template for a Jeykll site using the Just the Docs theme!
+title: OCG Documentation
+description: Documentation for the One-Click Level Generator (OCG) project, providing an overview of its features, usage, and technical details.
 theme: just-the-docs
 
 url: https://code1133.github.io/ocg-docs/
 
 aux_links:
-  Template Repository: https://github.com/Code1133/ocg-docs/
+  Docs Repository: https://github.com/Code1133/ocg-docs/
+
+callouts:
+  info:
+    title: Information
+    color: blue
+  warning:
+    title: Warning
+    color: orange
+  danger:
+    title: Danger
+    color: red
+
+callouts_opacity: 0.2
