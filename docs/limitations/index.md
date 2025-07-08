@@ -1,8 +1,10 @@
 ---
-title: Limitation
-description: Known limitation and issues of the One-Click Level Generator.
+title: Limitations
+description: Known limitations and issues of the One-Click Level Generator.
 layout: default
-tags: [limitation, known issues]
+tags: [limitations, known issues]
+nav_order: 3
+has_children: true
 ---
 
 # Limitations
