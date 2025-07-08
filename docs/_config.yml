@@ -1,8 +1,23 @@
 title: OCG Documentation
 description: Documentation for the One-Click Level Generator (OCG) project, providing an overview of its features, usage, and technical details.
-theme: just-the-docs
 
-url: https://code1133.github.io/ocg-docs/
+url: https://code1133.github.io/ocg-docs
+repository: https://github.com/Code1133/ocg-docs/
+
+theme: just-the-docs
+permalink: pretty
+
+defaults:
+  - scope:
+      path: "docs"
+      type: "pages"
+    values:
+      layout: "default"
+
+back_to_top: true
+back_to_top_text: "Back to top"
+
+enable_copy_code_button: true
 
 aux_links:
   Docs Repository: https://github.com/Code1133/ocg-docs/
