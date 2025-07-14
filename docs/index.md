@@ -1,13 +1,20 @@
 ---
 title: Home
 layout: home
-description: One-Click Level Generator Documentation
-tags: [one-click level generator]
+description: One-Button Level Generator Documentation
+tags: [one-Button level generator]
 nav_order: 1
 ---
 
-# One-Click Level Generator
-대충 간단한 플러그인 소개글
+# One-Button Level Generator
+
+One Button Level Generator is a user-friendly tool that allows you to create levels simply.
+You can create a level by setting characteristics for each biome.
+
+## Trailer
+!TODO : 트레일러 영상
+
+
 
 ## Dependencies
 - Water Plugin
@@ -16,8 +23,13 @@ nav_order: 1
 - PCG Water Interop
 
 ## Features
-- 랜덤 지형 생성
-- 다양한 환경 설정 가능
-  - 예: 산, 강, 숲 등
-- 사용자 친?화적인 인터페이스
+- Create terrain randomly
+- Per biome landscape material
+- Per biome PCG Content Generation
+- Random river generation
+- Nanite Tesselation
+- Custom editor and MapPreset asset which creates and export level
+- Free stylized landscape material
+- and more
+
 
