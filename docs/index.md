@@ -7,7 +7,6 @@ nav_order: 1
 ---
 
 # One-Click Level Generator
-
 대충 간단한 플러그인 소개글
 
 ## Features
