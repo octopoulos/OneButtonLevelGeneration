@@ -1,5 +1,6 @@
 title: OCG Documentation
 description: Documentation for the One-Click Level Generator (OCG) project, providing an overview of its features, usage, and technical details.
+favicon_ico: "/assets/favicons/favicon.ico"
 
 url: https://code1133.github.io/ocg-docs
 repository: https://github.com/Code1133/ocg-docs/
@@ -20,8 +21,11 @@ back_to_top_text: "Back to top"
 
 enable_copy_code_button: true
 
+footer_content: "Copyright &copy; 2025 Code1133"
+
 aux_links:
   Docs Repository: https://github.com/Code1133/ocg-docs/
+aux_links_new_tab: true
 
 callouts:
   info:

@@ -3,7 +3,7 @@ title: Limitations
 description: Known limitations and issues of the One-Click Level Generator.
 layout: default
 tags: [limitations, known issues]
-nav_order: 3
+nav_order: 10
 has_children: true
 ---
 

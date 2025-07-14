@@ -3,6 +3,7 @@ title: Changelog
 layout: home
 description: One-Click Level Generator Changelog
 tags: [one-click level generator, changelog]
+nav_order: 20
 ---
 
 # Changelog
