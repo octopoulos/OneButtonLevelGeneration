@@ -9,7 +9,10 @@ nav_order: 1
 # One-Button Level Generator
 
 One Button Level Generator is a user-friendly tool that allows you to create levels simply.
-You can create a level by setting various characteristics for each biome.
+You can create a level by setting characteristics for each biome.
+
+## Trailer
+!TODO : 트레일러 영상
 
 ## Features
 - Create terrain randomly
