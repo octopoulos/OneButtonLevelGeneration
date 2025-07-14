@@ -14,6 +14,14 @@ You can create a level by setting characteristics for each biome.
 ## Trailer
 !TODO : 트레일러 영상
 
+
+
+## Dependencies
+- Water Plugin
+- PCG
+- PCG Geometry Script Interop
+- PCG Water Interop
+
 ## Features
 - Create terrain randomly
 - Per biome landscape material
@@ -23,4 +31,5 @@ You can create a level by setting characteristics for each biome.
 - Custom editor and MapPreset asset which creates and export level
 - Free stylized landscape material
 - and more
+
 
