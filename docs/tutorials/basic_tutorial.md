@@ -242,19 +242,19 @@ OCG 창에서 `ㅤ+ㅤ` 버튼을 클릭후, 새로운 Map Preset 저장합니�
 >       </tr>
 >       <tr>
 >         <td>River Water Material</td>
->         <td>TODO</td>
+>         <td>강의 물을 표현하는데 사용되는 머티리얼입니다. WaterBodyRiver액터에 적용됩니다.</td>
 >       </tr>
 >       <tr>
 >         <td>River Water Static Mesh Material</td>
->         <td>TODO</td>
+>         <td>강의 물을 표현하는데 사용되는 스태틱 메시의 머티리얼입니다. WaterBodyRiver액터에 적용됩니다.</td>
 >       </tr>
 >       <tr>
 >         <td>River To Lake Transition Material</td>
->         <td>TODO</td>
+>         <td>강이 WaterBodyLake 액터와 오버랩될 때 적용되는 머티리얼입니다. WaterBodyRiver액터에 적용됩니다. </td>
 >       </tr>
 >       <tr>
 >         <td>River To Ocean Transition Material</td>
->         <td>TODO</td>
+>         <td>강이 WaterBodyOcean 액터와 오버랩될 때 적용되는 머티리얼입니다. WaterBodyRiver액터에 적용됩니다.</td>
 >       </tr>
 >     </tbody>
 >   </table>
