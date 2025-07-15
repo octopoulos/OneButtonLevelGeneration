@@ -17,6 +17,7 @@ You can create a level by setting characteristics for each biome.
 
 
 ## Dependencies
+| 아래 플러그인들은 OCG 플러그인 활성화 시 자동으로 활성화됩니다.
 - Water Plugin
 - PCG
 - PCG Geometry Script Interop
@@ -24,10 +25,9 @@ You can create a level by setting characteristics for each biome.
 
 ## Features
 - Create terrain randomly
-- Per biome landscape material
+- Per biome landscape material supports Nanite Tesselation
 - Per biome PCG Content Generation
 - Random river generation
-- Nanite Tesselation
 - Custom editor and MapPreset asset which creates and export level
 - Free stylized landscape material
 - and more
