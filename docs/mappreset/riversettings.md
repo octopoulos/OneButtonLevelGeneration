@@ -4,3 +4,43 @@ title: River Settings Properties
 parent: MapPreset
 nav_order: 3
 ---
+
+## River Settings
+
+River Settings 항목에서는 MapPreset 에셋을 이용하여 레벨에 강을 생성하는 방법 및 각 프로퍼티에 대해 설명합니다
+
+### MapPreset을 통한 강의 생성은 다음과 같이 진행됩니다.
+1. 해수면으로부터 일정 높이 이상 떨어진 랜덤한 위치를 시작지점으로 정합니다.
+2. 해수면 높이까지 이동하는 Spline을 생성하고, 단순화합니다.
+3. 해당 Spline을 사용하는 WaterBody River 액터를 생성합니다.
+4. 강의 폭, 깊이, 유속을 결정합니다.
+   1. 설정된 Curve 데이터를 정규화합니다.
+   2. 정규화된 Curve 데이터값에 Base Value를 곱하고, Min Value를 곱하여 최종적인 강의 폭, 깊이, 유속을 결정합니다.
+
+## Map Preset River Settings
+![MapPreset River Settings](/assets/images/mappreset/riversettings/riversettings.png)
+
+### RegenerateRiver
+- 현재 레벨에 존재하는 기존의 강들을 제거하고, 새롭게 강을 생성합니다.
+  
+### 강 생성관련 파라미터들
+- Generate River
+  - 현재 레벨에 강을 생성할지에 대한 여부입니다
+- River Count
+  - 생성할 강의 개수입니다. 최대 10개까지의 강을 생성할 수 있습니다.
+- River Source Elevation Ratio
+  - 강의 시작지점이 해수면으로부터 얼마나 높은 곳에 존재하는지에 대한 값입니다.
+  - 0.5 ~ 1의 값을 지정할 수 있으며, 1에 가까울 수록 현재 랜드스케이프의 가장 높은 지역에 생성됩니다.
+- River Spline Simplyfy Epsilon
+  - 생성한 강의 Spline을 얼마만큼 간략화할지에 대한 값입니다.
+  - 높을수록 Spline을 더욱 간략화합니다.
+  
+### 강의 폭, 깊이, 유속 관련 파라미터들
+  - Base Value
+    - 폭, 깊이, 유속의 기본값입니다. 
+    - 정규화된 Curve의 값에 곱해져 실제 강을 표현합니다.
+  - Curve Data
+    - 폭, 깊이, 유속이 강이 흐름에 따라 어떻게 변화하는지 결정합니다.
+    - X축은 강이 진행한 정도, Y축이 폭, 깊이, 유속 값인 float curve입니다.
+  - Materials
+    - 생성될 WaterBodyRiver 액터에 설정될 머티리얼 프로퍼티들입니다.
