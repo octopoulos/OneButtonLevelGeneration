@@ -7,7 +7,7 @@ nav_order: 2
 
 # Quick Start Guide
 
-Test the One-Click Level Generator with this quick start guide.
+Welcome to the One-Click Level Generator! This guide will help you get started with creating levels quickly and efficiently.
 
 
 ## Installation

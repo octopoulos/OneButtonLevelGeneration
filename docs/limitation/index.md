@@ -8,11 +8,15 @@ nav_order: 10
 
 # Limitations
 
-One-Click Level Generator는 쉽고 빠른 레벨 생성을 목표로 하지만, 몇 가지 제한 사항이 있습니다.
+While the One-Click Level Generator aims for easy and fast level creation, it has some limitations.
 
-- 일부 기능은 아직 개발 중입니다.
-- 레벨 생성 속도가 느릴 수 있습니다.
+- **Terrain Generation**: OCG's terrain generation relies on basic **randomness**. Complex terrain shaping or detailed adjustments must be done manually.
+- **River Generation**: River generation only supports basic flow and shape. Complex water networks or detailed adjustments must be done manually.
+- **Biome Generation**: Biome generation only supports basic vegetation and environmental settings. It does not support complex ecosystems or detailed adjustments.
+- **PCG Content**: Currently, PCG content generation is limited and only supports Static Mesh Spawning. For example, it does not support Actor placement or the placement of complex structures and detailed objects.
+- **Performance**: Performance degradation may occur when generating large-scale levels. This is particularly noticeable in levels with complex terrain or many objects.
+- **Experimental Features**: Some dependent plugins (like the Water Plugin) include experimental features, which can affect stability. These plugins may change in future updates.
 
-추가로 버그나 문제가 발생할 경우, [GitHub Issues]에 보고해 주세요.
+If you encounter any bugs or issues, please report them on [GitHub Issues].
 
 [GitHub Issues]: https://github.com/Code1133/ocg-docs/issues
