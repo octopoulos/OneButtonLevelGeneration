@@ -6,6 +6,7 @@ tags: [map_preset, asset]
 nav_order: 4
 has_children: true
 ---
+
 # MapPreset
 
 The **MapPreset** is the core data asset of the *OCG plugin*.

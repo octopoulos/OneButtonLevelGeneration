@@ -7,8 +7,14 @@ nav_order: 20
 ---
 
 # Changelog
-이 페이지는 One-Click Level Generator의 변경 사항을 기록합니다.
+
+This page documents the changes for the One-Click Level Generator.
 
 ## Version 1.0.0
-- 초기 릴리즈
-- 랜덤 지형 생성 기능 추가
+
+- Initial release 🎉
+- Added a custom editor and the ability to create MapPreset Assets.
+- Added random terrain generation.
+- Added random river generation.
+- Added biome-specific PCG content generation.
+- Miscellaneous feature improvements and bug fixes.

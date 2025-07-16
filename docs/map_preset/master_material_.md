@@ -1,31 +1,34 @@
 ---
 layout: default
-title: Landscape MasterMaterial
-parent: MapPreset
+title: Landscape Master Material Settings Guide
+parent: World Settings Properties
 nav_order: 5
 ---
 
-# OCG Landscape Master Material
+# Landscape Master Material Settings Guide
+
+This document provides a comprehensive guide to the OCG Landscape Master Material, detailing its structure, parameters, and how to effectively utilize it in your projects.
+
 ## 1. Layers
-![BiomeToLayer](/assets/images/mappreset/mastermaterial/BiomeToLayer.png)
+![BiomeToLayer](/assets/images/map_preset/master_material/BiomeToLayer.png)
 
 {: .warning }
-> &emsp;Landscape Material의 Landscape Layer Blend의 **Layer 순서와 MapPreset의 Biome 순서가 일치해야 합니다.**<br>
-> &emsp;예를 들어, Landscape Material의 Layer 순서가 `Grass`, `Forest`, `Mountain`이라면, Biome의 순서도 **동일하게** `Grass`, `Forest`, `Mountain`이어야 합니다.<br>
-> &emsp;**Layer0**은 기본적으로 **Water Plugin의 Water Body Actor들이 위치하는 부분의 Ladscape의 구역**입니다.<br>
+> &emsp;The **order of layers** in the Landscape Material's Layer Blend **must match the order of Biomes** in the MapPreset.<br>
+> &emsp;For example, if the Landscape Material's layer order is `Grass`, `Forest`, `Mountain`, the Biome order must also be **identical**: `Grass`, `Forest`, `Mountain`.<br>
+> &emsp;By default, **Layer0** is the landscape area where **Water Body Actors from the Water Plugin are located**.<br>
 
-- 기본 제공 되는 Layer는 8개입니다. 각 Layer마다 하나의 Biome Material을 구성합니다.
-  - Biomes의 순서대로 Layer1 ~ Layer7에 맞게 Material을 구성할 수 있습니다.
+- There are 8 layers provided by default. Each layer constitutes a single Biome Material.
+  - You can configure the materials for Layers 1 through 7 to correspond with the order of the Biomes.
 
-## 2.  MaterialInstance Parameter
-![MaterialInstnaceParamsBoxing](/assets/images/mappreset/mastermaterial/MaterialInstnaceParamsBoxing.png)
-- Material Instance에서 각 Layer들에 대한 Parameter들을 볼 수 있습니다.
-- 각 Layer는 같은 로직의 MaterialLayer들을 사용합니다.
+## 2. Material Instance Parameters
+![MaterialInstnaceParamsBoxing](/assets/images/map_preset/master_material/MaterialInstnaceParamsBoxing.png)
+- In the Material Instance, you can view the parameters for each layer.
+- Each layer uses the same logic from the Material Layers.
 
 <details markdown="1">
   <summary><b style="font-size:1.25em;">All Layer Parameters</b></summary>
 
-![AllLayerParams](/assets/images/mappreset/mastermaterial/AllLayerParams.png)
+![AllLayerParams](/assets/images/map_preset/master_material/AllLayerParams.png)
 
 | Parameter Name            | Description                                                                                                                 |
 | :------------------------ | :-------------------------------------------------------------------------------------------------------------------------- |
@@ -35,19 +38,19 @@ nav_order: 5
 | RVT Distance Scale        | Scales the distance for RVT Mip-based fade. Larger values widen the fade region.                                            |
 | Blend Distance Transition | The distance over which the fade transitions from visible to invisible. Larger values create a smoother fade.               |
 | Blend Distance Start      | The world-space distance at which the fade begins. The transition starts from this distance.                                |
-| Use ORD                   | If you enable this option, you can use the ORD texture; otherwise, you’ll use the Displacement texture and the ORM texture. | ' |
+| Use ORD                   | If you enable this option, you can use the ORD texture; otherwise, you’ll use the Displacement texture and the ORM texture. |
 
 {: .warning }
-> &emsp;현재 **ORM & Displacement**나 **ORD** 밖에 지원하지 않습니다.<br>
-> &emsp;Ambient Occlusion Texture, Roughness Texture, Metalic Texture, Displacement Texture들을 별개로 가지고 계시다면 하나로 합쳐서 **ORM & Displacement Texture로 만들어서 사용**하시면 됩니다.
+> &emsp;Currently, only **ORM & Displacement** or **ORD** texture formats are supported.<br>
+> &emsp;If you have separate Ambient Occlusion, Roughness, Metallic, and Displacement textures, you must combine them into a single **ORM & Displacement Texture** for use.
 
-- 모든 레이어에 적용되는 Parameter들입니다.
+- These parameters apply to all layers.
 
 </details>
   
 <details markdown="1">
   <summary><b style="font-size:1.25em;">Layer General Parameters</b></summary>
-![BaseGeneralParams](/assets/images/mappreset/mastermaterial/BaseGeneralParams.png)
+![BaseGeneralParams](/assets/images/map_preset/master_material/BaseGeneralParams.png)
 
 | Parameter Name      | Description                                                                                                                                     |
 | :------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -65,21 +68,20 @@ nav_order: 5
 | Color Variation Intensity | A value of 0 does not show any effect at all, and the closer you get to 1, the stronger the color change is overwritten over the original color.                                                                 |
 
 </details>
-
-- (숫자_BaseGeneral)에서 숫자에 해당하는 레이어에 전반적으로 적용되는 Parameter들입니다.
+- These are the parameters that apply generally to the layer corresponding to the number in `(Number_BaseGeneral)`.
 </details>
 
 <details markdown="1">
   <summary><b style="font-size:1.25em;">Layer BaseGround Parameters</b></summary>
 
 
-![BaseGroundBaseSetting](/assets/images/mappreset/mastermaterial/BaseGroundBaseSetting.png)
+![BaseGroundBaseSetting](/assets/images/map_preset/master_material/BaseGroundBaseSetting.png)
 
 {: .warning }
-> &emsp;-_Public Paramter의 -_UseORD를 체크해야 ORD Texture를 넣을 수 있는 Parameter가 노출됩니다.<br>
-> ![GroundORD](/assets/images/mappreset/mastermaterial/GroundORD.png)<br>
->  &emsp;(숫자)_AddGroundDisplacement를 체크해야 Displacement Texture를 넣을 수 있는 Parameter가 노출됩니다.<br>
-> ![GroundDisplacement](/assets/images/mappreset/mastermaterial/GroundDisplacement.png)
+> &emsp;To reveal the ORD Texture parameter, you must check the **Use ORD** option in the **All Layer Parameters**.<br>
+> ![GroundORD](/assets/images/map_preset/master_material/GroundORD.png)<br>
+> &emsp;To reveal the Displacement Texture parameter, you must check the **(Number)_AddGroundDisplacement** option.<br>
+> ![GroundDisplacement](/assets/images/map_preset/master_material/GroundDisplacement.png)
 
 | Parameter Name                   | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | :------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -102,8 +104,8 @@ nav_order: 5
 <details markdown="1">
   <summary>Ground Displacement Setting</summary>
 
-  ![GroundDisplacement](/assets/images/mappreset/mastermaterial/GroundDisplacement.png)
-  ![GroundDisplacementSetting](/assets/images/mappreset/mastermaterial/GroundDisplacementSetting.png)
+  ![GroundDisplacement](/assets/images/map_preset/master_material/GroundDisplacement.png)
+  ![GroundDisplacementSetting](/assets/images/map_preset/master_material/GroundDisplacementSetting.png)
 
   | Parameter Name             | Description                                                                                                                                                                        |
   | :------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -115,7 +117,7 @@ nav_order: 5
 <details markdown="1">
   <summary>Puddle Setting</summary>
 
-  ![GroundPuddleSetting](/assets/images/mappreset/mastermaterial/GroundPuddleSetting.png)
+  ![GroundPuddleSetting](/assets/images/map_preset/master_material/GroundPuddleSetting.png)
   
   | Parameter Name   | Description                                                                                                                                                                                       |
   | :--------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -129,10 +131,10 @@ nav_order: 5
 <details markdown="1">
   <summary>Texture Variation Setting</summary>
 
-  ![GroundTextureVariationSetting](/assets/images/mappreset/mastermaterial/GroundTextureVariationSetting.png)
+  ![GroundTextureVariationSetting](/assets/images/map_preset/master_material/GroundTextureVariationSetting.png)
 
   {: .warning }
-  > &emsp;**해당 Layer의 BaseGround와 Middle High**의 Variation을 줘서 BaseGround가 적용되는 부분에 영향을 줍니다. <br>
+  > &emsp;This affects the area where BaseGround is applied by adding variation between the **BaseGround and Middle High of the corresponding layer**.<br>
 
   | Parameter Name                       | Description                                                                                             |
   | :----------------------------------- | :------------------------------------------------------------------------------------------------------ |
@@ -146,9 +148,9 @@ nav_order: 5
   <summary>Slope Setting</summary>
 
   {: .warning }
-  > &emsp;**해당 Layer의 Add Cliff가 활성화**되어야 해당 Parameter가 보입니다. <br>
+  > &emsp;This parameter is only visible when **Add Cliff is enabled for the corresponding layer**.<br>
 
-![GroundSlopeSetting](/assets/images/mappreset/mastermaterial/GroundSlopeSetting.png)
+![GroundSlopeSetting](/assets/images/map_preset/master_material/GroundSlopeSetting.png)
 
 | Parameter Name         | Description                                                                                                          |
 | :--------------------- | :------------------------------------------------------------------------------------------------------------------- |
@@ -161,16 +163,16 @@ nav_order: 5
 <details markdown="1">
   <summary><b style="font-size:1.25em;">Layer Cliff Parameters</b></summary>
   
-![CliffParams](/assets/images/mappreset/mastermaterial/CliffParams.png)
+![CliffParams](/assets/images/map_preset/master_material/CliffParams.png)
 
-  - Add Cliff가 활성화되면 보이는 Parameter입니다.
+  - These parameters are visible when Add Cliff is enabled.
 
   {: .warning }
-  > &emsp;**Add Cliff가 활성화**하고 Cliff와 BaseGround 사이의 Slope 값을 조절하고 싶으면 **Ground Slope Constrain을 확인**하세요. <br>
-  > &emsp;-_Public Paramter의 -_UseORD를 체크해야 ORD Texture를 넣을 수 있는 Parameter가 노출됩니다.<br>
-  > ![CliffORD](/assets/images/mappreset/mastermaterial/CliffORD.png)<br>
-  >  &emsp;(숫자)_AddCliffDisplacement를 체크해야 Displacement Texture를 넣을 수 있는 Parameter가 노출됩니다.<br>
-  > ![CliffDisplacement](/assets/images/mappreset/mastermaterial/CliffDisplacement.png)
+  > &emsp;After **enabling Add Cliff**, check **Ground Slope Constrain** to adjust the slope value between the Cliff and BaseGround.<br>
+  > &emsp;You must check **Use ORD** in the All Layer Parameters to reveal the ORD Texture parameter.<br>
+  > ![CliffORD](/assets/images/map_preset/master_material/CliffORD.png)<br>
+  >  &emsp;You must check **(Number)_AddCliffDisplacement** to reveal the Displacement Texture parameter.<br>
+  > ![CliffDisplacement](/assets/images/map_preset/master_material/CliffDisplacement.png)
 
 | Parameter Name           | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | :----------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -190,7 +192,7 @@ nav_order: 5
 <details markdown="1">
   <summary>Triplanar Setting</summary>
 
-![TriplanarSetting](/assets/images/mappreset/mastermaterial/TriplanarSetting.png)
+![TriplanarSetting](/assets/images/map_preset/master_material/TriplanarSetting.png)
 
 | Parameter Name              | Description                |
 | :-------------------------- | :------------------------- |
@@ -201,8 +203,8 @@ nav_order: 5
 <details markdown="1">
   <summary>Displacement Setting</summary>
 
-![CliffDisplacement](/assets/images/mappreset/mastermaterial/CliffDisplacement.png)
-![CliffDisplacementSetting](/assets/images/mappreset/mastermaterial/CliffDisplacementSetting.png)
+![CliffDisplacement](/assets/images/map_preset/master_material/CliffDisplacement.png)
+![CliffDisplacementSetting](/assets/images/map_preset/master_material/CliffDisplacementSetting.png)
 
 | Parameter Name            | Description                                                                                                                                      |
 | :------------------------ | :----------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -216,13 +218,13 @@ nav_order: 5
 <details markdown="1">
   <summary><b style="font-size:1.25em;">Layer High Parameters</b></summary>
 
-![HighParams](/assets/images/mappreset/mastermaterial/HighParams.png)
+![HighParams](/assets/images/map_preset/master_material/HighParams.png)
 
   {: .warning }
-  > &emsp;-_Public Paramter의 -_UseORD를 체크해야 ORD Texture를 넣을 수 있는 Parameter가 노출됩니다.<br>
-  > ![HighORD](/assets/images/mappreset/mastermaterial/HighORD.png)<br>
-  >  &emsp;(숫자)_AddHighDisplacement를 체크해야 Displacement Texture를 넣을 수 있는 Parameter가 노출됩니다.<br>
-  > ![HighDisplacement](/assets/images/mappreset/mastermaterial/HighDisplacement.png)
+  > &emsp;You must check **Use ORD** in the All Layer Parameters to reveal the ORD Texture parameter.<br>
+  > ![HighORD](/assets/images/map_preset/master_material/HighORD.png)<br>
+  >  &emsp;You must check **(Number)_AddHighDisplacement** to reveal the Displacement Texture parameter.<br>
+  > ![HighDisplacement](/assets/images/map_preset/master_material/HighDisplacement.png)
 
 | Parameter Name          | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | :---------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -249,8 +251,8 @@ nav_order: 5
 <details markdown="1">
   <summary>Displacement Setting</summary>
 
-![HighDisplacement](/assets/images/mappreset/mastermaterial/HighDisplacement.png)
-![HighDisplacementSetting](/assets/images/mappreset/mastermaterial/HighDisplacementSetting.png)
+![HighDisplacement](/assets/images/map_preset/master_material/HighDisplacement.png)
+![HighDisplacementSetting](/assets/images/map_preset/master_material/HighDisplacementSetting.png)
 
 | Parameter Name           | Description                                                                                                                                                         |
 | :----------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -264,13 +266,13 @@ nav_order: 5
 <details markdown="1">
   <summary><b style="font-size:1.25em;">Layer Middle Parameters</b></summary>
 
-![MiddleParams](/assets/images/mappreset/mastermaterial/MiddleParams.png)
+![MiddleParams](/assets/images/map_preset/master_material/MiddleParams.png)
 
   {: .warning }
-  > &emsp;-_Public Paramter의 -_UseORD를 체크해야 ORD Texture를 넣을 수 있는 Parameter가 노출됩니다.<br>
-  > ![MiddleORD](/assets/images/mappreset/mastermaterial/MiddleORD.png)<br>
-  >  &emsp;(숫자)_AddMiddleDisplacement를 체크해야 Displacement Texture를 넣을 수 있는 Parameter가 노출됩니다.<br>
-  > ![MiddleDisplacement](/assets/images/mappreset/mastermaterial/MiddleDisplacement.png)
+  > &emsp;You must check **Use ORD** in the All Layer Parameters to reveal the ORD Texture parameter.<br>
+  > ![MiddleORD](/assets/images/map_preset/master_material/MiddleORD.png)<br>
+  >  &emsp;You must check **(Number)_AddMiddleDisplacement** to reveal the Displacement Texture parameter.<br>
+  > ![MiddleDisplacement](/assets/images/map_preset/master_material/MiddleDisplacement.png)
 
 | Parameter Name            | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | :------------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -289,8 +291,8 @@ nav_order: 5
 <details markdown="1">
   <summary>Displacement Setting</summary>
 
-![MiddleDisplacement](/assets/images/mappreset/mastermaterial/MiddleDisplacement.png)
-![MiddleDisplacementSetting](/assets/images/mappreset/mastermaterial/MiddleDisplacementSetting.png)
+![MiddleDisplacement](/assets/images/map_preset/master_material/MiddleDisplacement.png)
+![MiddleDisplacementSetting](/assets/images/map_preset/master_material/MiddleDisplacementSetting.png)
 
 
 | Parameter Name             | Description                                                                                                                                               |
@@ -305,13 +307,13 @@ nav_order: 5
 <details markdown="1">
   <summary><b style="font-size:1.25em;">Layer Middle High Parameters</b></summary>
 
-![MiddleHighParams](/assets/images/mappreset/mastermaterial/MiddleHighParams.png)
+![MiddleHighParams](/assets/images/map_preset/master_material/MiddleHighParams.png)
 
   {: .warning }
-  > &emsp;-_Public Paramter의 -_UseORD를 체크해야 ORD Texture를 넣을 수 있는 Parameter가 노출됩니다.<br>
-  > ![MiddleHighORD](/assets/images/mappreset/mastermaterial/MiddleHighORD.png)<br>
-  >  &emsp;(숫자)_AddMiddleHighDisplacement를 체크해야 Displacement Texture를 넣을 수 있는 Parameter가 노출됩니다.<br>
-  > ![MiddleHighDisplacement](/assets/images/mappreset/mastermaterial/MiddleHighDisplacement.png)
+  > &emsp;You must check **Use ORD** in the All Layer Parameters to reveal the ORD Texture parameter.<br>
+  > ![MiddleHighORD](/assets/images/map_preset/master_material/MiddleHighORD.png)<br>
+  >  &emsp;You must check **(Number)_AddMiddleHighDisplacement** to reveal the Displacement Texture parameter.<br>
+  > ![MiddleHighDisplacement](/assets/images/map_preset/master_material/MiddleHighDisplacement.png)
 
 | Parameter Name                 | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | :----------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -330,8 +332,8 @@ nav_order: 5
 <details markdown="1">
   <summary>Displacement Setting</summary>
 
-![MiddleHighDisplacement](/assets/images/mappreset/mastermaterial/MiddleHighDisplacement.png)
-![MiddleHighDisplacementSetting](/assets/images/mappreset/mastermaterial/MiddleHighDisplacementSetting.png)
+![MiddleHighDisplacement](/assets/images/map_preset/master_material/MiddleHighDisplacement.png)
+![MiddleHighDisplacementSetting](/assets/images/map_preset/master_material/MiddleHighDisplacementSetting.png)
 
 | Parameter Name                  | Description                                                                                                                                                 |
 | :------------------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------- |
