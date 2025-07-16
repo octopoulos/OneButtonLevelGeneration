@@ -6,7 +6,7 @@
     {
       "label": "Serve",
       "type": "shell",
-      "command": "cd ${workspaceFolder}/docs && bundle exec jekyll serve --livereload",
+      "command": "cd ${workspaceFolder}/docs && bundle install && bundle exec jekyll serve --livereload",
       "group": {
         // "kind": "test",
         "kind": "build",
