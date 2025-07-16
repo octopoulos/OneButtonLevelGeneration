@@ -18,7 +18,7 @@ This document explains how to generate rivers in a level using the MapPreset ass
    2. The final river width, depth, and velocity are determined by multiplying the normalized Curve data value by the Base Value.
 
 ## Map Preset River Settings
-![MapPreset River Settings](/assets/images/map_preset/river_settings/river_settings.png)
+![MapPreset River Settings]({{ site.baseurl }}/assets/images/map_preset/river_settings/river_settings.png)
 
 ## River Generation Parameters
 

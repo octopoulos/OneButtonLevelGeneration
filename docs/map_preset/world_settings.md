@@ -15,7 +15,7 @@ This page details the properties available in the World Settings section of the 
 <details markdown="1">
 <summary>Landscape Settings</summary>
   
-  ![Landscape Settings Properties](/assets/images/map_preset/world_settings/landscape_settings.png)
+  ![Landscape Settings Properties]({{ site.baseurl }}/assets/images/map_preset/world_settings/landscape_settings.png)
   
 | Property Name | Description |
 | :------------ | :---------- ||
@@ -36,9 +36,9 @@ This page details the properties available in the World Settings section of the 
 <details markdown="1">
 <summary>Height & Temperature</summary>
 
-![Height Properties](/assets/images/map_preset/world_settings/height_settings.png)
+![Height Properties]({{ site.baseurl }}/assets/images/map_preset/world_settings/height_settings.png)
 
-![Temperature Properties](/assets/images/map_preset/world_settings/temperature_settings.png)
+![Temperature Properties]({{ site.baseurl }}/assets/images/map_preset/world_settings/temperature_settings.png)
 
 | Property Name           | Description                                                                                                                                                               |
 | :---------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -51,7 +51,7 @@ This page details the properties available in the World Settings section of the 
 <details markdown="1">
 <summary>Noise</summary>
 
-![Noise Properties](/assets/images/map_preset/world_settings/noise_settings.png)
+![Noise Properties]({{ site.baseurl }}/assets/images/map_preset/world_settings/noise_settings.png)
 
 | Property Name           | Description                                                                                                                                                                                                                                                                                                                                            |
 | :---------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -66,7 +66,7 @@ This page details the properties available in the World Settings section of the 
 <details markdown="1">
 <summary>Height</summary>
 
-![Advanced Height Properties](/assets/images/map_preset/world_settings/advanced_height.png)
+![Advanced Height Properties]({{ site.baseurl }}/assets/images/map_preset/world_settings/advanced_height.png)
 
 | Property Name                   | Description                                                                                                                                                                                                                                                                                                                                         |
 | :------------------------------ | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -92,7 +92,7 @@ This page details the properties available in the World Settings section of the 
 <details markdown="1">
 <summary>Temperature & Humidity</summary>
 
-![Advanced Temperature and Height Properties](/assets/images/map_preset/world_settings/advanced_temp_humidity_settings.png)
+![Advanced Temperature and Height Properties]({{ site.baseurl }}/assets/images/map_preset/world_settings/advanced_temp_humidity_settings.png)
 
 | Property Name                     | Description                                                                                                                                                                                                                                                                                                                                                         |
 | :-------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -105,7 +105,7 @@ This page details the properties available in the World Settings section of the 
 <details markdown="1">
 <summary>Noise</summary>
 
-![Advanced Temperature and Height Properties](/assets/images/map_preset/world_settings/advanced_noise_settings.png)
+![Advanced Temperature and Height Properties]({{ site.baseurl }}/assets/images/map_preset/world_settings/advanced_noise_settings.png)
 
 | Property Name         | Description                                                                                                                                                                                                                                                            |
 | :-------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -120,7 +120,7 @@ This page details the properties available in the World Settings section of the 
 <details markdown="1">
 <summary>Erosion</summary>
 
-![Advanced Temperature and Height Properties](/assets/images/map_preset/world_settings/erosion_settings.png)
+![Advanced Temperature and Height Properties]({{ site.baseurl }}/assets/images/map_preset/world_settings/erosion_settings.png)
 
 | Property Name            | Description                                                                                                                                                                                                                                                                                                      |
 | :----------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

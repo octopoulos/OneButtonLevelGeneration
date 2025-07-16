@@ -15,21 +15,21 @@ nav_order: 1
 
 File > New Level(Ctrl+N)을 선택한 뒤, 새로운 빈 레벨을 생성합니다.
 
-![New Level Select Image](/assets/images/tutorials/basic_tutorial/new_level_select.png)
+![New Level Select Image]({{ site.baseurl }}/assets/images/tutorials/basic_tutorial/new_level_select.png)
 
 ### 2. Open the One-Click Level Generator
 
 Window > OCG Tools > OCG Window를 선택하여 OCG 창을 엽니다.
 
-![Open OCG Window](/assets/images/tutorials/basic_tutorial/open_ocg_window.png)
+![Open OCG Window]({{ site.baseurl }}/assets/images/tutorials/basic_tutorial/open_ocg_window.png)
 
 이후 OCG 창에서 Create Level Generator 버튼을 클릭하여 레벨 생성기를 월드에 추가합니다.
 
-![Create Level Generator Button](/assets/images/tutorials/basic_tutorial/create_level_generator.png)
+![Create Level Generator Button]({{ site.baseurl }}/assets/images/tutorials/basic_tutorial/create_level_generator.png)
 
 OCG 창에서 `ㅤ+ㅤ` 버튼을 클릭후, 새로운 Map Preset 저장합니다.
 
-![Add Map Preset Button](/assets/images/tutorials/basic_tutorial/add_map_preset.png)
+![Add Map Preset Button]({{ site.baseurl }}/assets/images/tutorials/basic_tutorial/add_map_preset.png)
 
 ### 3. Configure the Map Preset
 
@@ -37,7 +37,7 @@ OCG 창에서 `ㅤ+ㅤ` 버튼을 클릭후, 새로운 Map Preset 저장합니�
 
 이 단계에서는 월드 설정을 구성합니다. 월드 설정은 레벨의 기본적인 환경과 속성을 정의합니다. OCG 창에서 World Settings 탭을 선택하고, 필요한 설정을 조정합니다.
 
-![World Settings Tab](/assets/images/tutorials/basic_tutorial/world_settings_tab.png)
+![World Settings Tab]({{ site.baseurl }}/assets/images/tutorials/basic_tutorial/world_settings_tab.png)
 
 <!-- TODO: @hans4809 @clairhardt98 여기 TODO부분 지우고 설명을 채워주시면 될 것 같습니다. 한국어로 적어도 딱히 상관 없을 듯 합니다. -->
 
@@ -131,7 +131,7 @@ OCG 창에서 `ㅤ+ㅤ` 버튼을 클릭후, 새로운 Map Preset 저장합니�
 > Landscape Material의 Landscape Layer Blend의 **Layer 순서와 Biome의 순서가 일치해야**, PCG가 **올바른 영역에 Mesh를 Spawn**할 수 있게 됩니다.
 > 예를 들어, Landscape Material의 Layer 순서가 `Grass`, `Forest`, `Mountain`이라면, Biome의 순서도 **동일하게** `Grass`, `Forest`, `Mountain`이어야 합니다.
 
-![PCG Settings Tab](/assets/images/tutorials/basic_tutorial/biome_settings.png)
+![PCG Settings Tab]({{ site.baseurl }}/assets/images/tutorials/basic_tutorial/biome_settings.png)
 
 <details markdown="1">
   <summary>Biome Settings</summary>
@@ -152,7 +152,7 @@ OCG 창에서 `ㅤ+ㅤ` 버튼을 클릭후, 새로운 Map Preset 저장합니�
 > Hierarchy Data Settings의 Index는 **설정된 순서대로 적용됩니다.**  
 > 상위 Index에서 이미 포인트가 생성된 위치는, **다음 순서의 Index가 포인트를 생성할 수 있는 영역에서 제외됩니다.** (같은 바이옴은 제외)
 
-![Hierarchy Data Settings](/assets/images/tutorials/basic_tutorial/hierarchy_data_settings.png)
+![Hierarchy Data Settings]({{ site.baseurl }}/assets/images/tutorials/basic_tutorial/hierarchy_data_settings.png)
 
 <details markdown="1">
   <summary>Basic Settings</summary>

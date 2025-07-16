@@ -9,7 +9,7 @@ nav_order: 1
 
 This section covers the *PCG* properties within the `MapPreset` asset.
 
-![map_preset_pcg](/assets/images/map_preset/pcg_properties/map_preset_pcg.png)
+![map_preset_pcg]({{ site.baseurl }}/assets/images/map_preset/pcg_properties/map_preset_pcg.png)
 
 ## PCG Properties
 

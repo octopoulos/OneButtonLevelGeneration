@@ -10,7 +10,7 @@ nav_order: 5
 This document provides a comprehensive guide to the OCG Landscape Master Material, detailing its structure, parameters, and how to effectively utilize it in your projects.
 
 ## 1. Layers
-![BiomeToLayer](/assets/images/map_preset/master_material/BiomeToLayer.png)
+![BiomeToLayer]({{ site.baseurl }}/assets/images/map_preset/master_material/BiomeToLayer.png)
 
 {: .warning }
 > &emsp;The **order of layers** in the Landscape Material's Layer Blend **must match the order of Biomes** in the MapPreset.<br>
@@ -21,14 +21,14 @@ This document provides a comprehensive guide to the OCG Landscape Master Materia
   - You can configure the materials for Layers 1 through 7 to correspond with the order of the Biomes.
 
 ## 2. Material Instance Parameters
-![MaterialInstnaceParamsBoxing](/assets/images/map_preset/master_material/MaterialInstnaceParamsBoxing.png)
+![MaterialInstnaceParamsBoxing]({{ site.baseurl }}/assets/images/map_preset/master_material/MaterialInstnaceParamsBoxing.png)
 - In the Material Instance, you can view the parameters for each layer.
 - Each layer uses the same logic from the Material Layers.
 
 <details markdown="1">
   <summary><b style="font-size:1.25em;">All Layer Parameters</b></summary>
 
-![AllLayerParams](/assets/images/map_preset/master_material/AllLayerParams.png)
+![AllLayerParams]({{ site.baseurl }}/assets/images/map_preset/master_material/AllLayerParams.png)
 
 | Parameter Name            | Description                                                                                                                 |
 | :------------------------ | :-------------------------------------------------------------------------------------------------------------------------- |
@@ -50,7 +50,7 @@ This document provides a comprehensive guide to the OCG Landscape Master Materia
   
 <details markdown="1">
   <summary><b style="font-size:1.25em;">Layer General Parameters</b></summary>
-![BaseGeneralParams](/assets/images/map_preset/master_material/BaseGeneralParams.png)
+![BaseGeneralParams]({{ site.baseurl }}/assets/images/map_preset/master_material/BaseGeneralParams.png)
 
 | Parameter Name      | Description                                                                                                                                     |
 | :------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -75,13 +75,13 @@ This document provides a comprehensive guide to the OCG Landscape Master Materia
   <summary><b style="font-size:1.25em;">Layer BaseGround Parameters</b></summary>
 
 
-![BaseGroundBaseSetting](/assets/images/map_preset/master_material/BaseGroundBaseSetting.png)
+![BaseGroundBaseSetting]({{ site.baseurl }}/assets/images/map_preset/master_material/BaseGroundBaseSetting.png)
 
 {: .warning }
 > &emsp;To reveal the ORD Texture parameter, you must check the **Use ORD** option in the **All Layer Parameters**.<br>
-> ![GroundORD](/assets/images/map_preset/master_material/GroundORD.png)<br>
+> ![GroundORD]({{ site.baseurl }}/assets/images/map_preset/master_material/GroundORD.png)<br>
 > &emsp;To reveal the Displacement Texture parameter, you must check the **(Number)_AddGroundDisplacement** option.<br>
-> ![GroundDisplacement](/assets/images/map_preset/master_material/GroundDisplacement.png)
+> ![GroundDisplacement]({{ site.baseurl }}/assets/images/map_preset/master_material/GroundDisplacement.png)
 
 | Parameter Name                   | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | :------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -104,8 +104,8 @@ This document provides a comprehensive guide to the OCG Landscape Master Materia
 <details markdown="1">
   <summary>Ground Displacement Setting</summary>
 
-  ![GroundDisplacement](/assets/images/map_preset/master_material/GroundDisplacement.png)
-  ![GroundDisplacementSetting](/assets/images/map_preset/master_material/GroundDisplacementSetting.png)
+  ![GroundDisplacement]({{ site.baseurl }}/assets/images/map_preset/master_material/GroundDisplacement.png)
+  ![GroundDisplacementSetting]({{ site.baseurl }}/assets/images/map_preset/master_material/GroundDisplacementSetting.png)
 
   | Parameter Name             | Description                                                                                                                                                                        |
   | :------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -117,7 +117,7 @@ This document provides a comprehensive guide to the OCG Landscape Master Materia
 <details markdown="1">
   <summary>Puddle Setting</summary>
 
-  ![GroundPuddleSetting](/assets/images/map_preset/master_material/GroundPuddleSetting.png)
+  ![GroundPuddleSetting]({{ site.baseurl }}/assets/images/map_preset/master_material/GroundPuddleSetting.png)
   
   | Parameter Name   | Description                                                                                                                                                                                       |
   | :--------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -131,7 +131,7 @@ This document provides a comprehensive guide to the OCG Landscape Master Materia
 <details markdown="1">
   <summary>Texture Variation Setting</summary>
 
-  ![GroundTextureVariationSetting](/assets/images/map_preset/master_material/GroundTextureVariationSetting.png)
+  ![GroundTextureVariationSetting]({{ site.baseurl }}/assets/images/map_preset/master_material/GroundTextureVariationSetting.png)
 
   {: .warning }
   > &emsp;This affects the area where BaseGround is applied by adding variation between the **BaseGround and Middle High of the corresponding layer**.<br>
@@ -150,7 +150,7 @@ This document provides a comprehensive guide to the OCG Landscape Master Materia
   {: .warning }
   > &emsp;This parameter is only visible when **Add Cliff is enabled for the corresponding layer**.<br>
 
-![GroundSlopeSetting](/assets/images/map_preset/master_material/GroundSlopeSetting.png)
+![GroundSlopeSetting]({{ site.baseurl }}/assets/images/map_preset/master_material/GroundSlopeSetting.png)
 
 | Parameter Name         | Description                                                                                                          |
 | :--------------------- | :------------------------------------------------------------------------------------------------------------------- |
@@ -163,16 +163,16 @@ This document provides a comprehensive guide to the OCG Landscape Master Materia
 <details markdown="1">
   <summary><b style="font-size:1.25em;">Layer Cliff Parameters</b></summary>
   
-![CliffParams](/assets/images/map_preset/master_material/CliffParams.png)
+![CliffParams]({{ site.baseurl }}/assets/images/map_preset/master_material/CliffParams.png)
 
   - These parameters are visible when Add Cliff is enabled.
 
   {: .warning }
   > &emsp;After **enabling Add Cliff**, check **Ground Slope Constrain** to adjust the slope value between the Cliff and BaseGround.<br>
   > &emsp;You must check **Use ORD** in the All Layer Parameters to reveal the ORD Texture parameter.<br>
-  > ![CliffORD](/assets/images/map_preset/master_material/CliffORD.png)<br>
+  > ![CliffORD]({{ site.baseurl }}/assets/images/map_preset/master_material/CliffORD.png)<br>
   >  &emsp;You must check **(Number)_AddCliffDisplacement** to reveal the Displacement Texture parameter.<br>
-  > ![CliffDisplacement](/assets/images/map_preset/master_material/CliffDisplacement.png)
+  > ![CliffDisplacement]({{ site.baseurl }}/assets/images/map_preset/master_material/CliffDisplacement.png)
 
 | Parameter Name           | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | :----------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -192,7 +192,7 @@ This document provides a comprehensive guide to the OCG Landscape Master Materia
 <details markdown="1">
   <summary>Triplanar Setting</summary>
 
-![TriplanarSetting](/assets/images/map_preset/master_material/TriplanarSetting.png)
+![TriplanarSetting]({{ site.baseurl }}/assets/images/map_preset/master_material/TriplanarSetting.png)
 
 | Parameter Name              | Description                |
 | :-------------------------- | :------------------------- |
@@ -203,8 +203,8 @@ This document provides a comprehensive guide to the OCG Landscape Master Materia
 <details markdown="1">
   <summary>Displacement Setting</summary>
 
-![CliffDisplacement](/assets/images/map_preset/master_material/CliffDisplacement.png)
-![CliffDisplacementSetting](/assets/images/map_preset/master_material/CliffDisplacementSetting.png)
+![CliffDisplacement]({{ site.baseurl }}/assets/images/map_preset/master_material/CliffDisplacement.png)
+![CliffDisplacementSetting]({{ site.baseurl }}/assets/images/map_preset/master_material/CliffDisplacementSetting.png)
 
 | Parameter Name            | Description                                                                                                                                      |
 | :------------------------ | :----------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -218,13 +218,13 @@ This document provides a comprehensive guide to the OCG Landscape Master Materia
 <details markdown="1">
   <summary><b style="font-size:1.25em;">Layer High Parameters</b></summary>
 
-![HighParams](/assets/images/map_preset/master_material/HighParams.png)
+![HighParams]({{ site.baseurl }}/assets/images/map_preset/master_material/HighParams.png)
 
   {: .warning }
   > &emsp;You must check **Use ORD** in the All Layer Parameters to reveal the ORD Texture parameter.<br>
-  > ![HighORD](/assets/images/map_preset/master_material/HighORD.png)<br>
+  > ![HighORD]({{ site.baseurl }}/assets/images/map_preset/master_material/HighORD.png)<br>
   >  &emsp;You must check **(Number)_AddHighDisplacement** to reveal the Displacement Texture parameter.<br>
-  > ![HighDisplacement](/assets/images/map_preset/master_material/HighDisplacement.png)
+  > ![HighDisplacement]({{ site.baseurl }}/assets/images/map_preset/master_material/HighDisplacement.png)
 
 | Parameter Name          | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | :---------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -251,8 +251,8 @@ This document provides a comprehensive guide to the OCG Landscape Master Materia
 <details markdown="1">
   <summary>Displacement Setting</summary>
 
-![HighDisplacement](/assets/images/map_preset/master_material/HighDisplacement.png)
-![HighDisplacementSetting](/assets/images/map_preset/master_material/HighDisplacementSetting.png)
+![HighDisplacement]({{ site.baseurl }}/assets/images/map_preset/master_material/HighDisplacement.png)
+![HighDisplacementSetting]({{ site.baseurl }}/assets/images/map_preset/master_material/HighDisplacementSetting.png)
 
 | Parameter Name           | Description                                                                                                                                                         |
 | :----------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -266,13 +266,13 @@ This document provides a comprehensive guide to the OCG Landscape Master Materia
 <details markdown="1">
   <summary><b style="font-size:1.25em;">Layer Middle Parameters</b></summary>
 
-![MiddleParams](/assets/images/map_preset/master_material/MiddleParams.png)
+![MiddleParams]({{ site.baseurl }}/assets/images/map_preset/master_material/MiddleParams.png)
 
   {: .warning }
   > &emsp;You must check **Use ORD** in the All Layer Parameters to reveal the ORD Texture parameter.<br>
-  > ![MiddleORD](/assets/images/map_preset/master_material/MiddleORD.png)<br>
+  > ![MiddleORD]({{ site.baseurl }}/assets/images/map_preset/master_material/MiddleORD.png)<br>
   >  &emsp;You must check **(Number)_AddMiddleDisplacement** to reveal the Displacement Texture parameter.<br>
-  > ![MiddleDisplacement](/assets/images/map_preset/master_material/MiddleDisplacement.png)
+  > ![MiddleDisplacement]({{ site.baseurl }}/assets/images/map_preset/master_material/MiddleDisplacement.png)
 
 | Parameter Name            | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | :------------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -291,8 +291,8 @@ This document provides a comprehensive guide to the OCG Landscape Master Materia
 <details markdown="1">
   <summary>Displacement Setting</summary>
 
-![MiddleDisplacement](/assets/images/map_preset/master_material/MiddleDisplacement.png)
-![MiddleDisplacementSetting](/assets/images/map_preset/master_material/MiddleDisplacementSetting.png)
+![MiddleDisplacement]({{ site.baseurl }}/assets/images/map_preset/master_material/MiddleDisplacement.png)
+![MiddleDisplacementSetting]({{ site.baseurl }}/assets/images/map_preset/master_material/MiddleDisplacementSetting.png)
 
 
 | Parameter Name             | Description                                                                                                                                               |
@@ -307,13 +307,13 @@ This document provides a comprehensive guide to the OCG Landscape Master Materia
 <details markdown="1">
   <summary><b style="font-size:1.25em;">Layer Middle High Parameters</b></summary>
 
-![MiddleHighParams](/assets/images/map_preset/master_material/MiddleHighParams.png)
+![MiddleHighParams]({{ site.baseurl }}/assets/images/map_preset/master_material/MiddleHighParams.png)
 
   {: .warning }
   > &emsp;You must check **Use ORD** in the All Layer Parameters to reveal the ORD Texture parameter.<br>
-  > ![MiddleHighORD](/assets/images/map_preset/master_material/MiddleHighORD.png)<br>
+  > ![MiddleHighORD]({{ site.baseurl }}/assets/images/map_preset/master_material/MiddleHighORD.png)<br>
   >  &emsp;You must check **(Number)_AddMiddleHighDisplacement** to reveal the Displacement Texture parameter.<br>
-  > ![MiddleHighDisplacement](/assets/images/map_preset/master_material/MiddleHighDisplacement.png)
+  > ![MiddleHighDisplacement]({{ site.baseurl }}/assets/images/map_preset/master_material/MiddleHighDisplacement.png)
 
 | Parameter Name                 | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | :----------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -332,8 +332,8 @@ This document provides a comprehensive guide to the OCG Landscape Master Materia
 <details markdown="1">
   <summary>Displacement Setting</summary>
 
-![MiddleHighDisplacement](/assets/images/map_preset/master_material/MiddleHighDisplacement.png)
-![MiddleHighDisplacementSetting](/assets/images/map_preset/master_material/MiddleHighDisplacementSetting.png)
+![MiddleHighDisplacement]({{ site.baseurl }}/assets/images/map_preset/master_material/MiddleHighDisplacement.png)
+![MiddleHighDisplacementSetting]({{ site.baseurl }}/assets/images/map_preset/master_material/MiddleHighDisplacementSetting.png)
 
 | Parameter Name                  | Description                                                                                                                                                 |
 | :------------------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------- |
