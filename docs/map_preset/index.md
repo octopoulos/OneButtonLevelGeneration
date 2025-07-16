@@ -6,17 +6,16 @@ tags: [map_preset, asset]
 nav_order: 4
 has_children: true
 ---
-
 # MapPreset
 
-MapPreset은 OCG 플러그인의 핵심 데이터 에셋입니다.
-MapPreset을 편집하여 바이옴 별 식생, 지형의 생김새 및 강의 생성등 레벨 생성에 관련된 속성들을 결정할 수 있습니다.
+The **MapPreset** is the core data asset of the *OCG plugin*.
+By editing a **MapPreset**, you can define properties related to level generation, such as *biome-specific vegetation*, *terrain appearance*, and *river generation*.
 
 ![MapPreset asset image](/assets/images/map_preset/map_preset.png)
-- OCG Window 또는 콘텐츠 드로워에서 우클릭 > OCG > Map Preset을 통해 새로 생성할 수 있습니다.
+- You can create a new **MapPreset** from the **OCG Window** or by right-clicking in the **Content Drawer** and selecting **OCG > Map Preset**.
 
 
 ## Editing MapPreset
-OCG Window 또는 MapPreset 커스텀 에디터에서 MapPreset 에셋을 편집하고, 레벨을 생성할 수 있습니다.
+You can edit the **MapPreset** asset and generate a level from the **OCG Window** or the custom **MapPreset editor**.
 
 ![MapPreset detail panel](/assets/images/map_preset/map_preset_detail_panel.png)

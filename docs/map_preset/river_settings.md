@@ -7,33 +7,33 @@ nav_order: 3
 
 # River Settings
 
-River Settings 항목에서는 MapPreset 에셋을 이용하여 레벨에 강을 생성하는 방법 및 각 프로퍼티에 대해 설명합니다
+This document explains how to generate rivers in a level using the MapPreset asset and describes the properties in the River Settings section.
 
-## MapPreset을 통한 강의 생성은 다음과 같이 진행됩니다.
-1. 해수면으로부터 일정 높이 이상 떨어진 랜덤한 위치를 시작지점으로 정합니다.
-2. 해수면 높이까지 이동하는 Spline을 생성하고, 단순화합니다.
-3. 해당 Spline을 사용하는 WaterBody River 액터를 생성합니다.
-4. 강의 폭, 깊이, 유속을 결정합니다.
-   1. 설정된 Curve 데이터를 정규화합니다.
-   2. 정규화된 Curve 데이터값에 Base Value를 곱하고, Min Value를 곱하여 최종적인 강의 폭, 깊이, 유속을 결정합니다.
+## The river generation process via MapPreset is as follows:
+1. A random location at a certain height above sea level is chosen as the starting point.
+2. A Spline is generated that travels down to sea level and is then simplified.
+3. A WaterBody River actor is created using this Spline.
+4. The river's width, depth, and velocity are determined.
+   1. The configured Curve data is normalized.
+   2. The final river width, depth, and velocity are determined by multiplying the normalized Curve data value by the Base Value.
 
 ## Map Preset River Settings
 ![MapPreset River Settings](/assets/images/map_preset/river_settings/river_settings.png)
 
-## 강 생성관련 파라미터들
+## River Generation Parameters
 
-| 프로퍼티                      | 설명                                                                                                                                                                             |
-| ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Regenerate River              | 현재 레벨에 존재하는 강들을 제거하고, 새롭게 강을 생성합니다.<br>**Note:** 에디터에서만 호출 가능한 함수입니다.                                                                  |
-| Generate River                | 현재 레벨에 강을 생성할지에 대한 여부입니다                                                                                                                                      |
-| River Count                   | 생성할 강의 개수입니다. 최대 10개까지의 강을 생성할 수 있습니다.                                                                                                                 |
-| River Source Elevation Ratio  | 강의 시작지점이 해수면으로부터 얼마나 높은 곳에 존재하는지에 대한 값입니다.<br>0.5 ~ 1의 값을 지정할 수 있으며, 1에 가까울 수록 현재 랜드스케이프의 가장 높은 지역에 생성됩니다. |
-| River Spline Simplyfy Epsilon | 생성한 강의 Spline을 얼마만큼 간략화할지에 대한 값입니다.<br>높을수록 Spline을 더욱 간략화합니다.                                                                                |
+| Property Name                 | Description                                                                                                                                                                                                       |
+| :---------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Regenerate River              | Removes all existing rivers in the current level and generates new ones.<br>**Note:** This function can only be called in the editor.                                                                             |
+| Generate River                | Determines whether to generate rivers in the current level.                                                                                                                                                       |
+| River Count                   | The number of rivers to generate. A maximum of 10 rivers can be created.                                                                                                                                          |
+| River Source Elevation Ratio  | A value that determines how high the river's starting point is from sea level.<br>You can specify a value between 0.5 and 1. The closer to 1, the higher up on the current landscape the river will be generated. |
+| River Spline Simplify Epsilon | A value that determines how much to simplify the generated river's Spline.<br>A higher value results in a more simplified Spline.                                                                                 |
 
-### 강의 폭, 깊이, 유속 관련 파라미터들
+## Parameters for River Width, Depth, and Velocity
 
-| 프로퍼티   | 설명                                                                                                                                    |
-| ---------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| Base Value | 강의 폭, 깊이, 유속의 기본값입니다.<br>정규화된 Curve의 값에 곱해져 실제 강을 표현합니다.                                               |
-| Curve Data | 폭, 깊이, 유속이 강이 흐름에 따라 어떻게 변화하는지 결정합니다.<br>X축은 강이 진행한 정도, Y축이 폭, 깊이, 유속 값인 float curve입니다. |
-| Materials  | 생성될 Water Body River 액터에 설정될 머티리얼 프로퍼티들입니다.                                                                        |
+| Property Name | Description                                                                                                                                                                                                        |
+| :------------ | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Base Value    | The base value for the river's width, depth, and velocity.<br>It is multiplied by the normalized Curve value to represent the actual river.                                                                        |
+| Curve Data    | Determines how the width, depth, and velocity change as the river flows.<br>This is a float curve where the X-axis represents the river's progress, and the Y-axis represents the width, depth, or velocity value. |
+| Materials     | The material properties to be set on the generated Water Body River actor.                                                                                                                                         |
