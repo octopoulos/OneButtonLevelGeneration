@@ -1,12 +1,12 @@
 ---
-title: Changelog
+title: CHANGELOG
 layout: home
 description: One-Click Level Generator Changelog
 tags: [one-click level generator, changelog]
 nav_order: 20
 ---
 
-# Changelog
+# CHANGELOG
 
 This page documents the changes for the One-Click Level Generator.
 

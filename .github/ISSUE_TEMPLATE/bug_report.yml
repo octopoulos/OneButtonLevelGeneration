@@ -1,107 +1,60 @@
 name: Bug Report
 description: Report a bug to help us improve the OCG project
 title: "[Bug]: "
-labels: ["bug", "needs-triage"]
+labels: ["bug"]
 assignees: []
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to fill out this bug report! Please provide as much detail as possible.
+        Thanks for reporting a bug! Please fill out the fields below.
 
   - type: textarea
     id: bug-description
     attributes:
-      label: Bug Description
-      description: A clear and concise description of what the bug is.
-      placeholder: Describe the bug...
+      label: What happened?
+      description: Describe the bug and what you expected to happen
+      placeholder: |
+        Bug description: ...
+        Expected behavior: ...
+        Actual behavior: ...
     validations:
       required: true
 
   - type: textarea
     id: reproduction-steps
     attributes:
-      label: Steps to Reproduce
-      description: Steps to reproduce the behavior
+      label: How to reproduce
+      description: Steps to reproduce the issue
       placeholder: |
-        1. Go to '...'
-        2. Click on '....'
-        3. Scroll down to '....'
-        4. See error
-    validations:
-      required: true
-
-  - type: textarea
-    id: expected-behavior
-    attributes:
-      label: Expected Behavior
-      description: A clear and concise description of what you expected to happen.
-      placeholder: What should have happened?
-    validations:
-      required: true
-
-  - type: textarea
-    id: actual-behavior
-    attributes:
-      label: Actual Behavior
-      description: A clear and concise description of what actually happened.
-      placeholder: What actually happened?
+        1. Step 1
+        2. Step 2
+        3. Bug occurs
     validations:
       required: true
 
   - type: input
-    id: plugin-version
+    id: version-info
     attributes:
-      label: OCG Version
-      description: What version of OCG are you using?
-      placeholder: e.g., v1.0.0
-    validations:
-      required: true
-
-  - type: input
-    id: engine-version
-    attributes:
-      label: Unreal Engine Version
-      description: What version of Unreal Engine are you using?
-      placeholder: e.g., 5.5, 5.4.4, 5.3.2
+      label: Version Info
+      description: OCG version and Unreal Engine version
+      placeholder: OCG v1.0.0, UE 5.5
     validations:
       required: true
 
   - type: textarea
-    id: console-logs
+    id: additional-info
     attributes:
-      label: Console Logs/Error Messages
-      description: If applicable, add console logs or error messages
-      placeholder: Paste any relevant console output or error messages here
-      render: shell
-    validations:
-      required: false
-
-  - type: textarea
-    id: screenshots
-    attributes:
-      label: Screenshots
-      description: If applicable, add screenshots to help explain your problem
-      placeholder: Drag and drop screenshots here or paste image URLs
-    validations:
-      required: false
-
-  - type: textarea
-    id: additional-context
-    attributes:
-      label: Additional Context
-      description: Add any other context about the problem here
-      placeholder: Any additional information that might be helpful...
+      label: Additional Info (Optional)
+      description: Screenshots, logs, or other helpful information
+      placeholder: Add any screenshots, error messages, or additional context here
     validations:
       required: false
 
   - type: checkboxes
-    id: terms
+    id: checklist
     attributes:
       label: Checklist
-      description: Please confirm the following
       options:
-        - label: I have searched existing issues to make sure this is not a duplicate
-          required: true
-        - label: I have provided all the requested information
+        - label: I searched existing issues to avoid duplicates
           required: true
