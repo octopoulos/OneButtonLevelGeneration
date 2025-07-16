@@ -1,7 +1,7 @@
 ---
-title: Additional Setting
+title: Additional Settings
 layout: default
-tags: [Additional Setting]
+tags: [Additional Settings]
 nav_order: 5
 ---
 
