@@ -21,7 +21,7 @@ back_to_top_text: "Back to top"
 
 enable_copy_code_button: true
 
-footer_content: "Copyright &copy; 2025 Code1133"
+footer_content: "Copyright &copy; 2025 Code1133 | All rights reserved."
 
 aux_links:
   Docs Repository: https://github.com/Code1133/ocg-docs/
@@ -37,5 +37,14 @@ callouts:
   danger:
     title: Danger
     color: red
+  note:
+    title: Note
+    color: purple
+  tip:
+    title: Tip
+    color: green
+  important:
+    title: Important
+    color: yellow
 
 callouts_opacity: 0.2
