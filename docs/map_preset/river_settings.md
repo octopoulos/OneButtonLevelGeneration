@@ -18,7 +18,7 @@ River Settings 항목에서는 MapPreset 에셋을 이용하여 레벨에 강을
    2. 정규화된 Curve 데이터값에 Base Value를 곱하고, Min Value를 곱하여 최종적인 강의 폭, 깊이, 유속을 결정합니다.
 
 ## Map Preset River Settings
-![MapPreset River Settings](/assets/images/mappreset/riversettings/riversettings.png)
+![MapPreset River Settings](/assets/images/map_preset/river_settings/river_settings.png)
 
 ## 강 생성관련 파라미터들
 

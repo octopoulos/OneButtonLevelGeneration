@@ -17,7 +17,7 @@ nav_order: 5
 
 ![PCG Settings Tab](/assets/images/tutorials/basic_tutorial/biome_settings.png)
 
-| Setting Name   | Description                                                                                                                     |
+| Property Name  | Description                                                                                                                     |
 | -------------- | ------------------------------------------------------------------------------------------------------------------------------- |
 | Biome Name     | The name of the biome. This is used to identify the biome in the system.                                                        |
 | Temperature    | The temperature of the biome, which can affect the types of vegetation and terrain features generated.                          |
@@ -36,7 +36,7 @@ nav_order: 5
 <details markdown="1">
   <summary>Basic Settings</summary>
 
-| Setting Name                  | Description                                                                                                                                                                                             |
+| Property Name                 | Description                                                                                                                                                                                             |
 | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Biome Name                    | Biome의 이름입니다. 이 이름은 시스템에서 Biome을 식별하는 데 사용됩니다.                                                                                                                                |
 | Selected Landscape Layer Name | 선택된 Landscape Layer의 이름입니다. 이 Layer에 Biome이 적용됩니다. <br> 만약 `None`일 경우 Biome Name이 잘못되었거나, Landscape Material을 설정하지 않은 경우입니다.                                   |
@@ -57,7 +57,7 @@ nav_order: 5
 <details markdown="1">
   <summary>Optimization Settings</summary>
 
-| Setting Name                   | Description                                                                                                                                                                                                                                              |
+| Property Name                  | Description                                                                                                                                                                                                                                              |
 | ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | WPO Disable Distance           | WPO(World Position Offset)를 비활성화할 거리를 결정합니다. <br> 이 값은 Mesh가 Spawn될 때, WPO가 적용되지 않는 거리를 결정합니다. <br> 예를 들어, 1000이면 1000미터 이상 떨어진 곳에서는 WPO가 적용되지 않습니다.                                        |
 | Start Cull Distance            | Start Cull Distance를 설정합니다.                                                                                                                                                                                                                        |

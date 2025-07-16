@@ -13,7 +13,7 @@ nav_order: 4
 1. World Setting을 기반으로 지형을 생성하며 해수면 높이를 결정합니다.
 2. 결정된 해수면 높이에 WaterBodyOcean을 생성하여 해당 해수면 높이 미만의 지형은 전부 물에 잠기게됩니다.
 
-![mappreset_oceansetting](/assets/images/mappreset/oceansettings/mappreset_oceansetting.png)
+![map_preset_ocean_setting](/assets/images/map_preset/ocean_settings/map_preset_ocean_setting.png)
 
 | 속성                             | 설명                                                                                                                                    |
 | -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |

@@ -14,10 +14,10 @@ This page details the properties available in the World Settings section of the 
 <details markdown="1">
 <summary>Landscape Settings</summary>
   
-  ![Landscape Settings Properties](/assets/images/mappreset/worldsettings/landscapesettings.png)
+  ![Landscape Settings Properties](/assets/images/map_preset/world_settings/landscape_settings.png)
   
-| Setting Name | Description |
-| ------------ | ----------- ||
+| Property Name | Description |
+| ------------- | ----------- ||
 | World Partition Grid Size        | The number of landscape components per axis for streaming proxies                                                                                                                                                                               |
 | World Partition Region Size      | The number of landscape components per World Partition region, along each axis                                                                                                                                                                               |
 | Landscape Scale                  | Controls the size of the landscape by adjusting the Landscape Actor's XY scale. Default value is 1 which sets the scale to 100.                                                                                                       |
@@ -35,11 +35,11 @@ This page details the properties available in the World Settings section of the 
 <details markdown="1">
 <summary>Height & Temperature</summary>
 
-![Height Properties](/assets/images/mappreset/worldsettings/heightsettings.png)
+![Height Properties](/assets/images/map_preset/world_settings/height_settings.png)
 
-![Temperature Properties](/assets/images/mappreset/worldsettings/temperaturesettings.png)
+![Temperature Properties](/assets/images/map_preset/world_settings/temperature_settings.png)
 
-| Setting Name            | Description                                                                                                                                                               |
+| Property Name           | Description                                                                                                                                                               |
 | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Min Height / Max Height | Decides the minimum / maximum height of the landscape formed in unreal unit. Changing this value decides the Z scale of the landscape.                                    |
 | Sea Level               | Defines the sea level as a normalized value (0.0 - 1.0) that interpolates between Min Height and Max Height. A value of 0 corresponds to Min Height, and 1 to Max Height. |
@@ -50,9 +50,9 @@ This page details the properties available in the World Settings section of the 
 <details markdown="1">
 <summary>Noise</summary>
 
-![Noise Properties](/assets/images/mappreset/worldsettings/noisesettings.png)
+![Noise Properties](/assets/images/map_preset/world_settings/noise_settings.png)
 
-| Setting Name            | Description                                                                                                                                                                                                                                                                                                                                            |
+| Property Name           | Description                                                                                                                                                                                                                                                                                                                                            |
 | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Continent Noise Scale   | Controls the frequency of the noise that generates the main landmasses. Low values create wide mountain ranges, while high values result in bumpier, more rugged terrain with dense hills.                                                                                                                                                             |
 | Terrain Noise Scale     | Governs the scale of the fractal noise that adds fine details to the terrain surface. This acts as the base frequency for the multi-octave noise generation. Lower values produce a smoother and more gently rolling landscape, while higher values introduce more high-frequency undulations, resulting in a more rugged and detailed ground surface. |
@@ -65,9 +65,9 @@ This page details the properties available in the World Settings section of the 
 <details markdown="1">
 <summary>Height</summary>
 
-![Advanced Height Properties](/assets/images/mappreset/worldsettings/advancedheight.png)
+![Advanced Height Properties](/assets/images/map_preset/world_settings/advanced_height.png)
 
-| Setting Name                    | Description                                                                                                                                                                                                                                                                                                                                         |
+| Property Name                   | Description                                                                                                                                                                                                                                                                                                                                         |
 | ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Cur Min Height / Cur Max Height | This property is read-only property which shows the actual minimum height and maximum height of the landscape generated.                                                                                                                                                                                                                            |
 | Smooth Height                   | If enabled height of the landscape is smoothed by Gaussian blur method. Enabling this generates smoother landscape.                                                                                                                                                                                                                                 |
@@ -91,9 +91,9 @@ This page details the properties available in the World Settings section of the 
 <details markdown="1">
 <summary>Temperature & Humidity</summary>
 
-![Advanced Temperature and Height Properties](/assets/images/mappreset/worldsettings/advancedtemphumiditysettings.png)
+![Advanced Temperature and Height Properties](/assets/images/map_preset/world_settings/advanced_temp_humidity_settings.png)
 
-| Setting Name                      | Description                                                                                                                                                                                                                                                                                                                                                         |
+| Property Name                     | Description                                                                                                                                                                                                                                                                                                                                                         |
 | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Temp Drop Per 1000 Units          | Specifies the rate at which temperature decreases with increasing altitude. This value represents the total temperature drop for every 1000 world units of elevation above sea level. Higher values will result in colder mountaintops and a more significant temperature difference between low and high ground.                                                   |
 | Moisture Falloff Rate             | Determines how rapidly humidity decreases as the distance from a water source increases. This value acts as a decay factor in an exponential falloff function. Higher values cause a steep drop, resulting in narrow, humid coastal regions and very dry inland areas. Lower values create a much more gradual decline, allowing moisture to extend farther inland. |
@@ -104,9 +104,9 @@ This page details the properties available in the World Settings section of the 
 <details markdown="1">
 <summary>Noise</summary>
 
-![Advanced Temperature and Height Properties](/assets/images/mappreset/worldsettings/advancednoisesettings.png)
+![Advanced Temperature and Height Properties](/assets/images/map_preset/world_settings/advanced_noise_settings.png)
 
-| Setting Name          | Description                                                                                                                                                                                                                                                            |
+| Property Name         | Description                                                                                                                                                                                                                                                            |
 | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Standard Noise Offset | Sets the maximum random offset applied to each noise layer. This ensures that different noise passes (e.g., for continents, details, islands) are sampled from unique locations, preventing visual repetition and increasing overall randomness.                       |
 | Redistribution Factor | Adjusts the contrast of the procedural masks that blend different features. Higher values create sharper transitions, resulting in flatter plains and more distinct mountain areas with less gradual falloff.                                                          |
@@ -119,9 +119,9 @@ This page details the properties available in the World Settings section of the 
 <details markdown="1">
 <summary>Erosion</summary>
 
-![Advanced Temperature and Height Properties](/assets/images/mappreset/worldsettings/erosionsettings.png)
+![Advanced Temperature and Height Properties](/assets/images/map_preset/world_settings/erosion_settings.png)
 
-| Setting Name             | Description                                                                                                                                                                                                                                                                                                      |
+| Property Name            | Description                                                                                                                                                                                                                                                                                                      |
 | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Erosion                  | Enables or disables the hydraulic erosion simulation pass. When enabled, this pass simulates the effect of water droplets flowing over the terrain, carving channels and creating more realistic landforms.                                                                                                      |
 | Num Erosion Iterations   | Sets the total number of water droplets simulated during the erosion process. This is the primary control for the overall quality and intensity of the erosion. More iterations produce a more detailed and heavily eroded landscape but significantly increase processing time.                                 |
