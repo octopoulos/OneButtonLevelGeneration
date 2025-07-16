@@ -11,9 +11,6 @@ nav_order: 1
 One Button Level Generator is a user-friendly tool that allows you to create levels simply.
 You can create a level by setting characteristics for each biome.
 
-## Trailer
-!TODO : 트레일러 영상
-
 ## Dependencies
 
 The following plugins are automatically enabled when the OCG plugin is enabled.
