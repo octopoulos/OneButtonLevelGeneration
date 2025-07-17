@@ -21,3 +21,4 @@ By editing a **MapPreset**, you can define properties related to level generatio
 You can edit the **MapPreset** asset and generate a level from the **OCG Window** or the custom **MapPreset editor**.
 
 ![MapPreset detail panel]({{ site.baseurl }}/assets/images/map_preset/map_preset_detail_panel.png)
+![alt text](image.png)
