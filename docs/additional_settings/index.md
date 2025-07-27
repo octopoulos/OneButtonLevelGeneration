@@ -15,11 +15,11 @@ r.Nanite.AllowTessellation=1
 r.Nanite.Tessellation=1
 ```
   
-<br>![LandscapeNaniteSetting]({{ site.baseurl }}/assets/images/additionalsetting/LandscapeNaniteSetting.png)
+<br>![LandscapeNaniteSetting]({{ site.baseurl }}/assets/images/additional_settings/LandscapeNaniteSetting.png)
 - If you want to apply Nanite Tesselation to Landscape, check Landscape Enable Nanite and build Data. 
 
 ## Runtime Virtual Texture Setting
-![RVTSetting]({{ site.baseurl }}/assets/images/additionalsetting/RVTSetting.png)
+![RVTSetting]({{ site.baseurl }}/assets/images/additional_settings/RVTSetting.png)
 - In Editor, Edit -> Project Settings -> Engine - Rendering -> Virtual Textures
 - Check Enable virtual support and UnCheck Enable virtual texture on texture import
 
