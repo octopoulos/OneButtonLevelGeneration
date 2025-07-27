@@ -15,13 +15,13 @@ This page details the properties available in the World Settings section of the 
 <details markdown="1">
 <summary>Landscape Settings</summary>
   
-  ![Landscape Settings Properties]({{ site.baseurl }}/assets/images/map_preset/world_settings/landscape_settings.png)
+  ![landscapeSettings]({{ site.baseurl }}/assets/images/map_preset/world_settings/landscapeSettings.png)
   
 | Property Name | Description |
 | :------------ | :---------- ||
 | World Partition Grid Size        | The number of landscape components per axis for streaming proxies                                                                                                                                                                               |
 | World Partition Region Size      | The number of landscape components per World Partition region, along each axis                                                                                                                                                                               |
-| Landscape Scale                  | Controls the size of the landscape by adjusting the Landscape Actor's XY scale. Default value is 1 which sets the scale to 100.                                                                                                       |
+| Landscape Size                   | Defines the horizontal size of the Landscape (in kilometers), it changes Landscape Size by Formular (XScale = Landscape Size * 1000 * 100 / Map Resolution.)                                                                                                       |
 | Apply Scale To Noise             | If enabled, changing Landscape Scale regenerates the landscape's features. If disabled, it only stretches or shrinks the Landscape, preserving its shape.                                                                                                    |
 | Biome Blend Radius               | Defines the radius of the transition zone between adjacent biomes. This value controls the distance over which one biome's influence fades into the next, preventing abrupt changes. A value of 0 will disable blending, creating hard edges.                                                                                                                       |
 | Water Blend Radius               | This property does same actions as Biome Blend Radius but only decides trasition between water biome and other biomes.                                                                                                                 |
@@ -29,7 +29,8 @@ This page details the properties available in the World Settings section of the 
 | Landscape Sections Per Component | The number of sections in a single landscape component. This along with the section size determines the size of each landscape component. A component is the base unit of rendering and culling. |
 | Landscape Component Count        | Sets the number of components in the X and Y axes, which defines the total size of the landscape.                                                                                  |
 | Map Resolution                   | The resolution of the landscape and its associated generation maps in the X and Y directions.                                                                                      |
-| Landscape Material               | The material to be applied to the landscape.                                                                                      
+| Landscape Material               | The material to be applied to the landscape.                 |           
+| Heightmap File Path              | .png file Path, which apply to Landscape Height.                                                           
 
 </details>
 
