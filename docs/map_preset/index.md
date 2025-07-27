@@ -20,5 +20,12 @@ By editing a **MapPreset**, you can define properties related to level generatio
 ## Editing MapPreset
 You can edit the **MapPreset** asset and generate a level from the **OCG Window** or the custom **MapPreset editor**.
 
-![MapPreset detail panel]({{ site.baseurl }}/assets/images/map_preset/map_preset_detail_panel.png)
-![alt text](image.png)
+![OCGWindow]({{ site.baseurl }}/assets/images/map_preset/OCGWindow.png)
+
+| Button | Description |
+| Create Level Generator / Select Level Generator | Create New ALevelGenerator in current Level. / Select one ALevelGenertor in current Level.                                                                                                          |
+| Preview Map | the Landscape that will be generated based on the .png specified in the HeightMap File Path is previewed with a green outline. If there is no HeightMap File Path, the Landscape generated from the current Seed value is previewed with a green outline.                                                                                                          |
+| Generate | Generate Landscape & PCG & Rivers based on the MapPreset in current Level.                                                                                                          |
+| Generate With Random Seed | Generate Landscape & PCG & Rivers based on the MapPreset with Random Seed in current Level.                                                                                                               |
+| Force Generate PCG | Removes all existing *PCG* actors in the current level and generates new ones. <br>**Note:** This is an *editor-only* function.                                                                                                          |
+| Regenerate River | the current River is removed and a new River is regenerated on the current Landscape based on the River Setting. If you changed any weights on the Landscape that were affected by the River, those changes will be lost.                                                                                             |
