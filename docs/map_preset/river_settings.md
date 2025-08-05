@@ -19,7 +19,6 @@ This document explains how to generate rivers in a level using the MapPreset ass
 
 ## Map Preset River Settings
 ![MapPreset River Settings]({{ site.baseurl }}/assets/images/map_preset/river_settings/river_settings.png)
-![alt text](image.png)
 
 ## River Generation Parameters
 
