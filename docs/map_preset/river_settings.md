@@ -19,12 +19,14 @@ This document explains how to generate rivers in a level using the MapPreset ass
 
 ## Map Preset River Settings
 ![MapPreset River Settings]({{ site.baseurl }}/assets/images/map_preset/river_settings/river_settings.png)
+![alt text](image.png)
 
 ## River Generation Parameters
 
 | Property Name                 | Description                                                                                                                                                                                                       |
 | :---------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Regenerate River              | Removes all existing rivers in the current level and generates new ones.<br>**Note:** This function can only be called in the editor.                                                                             |
+| River Seed                    | This is the seed for random river generation. Rivers with the same shape will be generated in the same location when using the identical seed.                                                                    |
 | Generate River                | Determines whether to generate rivers in the current level.                                                                                                                                                       |
 | River Count                   | The number of rivers to generate. A maximum of 10 rivers can be created.                                                                                                                                          |
 | River Source Elevation Ratio  | A value that determines how high the river's starting point is from sea level.<br>You can specify a value between 0.5 and 1. The closer to 1, the higher up on the current landscape the river will be generated. |
