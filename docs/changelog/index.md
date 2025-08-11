@@ -10,6 +10,14 @@ nav_order: 20
 
 This page documents the changes for the One-Click Level Generator.
 
+## Version 1.1.1
+
+### HotFixes
+- Fixed a bug where multiple rivers would be generated at the same location when creating more than two rivers.
+
+### New Features
+- Added a button to the OCG Window that assigns a new River Seed and generates a river when clicked.
+
 ## Version 1.1.0
 
 ### New Features
