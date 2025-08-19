@@ -65,4 +65,5 @@ In this step, you will configure the Procedural Content Generation (PCG) setting
 | End Cull Distance              | Sets the distance at which culling ends. Meshes beyond this distance are not rendered. For example, if Start Cull Distance is 1000 and End Cull Distance is 2000, meshes become invisible beyond 1000 meters. |
 | Affect Distance Field Lighting | Determines if the mesh affects Distance Field Lighting. Enable this to allow the mesh to contribute to lighting, but it may impact performance, so use only if necessary.                                     |
 | Execute on GPU                 | Sets whether mesh generation runs on the GPU. If enabled, meshes are generated on the GPU.                                                                                                                    |
+
 </details>
