@@ -263,8 +263,10 @@ void UOCGLandscapeGenerateComponent::GenerateLandscape(UWorld* World)
 			IsCreateNewLandscape = true;
 		}
 	}
-	
+
+#if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION <= 6
     TargetLandscape->bCanHaveLayersContent = true;
+#endif
 	if (TargetLandscape->LandscapeMaterial != MapPreset->LandscapeMaterial)
 	{
 		FScopedSlowTask SlowTask(5.0f, NSLOCTEXT("ONEBUTTONLEVELGENERATION_API", "ChangingMaterial", "Change Landscape Material"));

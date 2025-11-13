@@ -34,10 +34,75 @@
 #include "ObjectTools.h"
 #include "AssetRegistry/AssetRegistryModule.h"
 #include "Utils/OCGFileUtils.h"
+
 #if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION > 5
 #include "LandscapeEditLayer.h"
 #endif
+#endif // WITH_EDITOR
+
+namespace Compat
+{
+#if ENGINE_MAJOR_VERSION == 5
+#if ENGINE_MINOR_VERSION <= 6
+	template <bool bInUseInterp>
+	using AlphamapAccessorType = FAlphamapAccessor<bInUseInterp, false>;
+#else
+	template <bool bInUseInterp>
+	using AlphamapAccessorType = TAlphamapAccessor<bInUseInterp>;
 #endif
+
+void SetLayerUsageDebugColor(ULandscapeLayerInfoObject* LayerInfoObject, const FLinearColor& InLayerUsageDebugColor)
+{
+#if ENGINE_MINOR_VERSION <= 6
+	LayerInfoObject->LayerUsageDebugColor = InLayerUsageDebugColor;
+#else
+	LayerInfoObject->SetLayerUsageDebugColor(InLayerUsageDebugColor, false, EPropertyChangeType::ValueSet);
+#endif
+}
+
+void SetNoWeightBlend(ULandscapeLayerInfoObject* LayerInfoObject, bool InValue)
+{
+#if ENGINE_MINOR_VERSION <= 6
+	LayerInfoObject->bNoWeightBlend = InValue;
+#else
+	LayerInfoObject->SetBlendMethod(
+		InValue
+			? ELandscapeTargetLayerBlendMethod::None
+			: ELandscapeTargetLayerBlendMethod::FinalWeightBlending,
+		false
+	);
+#endif
+}
+
+const FName& GetLayerName(const ULandscapeLayerInfoObject* LayerInfoObject)
+{
+#if ENGINE_MINOR_VERSION <= 6
+	return LayerInfoObject->LayerName;
+#else
+	return LayerInfoObject->GetLayerName();
+#endif
+}
+
+void SetLayerName(ULandscapeLayerInfoObject* LayerInfoObject, const FName& InLayerName)
+{
+#if ENGINE_MINOR_VERSION <= 6
+	NewLayerInfo->LayerName = InLayerName;
+#else
+	LayerInfoObject->SetLayerName(InLayerName, false);
+#endif
+}
+
+void SetLandscapeSectionOffset(ALandscapeProxy* LandscapeProxy, FIntPoint SectionOffset)
+{
+#if ENGINE_MINOR_VERSION <= 6
+	LandscapeProxy->LandscapeSectionOffset = SectionOffset;
+#else
+	LandscapeProxy->SetSectionBase(SectionOffset);
+#endif
+}
+
+#endif
+}
 
 FString OCGLandscapeUtil::LayerInfoSavePath = TEXT("/Game/Landscape/LayerInfos");
 
@@ -134,7 +199,7 @@ void OCGLandscapeUtil::AddWeightMap(ALandscape* InLandscape, ULandscapeLayerInfo
 				InLandscape->RequestLayersContentUpdate(ELandscapeLayerUpdateMode::Update_Weightmap_All);
 			});
 
-			FAlphamapAccessor<false, false> AlphamapAccessor(LandscapeInfo, InLayerInfo);
+			Compat::AlphamapAccessorType<false> AlphamapAccessor(LandscapeInfo, InLayerInfo);
 			int32 RegionWidth = Region.Width() + 1;
 			int32 RegionHeight = Region.Height() + 1;
 			int32 NumPixels = RegionWidth * RegionHeight;
@@ -215,7 +280,7 @@ void OCGLandscapeUtil::ApplyWeightMap(ALandscape* InLandscape, ULandscapeLayerIn
 				InLandscape->RequestLayersContentUpdate(ELandscapeLayerUpdateMode::Update_Weightmap_All);
 			});
 
-			FAlphamapAccessor<false, false> AlphamapAccessor(LandscapeInfo, InLayerInfo);
+			Compat::AlphamapAccessorType<false> AlphamapAccessor(LandscapeInfo, InLayerInfo);
 			AlphamapAccessor.SetData(Region.Min.X, Region.Min.Y, Region.Max.X - 1, Region.Max.Y - 1, InWeightMap.GetData(), ELandscapeLayerPaintingRestriction::None);
 			LandscapeInfo->ForceLayersFullUpdate();
 
@@ -253,7 +318,7 @@ void OCGLandscapeUtil::ApplyMaskedWeightMap(ALandscape* InLandscape, ULandscapeL
 				InLandscape->RequestLayersContentUpdate(ELandscapeLayerUpdateMode::Update_Weightmap_All);
 			});
 
-			FAlphamapAccessor<false, false> AlphamapAccessor(LandscapeInfo, InLayerInfo);
+			Compat::AlphamapAccessorType<false> AlphamapAccessor(LandscapeInfo, InLayerInfo);
 			int32 RegionWidth = Region.Width() + 1;
 			int32 RegionHeight = Region.Height() + 1;
 			int32 NumPixels = RegionWidth * RegionHeight;
@@ -324,7 +389,7 @@ void OCGLandscapeUtil::GetWeightMap(ALandscape* InLandscape, ULandscapeLayerInfo
 				InLandscape->RequestLayersContentUpdate(ELandscapeLayerUpdateMode::Update_Weightmap_All);
 			});
 
-			FAlphamapAccessor<false, false> AlphamapAccessor(LandscapeInfo, InLayerInfo);
+			Compat::AlphamapAccessorType<false> AlphamapAccessor(LandscapeInfo, InLayerInfo);
 			int32 RegionWidth = Region.Width() + 1; 
 			int32 RegionHeight = Region.Height() + 1;
 			if (!OutOriginWeightMap.IsEmpty())
@@ -515,7 +580,7 @@ void OCGLandscapeUtil::UpdateTargetLayers(ALandscape* InLandscape,
 #endif
 			if (LayerInfoObj)
 			{
-				LayerInfoObj->LayerUsageDebugColor = LayerInfoObj->GenerateLayerUsageDebugColor();
+				Compat::SetLayerUsageDebugColor(LayerInfoObj, LayerInfoObj->GenerateLayerUsageDebugColor());
 				(void)LayerInfoObj->MarkPackageDirty();
 			}
 		}
@@ -560,7 +625,7 @@ void OCGLandscapeUtil::UpdateTargetLayers(ALandscape* InLandscape,
 		ULandscapeLayerInfoObject* LayerInfoObject = OCGLandscapeUtil::CreateLayerInfo(OCGLandscapeUtil::LayerInfoSavePath, LayerName.ToString(), DefaultLayerInfo);
 		if (LayerInfoObject)
 		{
-			LayerInfoObject->bNoWeightBlend = true;
+			Compat::SetNoWeightBlend(LayerInfoObject, true);
 			(void)LayerInfoObject->MarkPackageDirty();
 			InLandscape->AddTargetLayer(LayerName, FLandscapeTargetLayerSettings(LayerInfoObject));
 			if (LandscapeInfo)
@@ -607,7 +672,7 @@ void OCGLandscapeUtil::AddTargetLayers(ALandscape* InLandscape,
 #endif
 			if (LayerInfoObj)
 			{
-				LayerInfoObj->LayerUsageDebugColor = LayerInfoObj->GenerateLayerUsageDebugColor();
+				Compat::SetLayerUsageDebugColor(LayerInfoObj, LayerInfoObj->GenerateLayerUsageDebugColor());
 				(void)LayerInfoObj->MarkPackageDirty();
 			}
 		}
@@ -637,7 +702,7 @@ void OCGLandscapeUtil::AddTargetLayers(ALandscape* InLandscape,
 		ULandscapeLayerInfoObject* LayerInfoObject = OCGLandscapeUtil::CreateLayerInfo(OCGLandscapeUtil::LayerInfoSavePath, LayerName.ToString(), DefaultLayerInfo);
 		if (LayerInfoObject)
 		{
-			LayerInfoObject->bNoWeightBlend = true;
+			Compat::SetNoWeightBlend(LayerInfoObject, true);
 			(void)LayerInfoObject->MarkPackageDirty();
 			InLandscape->AddTargetLayer(LayerName, FLandscapeTargetLayerSettings(LayerInfoObject));
 			if (LandscapeInfo)
@@ -814,7 +879,7 @@ void OCGLandscapeUtil::ImportMapDatas(UWorld* World, ALandscape* InLandscape, TA
 				{
 					ALandscape* Landscape = LandscapeInfo->LandscapeActor.Get();
 					FScopedSetLandscapeEditingLayer Scope(Landscape, CurrentLayerGuid, [&] { check(Landscape); Landscape->RequestLayersContentUpdate(ELandscapeLayerUpdateMode::Update_Weightmap_All); });
-					FAlphamapAccessor<false, false> AlphamapAccessor(LandscapeInfo, ImportLayer.LayerInfo);
+					Compat::AlphamapAccessorType<false> AlphamapAccessor(LandscapeInfo, ImportLayer.LayerInfo);
 					AlphamapAccessor.SetData(LandscapeLoadedExtent.Min.X, LandscapeLoadedExtent.Min.Y, LandscapeLoadedExtent.Max.X - 1, LandscapeLoadedExtent.Max.Y - 1, ImportLayer.LayerData.GetData(), PaintRestriction);
 				}
 	
@@ -842,7 +907,7 @@ void OCGLandscapeUtil::ImportMapDatas(UWorld* World, ALandscape* InLandscape, TA
 	
 				ALandscape* Landscape = LandscapeInfo->LandscapeActor.Get();
 				FScopedSetLandscapeEditingLayer Scope(Landscape, CurrentLayerGuid, [&] { check(Landscape); Landscape->RequestLayersContentUpdate(ELandscapeLayerUpdateMode::Update_Weightmap_All); });
-				FAlphamapAccessor<false, false> AlphamapAccessor(LandscapeInfo, ImportLayer.LayerInfo);
+				Compat::AlphamapAccessorType<false> AlphamapAccessor(LandscapeInfo, ImportLayer.LayerInfo);
 				AlphamapAccessor.SetData(ImportRegion.Min.X, ImportRegion.Min.Y, ImportRegion.Max.X - 1, ImportRegion.Max.Y - 1, ImportLayer.LayerData.GetData(), PaintRestriction);
 			}
 	
@@ -959,7 +1024,9 @@ bool OCGLandscapeUtil::ChangeGridSize(const UWorld* InWorld, ULandscapeInfo* InL
 		}, GridSize);
 	}
 
+#if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION <= 6
 	if (InLandscapeInfo->CanHaveLayersContent())
+#endif
 	{
 		InLandscapeInfo->ForceLayersFullUpdate();
 	}
@@ -1020,11 +1087,15 @@ void OCGLandscapeUtil::AddLandscapeComponent(ULandscapeInfo* InLandscapeInfo, UL
 
 	ALandscape* Landscape = InLandscapeInfo->LandscapeActor.Get();
 
-	bool bHasLandscapeLayersContent = Landscape && Landscape->HasLayersContent();
+#if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION <= 6
+	const bool bIsLandscapeValid = Landscape && Landscape->HasLayersContent();
+#else
+	const bool bIsLandscapeValid = Landscape != nullptr;
+#endif
 
 	for (ULandscapeComponent* NewComponent : NewComponents)
 	{
-		if (bHasLandscapeLayersContent)
+		if (bIsLandscapeValid)
 		{
 			TArray<ULandscapeComponent*> ComponentsUsingHeightmap;
 			ComponentsUsingHeightmap.Add(NewComponent);
@@ -1049,7 +1120,7 @@ void OCGLandscapeUtil::AddLandscapeComponent(ULandscapeInfo* InLandscapeInfo, UL
 		NewComponent->UpdateBounds();
 		NewComponent->MarkRenderStateDirty();
 
-		if (!bHasLandscapeLayersContent)
+		if (!bIsLandscapeValid)
 		{
 			if (ULandscapeHeightfieldCollisionComponent* CollisionComp = NewComponent->GetCollisionComponent())
 			{
@@ -1121,7 +1192,7 @@ ULandscapeLayerInfoObject* OCGLandscapeUtil::CreateLayerInfo(ALandscape* InLands
 		{
 			// Add or update the newly created LayerInfo in the landscape information.
 			// This process allows the landscape to recognize the layer.
-			const int32 Index = LandscapeInfo->GetLayerInfoIndex(LayerInfo->LayerName, InLandscape);
+			const int32 Index = LandscapeInfo->GetLayerInfoIndex(Compat::GetLayerName(LayerInfo), InLandscape);
 			if (Index == INDEX_NONE)
 			{
 				LandscapeInfo->Layers.Add(FLandscapeInfoLayerSettings(LayerInfo, InLandscape));
@@ -1336,7 +1407,7 @@ ALandscapeProxy* OCGLandscapeUtil::FindOrAddLandscapeStreamingProxy(UActorPartit
 
 		LandscapeProxy->CreateLandscapeInfo();
 		LandscapeProxy->SetActorLocationAndRotation(ProxyLocation, Landscape->GetActorRotation());
-		LandscapeProxy->LandscapeSectionOffset = FIntPoint(CellLocation.X, CellLocation.Y);
+		Compat::SetLandscapeSectionOffset(LandscapeProxy, FIntPoint(CellLocation.X, CellLocation.Y));
 		LandscapeProxy->SetIsSpatiallyLoaded(LandscapeProxy->GetLandscapeInfo()->AreNewLandscapeActorsSpatiallyLoaded());
 	};
 
@@ -1414,11 +1485,11 @@ ULandscapeLayerInfoObject* OCGLandscapeUtil::CreateLayerInfo(const FString& InPa
         UE_LOG(LogOCGModule, Error, TEXT("Failed to create ULandscapeLayerInfoObject in package: %s"), *FullPackageName);
         return nullptr;
     }
-	
-    NewLayerInfo->LayerName = AssetFName;
-    
+
+	Compat::SetLayerName(NewLayerInfo, AssetFName);
+
     FAssetRegistryModule::AssetCreated(NewLayerInfo);
-    NewLayerInfo->LayerUsageDebugColor = NewLayerInfo->GenerateLayerUsageDebugColor();
+	Compat::SetLayerUsageDebugColor(NewLayerInfo, NewLayerInfo->GenerateLayerUsageDebugColor());
     (void)NewLayerInfo->MarkPackageDirty();
 
     return NewLayerInfo;
