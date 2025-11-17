@@ -339,16 +339,13 @@ void UOCGLandscapeGenerateComponent::GenerateLandscape(UWorld* World)
 		OCGLandscapeUtil::AddTargetLayers(TargetLandscape, MaterialLayerDataPerLayer);
 	
 		OCGLandscapeUtil::ManageLandscapeRegions(World, TargetLandscape, MapPreset, LandscapeSetting);
-		
-		TargetLandscape->RegisterAllComponents();
-		GEditor->RedrawAllViewports();
-		
+
 		FProperty* RuntimeVirtualTexturesProperty = FindFProperty<FProperty>(ALandscapeProxy::StaticClass(), "RuntimeVirtualTextures");
 
 		TargetLandscape->RuntimeVirtualTextures.Add(ColorRVT);
 		TargetLandscape->RuntimeVirtualTextures.Add(HeightRVT);
 		TargetLandscape->RuntimeVirtualTextures.Add(DisplacementRVT);
-		
+
 		FPropertyChangedEvent RuntimeVirtualTexturesPropertyChangedEvent(RuntimeVirtualTexturesProperty);
 		TargetLandscape->PostEditChangeProperty(RuntimeVirtualTexturesPropertyChangedEvent);
 	}
