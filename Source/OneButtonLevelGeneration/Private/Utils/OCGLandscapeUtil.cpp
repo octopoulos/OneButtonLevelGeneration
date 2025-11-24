@@ -722,7 +722,7 @@ void OCGLandscapeUtil::AddTargetLayers(ALandscape* InLandscape,
 void OCGLandscapeUtil::ManageLandscapeRegions(UWorld* World, const ALandscape* Landscape, UMapPreset* InMapPreset,
 	const FLandscapeSetting& InLandscapeSetting)
 {
-	#if WITH_EDITOR
+#if WITH_EDITOR
     ULandscapeInfo* LandscapeInfo = Landscape->GetLandscapeInfo();
     ALandscapeProxy* LandscapeProxy = nullptr;
 	if (InMapPreset == nullptr)
@@ -822,7 +822,7 @@ void OCGLandscapeUtil::ManageLandscapeRegions(UWorld* World, const ALandscape* L
 void OCGLandscapeUtil::ImportMapDatas(UWorld* World, ALandscape* InLandscape, TArray<uint16> ImportHeightMap,
                                       TArray<FLandscapeImportLayerInfo> ImportLayers)
 {
-	#if WITH_EDITOR
+#if WITH_EDITOR
 	if (World == nullptr)
 		return;
 	
@@ -914,7 +914,7 @@ void OCGLandscapeUtil::ImportMapDatas(UWorld* World, ALandscape* InLandscape, TA
 			LandscapeInfo->ForceLayersFullUpdate();
 		}
 	}
-	#endif
+#endif
 }
 
 bool OCGLandscapeUtil::ChangeGridSize(const UWorld* InWorld, ULandscapeInfo* InLandscapeInfo,
