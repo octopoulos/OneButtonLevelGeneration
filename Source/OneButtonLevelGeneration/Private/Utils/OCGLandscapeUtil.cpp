@@ -649,10 +649,10 @@ void OCGLandscapeUtil::AddTargetLayers(ALandscape* InLandscape,
 #if WITH_EDITOR
 	if (!InLandscape) return;
 	ULandscapeInfo* LandscapeInfo = InLandscape->GetLandscapeInfo();
-	if (LandscapeInfo)
-	{
-		LandscapeInfo->UpdateLayerInfoMap(InLandscape);
-	}
+	//if (LandscapeInfo)
+	//{
+	//	LandscapeInfo->UpdateLayerInfoMap(InLandscape);
+	//}
 
 	// Assume single entry in map
 	const TArray<FLandscapeImportLayerInfo>& ImportInfos = MaterialLayerDataPerLayers.begin()->Value;
@@ -1407,8 +1407,16 @@ ALandscapeProxy* OCGLandscapeUtil::FindOrAddLandscapeStreamingProxy(UActorPartit
 
 		LandscapeProxy->CreateLandscapeInfo();
 		LandscapeProxy->SetActorLocationAndRotation(ProxyLocation, Landscape->GetActorRotation());
+#if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION >= 7
+		LandscapeProxy->SetSectionBase(FIntPoint(CellLocation.X, CellLocation.Y));
+#else
 		Compat::SetLandscapeSectionOffset(LandscapeProxy, FIntPoint(CellLocation.X, CellLocation.Y));
+#endif
 		LandscapeProxy->SetIsSpatiallyLoaded(LandscapeProxy->GetLandscapeInfo()->AreNewLandscapeActorsSpatiallyLoaded());
+
+#if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION >= 7
+		const_cast<ULandscapeInfo*>(LandscapeProxy->GetLandscapeInfo())->FixupProxiesTransform();
+#endif
 	};
 
 	constexpr bool bCreate = true;
