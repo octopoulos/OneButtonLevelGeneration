@@ -86,7 +86,7 @@ FORCEINLINE const FName& GetLayerName(const ULandscapeLayerInfoObject* LayerInfo
 FORCEINLINE void SetLayerName(ULandscapeLayerInfoObject* LayerInfoObject, const FName& InLayerName)
 {
 #if ENGINE_MINOR_VERSION <= 6
-	NewLayerInfo->LayerName = InLayerName;
+	LayerInfoObject->LayerName = InLayerName;
 #else
 	LayerInfoObject->SetLayerName(InLayerName, false);
 #endif
@@ -101,6 +101,8 @@ FORCEINLINE void SetSectionBase(ALandscapeProxy* LandscapeProxy, FIntPoint Secti
 #endif
 }
 
+#else
+#error "This module requires Unreal Engine 5.0 or higher."
 #endif
 }
 
@@ -1090,7 +1092,7 @@ void OCGLandscapeUtil::AddLandscapeComponent(ULandscapeInfo* InLandscapeInfo, UL
 #if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION <= 6
 	const bool bIsLandscapeValid = Landscape && Landscape->HasLayersContent();
 #else
-	const bool bIsLandscapeValid = Landscape != nullptr;
+	const bool bIsLandscapeValid = Landscape && Landscape->GetLayersConst().Num() > 0;
 #endif
 
 	for (ULandscapeComponent* NewComponent : NewComponents)
