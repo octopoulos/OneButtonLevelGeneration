@@ -51,7 +51,7 @@ namespace Compat
 	using AlphamapAccessorType = TAlphamapAccessor<bInUseInterp>;
 #endif
 
-void SetLayerUsageDebugColor(ULandscapeLayerInfoObject* LayerInfoObject, const FLinearColor& InLayerUsageDebugColor)
+FORCEINLINE void SetLayerUsageDebugColor(ULandscapeLayerInfoObject* LayerInfoObject, const FLinearColor& InLayerUsageDebugColor)
 {
 #if ENGINE_MINOR_VERSION <= 6
 	LayerInfoObject->LayerUsageDebugColor = InLayerUsageDebugColor;
@@ -60,7 +60,7 @@ void SetLayerUsageDebugColor(ULandscapeLayerInfoObject* LayerInfoObject, const F
 #endif
 }
 
-void SetNoWeightBlend(ULandscapeLayerInfoObject* LayerInfoObject, bool InValue)
+FORCEINLINE void SetNoWeightBlend(ULandscapeLayerInfoObject* LayerInfoObject, bool InValue)
 {
 #if ENGINE_MINOR_VERSION <= 6
 	LayerInfoObject->bNoWeightBlend = InValue;
@@ -74,7 +74,7 @@ void SetNoWeightBlend(ULandscapeLayerInfoObject* LayerInfoObject, bool InValue)
 #endif
 }
 
-const FName& GetLayerName(const ULandscapeLayerInfoObject* LayerInfoObject)
+FORCEINLINE const FName& GetLayerName(const ULandscapeLayerInfoObject* LayerInfoObject)
 {
 #if ENGINE_MINOR_VERSION <= 6
 	return LayerInfoObject->LayerName;
@@ -83,7 +83,7 @@ const FName& GetLayerName(const ULandscapeLayerInfoObject* LayerInfoObject)
 #endif
 }
 
-void SetLayerName(ULandscapeLayerInfoObject* LayerInfoObject, const FName& InLayerName)
+FORCEINLINE void SetLayerName(ULandscapeLayerInfoObject* LayerInfoObject, const FName& InLayerName)
 {
 #if ENGINE_MINOR_VERSION <= 6
 	NewLayerInfo->LayerName = InLayerName;
@@ -92,7 +92,7 @@ void SetLayerName(ULandscapeLayerInfoObject* LayerInfoObject, const FName& InLay
 #endif
 }
 
-void SetSectionBase(ALandscapeProxy* LandscapeProxy, FIntPoint SectionOffset)
+FORCEINLINE void SetSectionBase(ALandscapeProxy* LandscapeProxy, FIntPoint SectionOffset)
 {
 #if ENGINE_MINOR_VERSION <= 6
 	LandscapeProxy->LandscapeSectionOffset = SectionOffset;
