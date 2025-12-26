@@ -14,7 +14,13 @@ This page documents the changes for the One-Click Level Generator.
 
 ### New Features
 
-- Added support for Unreal Engine 5.7
+- Added support for Unreal Engine 5.7 and 5.7.1
+
+### Fixed Bugs
+
+- Fixed landscape generation issues in Open World levels on Unreal Engine 5.7.1
+- Added compatibility for Unreal Engine 5.6 and earlier in landscape utility methods
+- Added compatibility for Unreal Engine 5.6 in river generation logic
 
 ## Version 1.1.1
 
