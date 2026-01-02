@@ -10,17 +10,32 @@ nav_order: 20
 
 This page documents the changes for the One-Click Level Generator.
 
-## Version 1.1.1
-
-### HotFixes
-- Fixed a bug where multiple rivers would be generated at the same location when creating more than two rivers.
+## Version 1.2.0
 
 ### New Features
+
+- Added support for Unreal Engine 5.7 and 5.7.1
+
+### Fixed Bugs
+
+- Fixed landscape generation issues in Open World levels on Unreal Engine 5.7.1
+- Added compatibility for Unreal Engine 5.6 and earlier in landscape utility methods
+- Added compatibility for Unreal Engine 5.6 in river generation logic
+
+## Version 1.1.1
+
+### New Features
+
 - Added a button to the OCG Window that assigns a new River Seed and generates a river when clicked.
+
+### Fixed Bugs
+
+- Fixed a bug where multiple rivers would be generated at the same location when creating more than two rivers.
 
 ## Version 1.1.0
 
 ### New Features
+
 - Added a feature allowing users to import custom Height Maps to generate terrain.
 - Introduced a seed parameter in the river generation logic, ensuring rivers are generated in the same locations for identical seeds.
 - Added a layer to prevent PCG content from being generated during level creation, which can be applied via painting in landscape mode.
@@ -33,13 +48,13 @@ This page documents the changes for the One-Click Level Generator.
 - Updated the logic for specifying landscape scale, enabling direct input in kilometers.
 
 ### Fixed Bugs
+
 - Fixed a crash that occurred when the biome name in OCG settings was set to "None."
 - Resolved an issue where regenerating rivers caused irrevocable loss of layer data at biome boundaries.
 - Fixed a problem where, with both the OCG Window and MapPreset Editor open, rivers were only generated in the editor's world.
 - Fixed an issue where debug points would not appear even when enabled in PCG settings.
 - Fixed inconsistent terrain generation with the same seed during initial creation in the OCG Window.
 - Fixed a crash that occurred when clearing a MapPreset in the OCG Window.
-
 
 ## Version 1.0.0
 

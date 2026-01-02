@@ -263,8 +263,10 @@ void UOCGLandscapeGenerateComponent::GenerateLandscape(UWorld* World)
 			IsCreateNewLandscape = true;
 		}
 	}
-	
+
+#if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION <= 6
     TargetLandscape->bCanHaveLayersContent = true;
+#endif
 	if (TargetLandscape->LandscapeMaterial != MapPreset->LandscapeMaterial)
 	{
 		FScopedSlowTask SlowTask(5.0f, NSLOCTEXT("ONEBUTTONLEVELGENERATION_API", "ChangingMaterial", "Change Landscape Material"));
@@ -337,16 +339,13 @@ void UOCGLandscapeGenerateComponent::GenerateLandscape(UWorld* World)
 		OCGLandscapeUtil::AddTargetLayers(TargetLandscape, MaterialLayerDataPerLayer);
 	
 		OCGLandscapeUtil::ManageLandscapeRegions(World, TargetLandscape, MapPreset, LandscapeSetting);
-		
-		TargetLandscape->RegisterAllComponents();
-		GEditor->RedrawAllViewports();
-		
+
 		FProperty* RuntimeVirtualTexturesProperty = FindFProperty<FProperty>(ALandscapeProxy::StaticClass(), "RuntimeVirtualTextures");
 
 		TargetLandscape->RuntimeVirtualTextures.Add(ColorRVT);
 		TargetLandscape->RuntimeVirtualTextures.Add(HeightRVT);
 		TargetLandscape->RuntimeVirtualTextures.Add(DisplacementRVT);
-		
+
 		FPropertyChangedEvent RuntimeVirtualTexturesPropertyChangedEvent(RuntimeVirtualTexturesProperty);
 		TargetLandscape->PostEditChangeProperty(RuntimeVirtualTexturesPropertyChangedEvent);
 	}
