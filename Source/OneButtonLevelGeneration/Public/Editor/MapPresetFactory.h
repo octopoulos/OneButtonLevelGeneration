@@ -6,14 +6,12 @@
 #include "Factories/Factory.h"
 #include "MapPresetFactory.generated.h"
 
-/**
- * 
- */
+//
 UCLASS()
 class ONEBUTTONLEVELGENERATION_API UMapPresetFactory : public UFactory
 {
 	GENERATED_BODY()
-	
+
 public:
 	UMapPresetFactory();
 

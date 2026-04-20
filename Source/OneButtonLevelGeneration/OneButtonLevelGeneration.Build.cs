@@ -7,21 +7,19 @@ public class OneButtonLevelGeneration : ModuleRules
 	public OneButtonLevelGeneration(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
-		
+
 		PublicIncludePaths.AddRange(
 			new string[] {
 				// ... add public include paths required here ...
 			}
-			);
-				
-		
+		);
+
 		PrivateIncludePaths.AddRange(
 			new string[] {
 				// ... add other private include paths required here ...
 			}
-			);
-			
-		
+		);
+
 		PublicDependencyModuleNames.AddRange(
 			new string[]
 			{
@@ -31,41 +29,39 @@ public class OneButtonLevelGeneration : ModuleRules
 				"PCGGeometryScriptInterop",
 				"PCGWaterInterop",
 			}
-			);
-			
-		
+		);
+
 		PrivateDependencyModuleNames.AddRange(
 			new string[]
 			{
 				"AssetTools",
+				"DeveloperSettings",
 				"EditorStyle",
 				"Engine",
+				"Foliage",
+				"InputCore",
 				"Landscape",
 				"LandscapeEditor",
+				"MaterialEditor",
 				"PCGEditor",
+				"Projects",
 				"PropertyEditor",
 				"Slate",
 				"SlateCore",
-				"UnrealEd",
-				"WorkspaceMenuStructure",
-				"MaterialEditor",
-				"InputCore",
-				"DeveloperSettings", 
-				"VirtualTexturingEditor",
-				"Projects", 
-				"Water", 
-				"WaterEditor",
 				"ToolMenus",
-				"Foliage",
-			}  
-			);
-		
-		
+				"UnrealEd",
+				"VirtualTexturingEditor",
+				"Water",
+				"WaterEditor",
+				"WorkspaceMenuStructure",
+			}
+		);
+
 		DynamicallyLoadedModuleNames.AddRange(
 			new string[]
 			{
 				// ... add any modules that your module loads dynamically here ...
 			}
-			);
+		);
 	}
 }

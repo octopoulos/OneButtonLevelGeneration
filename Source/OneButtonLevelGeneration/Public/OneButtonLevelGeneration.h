@@ -7,14 +7,13 @@
 class FOneButtonLevelGenerationModule : public IModuleInterface
 {
 public:
-
 	/** IModuleInterface implementation */
 	virtual void StartupModule() override;
 	virtual void ShutdownModule() override;
-	
-	void RegisterMenus();
+
+	void                 RegisterMenus();
 	TSharedRef<SDockTab> OnSpawnPluginTab(const FSpawnTabArgs& SpawnTabArgs);
-	void OnPluginButtonClicked();
+	void                 OnPluginButtonClicked();
 
 	static inline const FName OCGWindowTabName = TEXT("OCGWindowTab");
 

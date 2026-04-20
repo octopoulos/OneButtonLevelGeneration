@@ -30,7 +30,7 @@
 class ADirectionalLight;
 
 void FMapPresetEditorToolkit::InitEditor(const EToolkitMode::Type Mode,
-                                         const TSharedPtr<IToolkitHost>& InitToolkitHost, UMapPreset* MapPreset)
+										const TSharedPtr<IToolkitHost>& InitToolkitHost, UMapPreset* MapPreset)
 {
 	// Bind command lists and actions
 	FMapPresetEditorCommands::Register();
@@ -45,14 +45,14 @@ void FMapPresetEditorToolkit::InitEditor(const EToolkitMode::Type Mode,
 	);
 
 	EditingPreset = MapPreset;
-	
+
 	MapPresetEditorWorld = CreateEditorWorld();
 
 	if (MapPresetEditorWorld)
 	{
 		FWorldContext& Context = GEngine->CreateNewWorldContext(EWorldType::Editor);
 		Context.SetCurrentWorld(MapPresetEditorWorld.Get());
-		
+
 		MapPresetEditorWorld->GetWorldSettings()->bEnableWorldBoundsChecks = false;
 
 		// Add LevelGenerator
@@ -61,16 +61,16 @@ void FMapPresetEditorToolkit::InitEditor(const EToolkitMode::Type Mode,
 		SetupDefaultActors();
 	}
 
-	
+
 	// Create Viewport Widget
 	ViewportWidget = SNew(SMapPresetViewport)
 		.MapPresetEditorToolkit(SharedThis(this))
 		.World(MapPresetEditorWorld.Get());
-	
+
 	// Create Environment Lighting Viewer
 	EnvironmentLightingViewer = SNew(SMapPresetEnvironmentLightingViewer)
 		.World(MapPresetEditorWorld.Get());
-	
+
 	// Add Application Mode
 	AddApplicationMode(
 		TEXT("DefaultMode"),
@@ -90,7 +90,7 @@ void FMapPresetEditorToolkit::InitEditor(const EToolkitMode::Type Mode,
 		);
 
 	AddToolbarExtender(ToolbarExtender);
-	
+
 	RegenerateMenusAndToolbars();
 	SetCurrentMode(TEXT("DefaultMode"));
 }
@@ -133,7 +133,7 @@ FMapPresetEditorToolkit::~FMapPresetEditorToolkit()
 				MapPresetEditorWorld->DestroyActor(Actor);
 			}
 		}
-		
+
 		MapPresetEditorWorld->DestroyWorld(true);
 		MapPresetEditorWorld->MarkAsGarbage();
 		MapPresetEditorWorld->SetFlags(RF_Transient);
@@ -241,11 +241,11 @@ TSharedRef<SWidget> FMapPresetEditorToolkit::CreateLandscapeTabBody()
 	DetailsViewArgs.bHideSelectionTip = true;
 
 	LandscapeDetailsView = PropertyEditorModule.CreateDetailView(DetailsViewArgs);
-	
+
 	ALandscape* SpawnedLandscape = LevelGenerator.IsValid()
 		? LevelGenerator->GetLandscape()
 		: nullptr;
-	
+
 	LandscapeDetailsView->SetObject(SpawnedLandscape);
 
 	// Create and return the vertical box containing the DetailsView
@@ -280,7 +280,8 @@ void FMapPresetEditorToolkit::FillToolbar(FToolBarBuilder& ToolbarBuilder)
 	const FButtonStyle* GenerateButtonStyle = new FButtonStyle(FAppStyle::Get().GetWidgetStyle<FButtonStyle>("Button"));
 	const TSharedRef<SHorizontalBox> CustomToolbarBox = SNew(SHorizontalBox);
 
-	// Add Spacer 
+	// clang-format off
+	// Add Spacer
 	CustomToolbarBox->AddSlot()
 	.FillWidth(1.0f)
 	[
@@ -303,7 +304,7 @@ void FMapPresetEditorToolkit::FillToolbar(FToolBarBuilder& ToolbarBuilder)
 			.Justification(ETextJustify::Center)
 		]
 	];
-	
+
 	// Create buttons for Generate and Export to Level actions
 	CustomToolbarBox->AddSlot()
 	.AutoWidth()
@@ -355,7 +356,7 @@ void FMapPresetEditorToolkit::FillToolbar(FToolBarBuilder& ToolbarBuilder)
 				.Justification(ETextJustify::Center)
 			]
 		];
-	
+
 	CustomToolbarBox->AddSlot()
 	.AutoWidth()
 	.HAlign(HAlign_Right)
@@ -372,6 +373,7 @@ void FMapPresetEditorToolkit::FillToolbar(FToolBarBuilder& ToolbarBuilder)
 			.Justification(ETextJustify::Center)
 		]
 	];
+	// clang-format on
 
 	ToolbarBuilder.AddWidget(CustomToolbarBox);
 }
@@ -382,7 +384,7 @@ FReply FMapPresetEditorToolkit::OnPreviewMapClicked()
 	{
 		LevelGenerator->PreviewMaps();
 	}
-	
+
 	return FReply::Handled();
 }
 
@@ -395,7 +397,7 @@ FReply FMapPresetEditorToolkit::OnGenerateClicked()
 		const FText DialogText = FText::FromString(TEXT("At Least one biome must be defined in the preset before generating the level."));
 
 		FMessageDialog::Open(EAppMsgType::Ok, DialogText, DialogTitle);
-        
+
 		return FReply::Handled();
 	}
 	for (const auto& Biome : EditingPreset->Biomes)
@@ -411,14 +413,14 @@ FReply FMapPresetEditorToolkit::OnGenerateClicked()
 	}
 
 	Generate();
-	
+
 	return FReply::Handled();
 }
 
 FReply FMapPresetEditorToolkit::OnExportToLevelClicked()
 {
 	ExportPreviewSceneToLevel();
-	
+
 	return FReply::Handled();
 }
 
@@ -437,7 +439,7 @@ FReply FMapPresetEditorToolkit::OnRegenerateRiverClicked()
 FReply FMapPresetEditorToolkit::OnForceGeneratePCGClicked()
 {
 	if (LevelGenerator.IsValid())
-	{    
+	{
 		if (LevelGenerator->GetLandscape())
 			OCGLandscapeUtil::ForceGeneratePCG(MapPresetEditorWorld);
 	}
@@ -490,9 +492,9 @@ void FMapPresetEditorToolkit::ExportPreviewSceneToLevel()
 		UE_LOG(LogOCGModule, Warning, TEXT("Toolkit or its EditorWorld is null, cannot export."));
 		return;
 	}
-	
+
 	UWorld* SourceWorld = MapPresetEditorWorld;
-	
+
 	// Duplicate World
 	UPackage* DestWorldPackage = CreatePackage(TEXT("/Temp/MapPresetEditor/World"));
 	FObjectDuplicationParameters Parameters(SourceWorld, DestWorldPackage);
@@ -500,15 +502,15 @@ void FMapPresetEditorToolkit::ExportPreviewSceneToLevel()
 	Parameters.DestClass = SourceWorld->GetClass();
 	Parameters.DuplicateMode = EDuplicateMode::World;
 	Parameters.PortFlags = PPF_Duplicate;
-	
+
 	UWorld* DuplicatedWorld = CastChecked<UWorld>(StaticDuplicateObjectEx(Parameters));
 	DuplicatedWorld->SetFeatureLevel(SourceWorld->GetFeatureLevel());
-	
+
 	ULevel* SourceLevel = SourceWorld->PersistentLevel;
 	ULevel* DuplicatedLevel = DuplicatedWorld->PersistentLevel;
-	
+
 	TArray<AActor*> ActorsToDestroy;
-	
+
 	for (AActor* Actor : DuplicatedLevel->Actors)
 	{
 		if (Actor && Actor->IsA<AWaterBody>())
@@ -540,10 +542,10 @@ void FMapPresetEditorToolkit::ExportPreviewSceneToLevel()
 			DstComponent->CopyElementsFrom(SrcComponent);
 		}
 	}
-	
+
 	// Enable World Bounds Checks
 	DuplicatedWorld->GetWorldSettings()->bEnableWorldBoundsChecks = true;
-	
+
 	bool bSuccess = FEditorFileUtils::SaveLevelAs(DuplicatedWorld->GetCurrentLevel());
 	if (bSuccess)
 	{
@@ -556,13 +558,13 @@ void FMapPresetEditorToolkit::ExportPreviewSceneToLevel()
 	{
 		DestWorldPackage->ClearFlags(RF_Standalone);
 		DestWorldPackage->MarkAsGarbage();
-		
+
 		GEngine->DestroyWorldContext(DuplicatedWorld);
 		DuplicatedWorld->DestroyWorld(true);
 		DuplicatedWorld->MarkAsGarbage();
 		DuplicatedWorld->SetFlags(RF_Transient);
 		DuplicatedWorld->Rename(nullptr, GetTransientPackage(), REN_NonTransactional | REN_DontCreateRedirectors);
-		
+
 		CollectGarbage(RF_NoFlags);
 
 		// Show error message

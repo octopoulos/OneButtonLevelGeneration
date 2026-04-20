@@ -21,10 +21,10 @@
 
 AOCGLevelGenerator::AOCGLevelGenerator()
 {
-	MapGenerateComponent = CreateDefaultSubobject<UOCGMapGenerateComponent>(TEXT("MapGenerateComponent"));
+	MapGenerateComponent       = CreateDefaultSubobject<UOCGMapGenerateComponent>(TEXT("MapGenerateComponent"));
 	LandscapeGenerateComponent = CreateDefaultSubobject<UOCGLandscapeGenerateComponent>(TEXT("LandscapeGenerateComponent"));
-	TerrainGenerateComponent = CreateDefaultSubobject<UOCGTerrainGenerateComponent>(TEXT("TerrainGenerateComponent"));
-	RiverGenerateComponent = CreateDefaultSubobject<UOCGRiverGenerateComponent>(TEXT("RiverGenerateComponent"));
+	TerrainGenerateComponent   = CreateDefaultSubobject<UOCGTerrainGenerateComponent>(TEXT("TerrainGenerateComponent"));
+	RiverGenerateComponent     = CreateDefaultSubobject<UOCGRiverGenerateComponent>(TEXT("RiverGenerateComponent"));
 	SetIsSpatiallyLoaded(false);
 }
 
@@ -34,7 +34,7 @@ void AOCGLevelGenerator::Generate()
 	{
 		MapGenerateComponent->GenerateMaps();
 	}
-	
+
 	if (LandscapeGenerateComponent)
 	{
 		LandscapeGenerateComponent->SetLandscapeZValues(MapGenerateComponent->GetZScale(), MapGenerateComponent->GetZOffset());
@@ -56,24 +56,24 @@ void AOCGLevelGenerator::OnClickGenerate(UWorld* InWorld)
 		UE_LOG(LogOCGModule, Error, TEXT("MapPreset is not set! Please set a valid MapPreset before generating."));
 		return;
 	}
-	
+
 	if (!MapPreset || MapPreset->Biomes.IsEmpty())
 	{
 		// Error message
 		const FText DialogTitle = FText::FromString(TEXT("Error"));
-		const FText DialogText = FText::FromString(TEXT("At Least one biome must be defined in the preset before generating the level."));
+		const FText DialogText  = FText::FromString(TEXT("At Least one biome must be defined in the preset before generating the level."));
 
 		FMessageDialog::Open(EAppMsgType::Ok, DialogText, DialogTitle);
 
 		return;
 	}
-	
+
 	for (const auto& Biome : MapPreset->Biomes)
 	{
 		if (Biome.BiomeName == NAME_None)
 		{
 			const FText DialogTitle = FText::FromString(TEXT("Error"));
-			const FText DialogText = FText::FromString(TEXT("Invalid Biome Name. Please set a valid name for each biome."));
+			const FText DialogText  = FText::FromString(TEXT("Invalid Biome Name. Please set a valid name for each biome."));
 
 			FMessageDialog::Open(EAppMsgType::Ok, DialogText, DialogTitle);
 			return;
@@ -87,20 +87,24 @@ void AOCGLevelGenerator::OnClickGenerate(UWorld* InWorld)
 		if (!OCGMapDataUtils::ImportMap(MapPreset->HeightMapData, MapPreset->MapResolution, MapPreset->HeightmapFilePath.FilePath))
 		{
 			const FText DialogTitle = FText::FromString(TEXT("Error"));
-			const FText DialogText = FText::FromString(TEXT("Failed to read Height Map texture."));
+			const FText DialogText  = FText::FromString(TEXT("Failed to read Height Map texture."));
 
 			FMessageDialog::Open(EAppMsgType::Ok, DialogText, DialogTitle);
 			return;
 		}
 		bHasHeightMap = true;
 	}
-	
+
 	if (MapGenerateComponent)
 	{
 		if (!bHasHeightMap)
+		{
 			MapGenerateComponent->GenerateMaps();
+		}
 		else
+		{
 			MapGenerateComponent->GenerateMapsWithHeightMap();
+		}
 	}
 
 	if (LandscapeGenerateComponent)
@@ -113,17 +117,16 @@ void AOCGLevelGenerator::OnClickGenerate(UWorld* InWorld)
 	{
 		TerrainGenerateComponent->GenerateTerrain(InWorld);
 	}
-	
+
 	AddWaterPlane(InWorld);
 
 	if (RiverGenerateComponent && MapGenerateComponent && LandscapeGenerateComponent && MapPreset)
 	{
 		RiverGenerateComponent->SetMapData(
 			MapPreset->HeightMapData,
-			MapPreset, 
+			MapPreset,
 			MapPreset->CurMinHeight,
-			MapPreset->CurMaxHeight
-		);
+			MapPreset->CurMaxHeight);
 
 		RiverGenerateComponent->GenerateRiver(InWorld, LandscapeGenerateComponent->GetLandscape());
 	}
@@ -202,14 +205,13 @@ void AOCGLevelGenerator::AddWaterPlane(UWorld* InWorld)
 	SeaLevelWaterBody = InWorld->SpawnActor<AWaterBodyOcean>(AWaterBodyOcean::StaticClass());
 	SeaLevelWaterBody->SetIsSpatiallyLoaded(false);
 	SetDefaultWaterProperties(SeaLevelWaterBody);
-	
+
 	// Linear Interpolation for sea height
-	float SeaHeight = MapPreset->MinHeight + 
-		(MapPreset->MaxHeight - MapPreset->MinHeight) * MapPreset->SeaLevel - 5;
+	float SeaHeight = MapPreset->MinHeight + (MapPreset->MaxHeight - MapPreset->MinHeight) * MapPreset->SeaLevel - 5;
 	// FTransform SeaLevelWaterbodyTransform = FTransform::Identity;
 
 	SeaLevelWaterBody->SetActorLocation(FVector(0.0f, 0.0f, SeaHeight));
-	
+
 	ALandscape* Landscape = LandscapeGenerateComponent->GetLandscape();
 	if (Landscape)
 	{
@@ -217,12 +219,12 @@ void AOCGLevelGenerator::AddWaterPlane(UWorld* InWorld)
 		FVector LandscapeExtent = GetVolumeExtent();
 
 		SeaLevelWaterBody->SetActorLocation(FVector(LandscapeOrigin.X, LandscapeOrigin.Y, SeaHeight));
-		
+
 		const float ScaleX = (LandscapeExtent.X * 2.0f) / 100.0f;
 		const float ScaleY = (LandscapeExtent.Y * 2.0f) / 100.0f;
-		
+
 		const FVector RequiredScale(ScaleX, ScaleY, 1.0f);
-		
+
 		SeaLevelWaterBody->SetActorScale3D(RequiredScale);
 	}
 }
@@ -236,11 +238,11 @@ void AOCGLevelGenerator::SetDefaultWaterProperties(AWaterBody* InWaterBody)
 	WaterBodyComponent->SetWaterStaticMeshMaterial(MapPreset->OceanWaterStaticMeshMaterial.LoadSynchronous());
 	WaterBodyComponent->SetHLODMaterial(MapPreset->WaterHLODMaterial.LoadSynchronous());
 	WaterBodyComponent->SetUnderwaterPostProcessMaterial(MapPreset->UnderwaterPostProcessMaterial.LoadSynchronous());
-	
+
 	if (const FWaterBodyDefaults* WaterBodyDefaults = &GetDefault<UWaterEditorSettings>()->WaterBodyOceanDefaults)
 	{
 		UWaterSplineComponent* WaterSpline = WaterBodyComponent->GetWaterSpline();
-		WaterSpline->WaterSplineDefaults = WaterBodyDefaults->SplineDefaults;
+		WaterSpline->WaterSplineDefaults   = WaterBodyDefaults->SplineDefaults;
 	}
 
 	// If the water body is spawned into a zone which is using local only tessellation, we must default to enabling static meshes.
@@ -266,14 +268,14 @@ void AOCGLevelGenerator::SetDefaultWaterProperties(AWaterBody* InWaterBody)
 	}
 
 	UWaterSplineComponent* WaterSpline = WaterBodyComponent->GetWaterSpline();
-	WaterSpline->ResetSpline({FVector::ZeroVector, FVector::ZeroVector, FVector::ZeroVector, FVector::ZeroVector });
+	WaterSpline->ResetSpline({ FVector::ZeroVector, FVector::ZeroVector, FVector::ZeroVector, FVector::ZeroVector });
 
 	if (const AWaterZone* OwningWaterZone = WaterBodyComponent->GetWaterZone())
 	{
 		if (UWaterBodyOceanComponent* OceanComponent = Cast<UWaterBodyOceanComponent>(WaterBodyComponent))
 		{
 			const double ExistingCollisionHeight = OceanComponent->GetCollisionExtents().Z;
-			OceanComponent->bAffectsLandscape = false;
+			OceanComponent->bAffectsLandscape    = false;
 			OceanComponent->SetCollisionExtents(FVector(OwningWaterZone->GetZoneExtent() / 2.0, ExistingCollisionHeight));
 			OceanComponent->FillWaterZoneWithOcean();
 		}
@@ -283,49 +285,51 @@ void AOCGLevelGenerator::SetDefaultWaterProperties(AWaterBody* InWaterBody)
 	InWaterBody->PostEditMove(true);
 
 	FOnWaterBodyChangedParams Params;
-	Params.bShapeOrPositionChanged = true; 
-	Params.bUserTriggered = true;          
-	
-	InWaterBody->GetWaterBodyComponent()->UpdateAll(Params); 
+	Params.bShapeOrPositionChanged = true;
+	Params.bUserTriggered          = true;
+
+	InWaterBody->GetWaterBodyComponent()->UpdateAll(Params);
 	InWaterBody->GetWaterBodyComponent()->UpdateWaterBodyRenderData();
 }
 
 void AOCGLevelGenerator::DrawDebugLandscape(TArray<uint16>& HeightMapData)
 {
 	if (!MapPreset)
+	{
 		return;
+	}
 	FlushPersistentDebugLines(GetWorld());
-	int32 Width = MapPreset->MapResolution.X;
+	int32 Width  = MapPreset->MapResolution.X;
 	int32 Height = MapPreset->MapResolution.Y;
 
 	const int32 Step = MapPreset->DebugGridSpacing;
-	
+
 	const float ScaleXY = MapPreset->LandscapeScale * 100.f;
-	const float ScaleZ = (MapPreset->MaxHeight - MapPreset->MinHeight) * 0.001953125f;
+	const float ScaleZ  = (MapPreset->MaxHeight - MapPreset->MinHeight) * 0.001953125f;
 
 	float AbsMaxHeight = FMath::Abs(MapPreset->MaxHeight);
 	float AbsMinHeight = FMath::Abs(MapPreset->MinHeight);
-	float AbsOffset = FMath::Abs(AbsMaxHeight - AbsMinHeight) / 2.0f;
+	float AbsOffset    = FMath::Abs(AbsMaxHeight - AbsMinHeight) / 2.0f;
 
 	float ZOffset = (AbsMaxHeight < AbsMinHeight) ? -AbsOffset : AbsOffset;
 
-	const FVector DebugLandscapeLocation = {(-Width / 2.f) * ScaleXY, (-Height / 2.f) * ScaleXY, ZOffset};
+	const FVector DebugLandscapeLocation = { (-Width / 2.f) * ScaleXY, (-Height / 2.f) * ScaleXY, ZOffset };
 
-	for (int32 y = 0; y < Height; y+=Step)
+	for (int32 y = 0; y < Height; y += Step)
 	{
-		for (int32 x = 0; x < Width; x+=Step)
+		for (int32 x = 0; x < Width; x += Step)
 		{
-			float CurrentZ = (HeightMapData[y * Width + x] - 32768.f) * ScaleZ / 128.f;
+			float   CurrentZ     = (HeightMapData[y * Width + x] - 32768.f) * ScaleZ / 128.f;
 			FVector CurrentPoint = FVector(x * ScaleXY, y * ScaleXY, CurrentZ) + DebugLandscapeLocation;
 			if (x + Step < Width)
 			{
-				float RightZ = (HeightMapData[y * Width + (x + Step)] - 32768.f) * ScaleZ / 128.f;
+				float   RightZ     = (HeightMapData[y * Width + (x + Step)] - 32768.f) * ScaleZ / 128.f;
 				FVector RightPoint = FVector((x + Step) * ScaleXY, y * ScaleXY, RightZ) + DebugLandscapeLocation;
 				DrawDebugLine(GetWorld(), CurrentPoint, RightPoint, FColor::Green, true, -1, 0, ScaleXY);
 			}
 			if (y + Step < Height)
 			{
-				float DownZ = (HeightMapData[(y + Step) * Width + x] - 32768.f) * ScaleZ / 128.f;
+				float   DownZ     = (HeightMapData[(y + Step) * Width + x] - 32768.f) * ScaleZ / 128.f;
 				FVector DownPoint = FVector(x * ScaleXY, (y + Step) * ScaleXY, DownZ) + DebugLandscapeLocation;
 				DrawDebugLine(GetWorld(), CurrentPoint, DownPoint, FColor::Green, true, -1, 0, ScaleXY);
 			}
@@ -336,24 +340,26 @@ void AOCGLevelGenerator::DrawDebugLandscape(TArray<uint16>& HeightMapData)
 void AOCGLevelGenerator::PreviewMaps()
 {
 	if (!MapPreset)
+	{
 		return;
+	}
 	if (MapPreset->Biomes.IsEmpty())
 	{
 		// Error message
 		const FText DialogTitle = FText::FromString(TEXT("Error"));
-		const FText DialogText = FText::FromString(TEXT("At Least one biome must be defined in the preset before generating the level."));
+		const FText DialogText  = FText::FromString(TEXT("At Least one biome must be defined in the preset before generating the level."));
 
 		FMessageDialog::Open(EAppMsgType::Ok, DialogText, DialogTitle);
 
 		return;
 	}
-	
+
 	for (const auto& Biome : MapPreset->Biomes)
 	{
 		if (Biome.BiomeName == NAME_None)
 		{
 			const FText DialogTitle = FText::FromString(TEXT("Error"));
-			const FText DialogText = FText::FromString(TEXT("Invalid Biome Name. Please set a valid name for each biome."));
+			const FText DialogText  = FText::FromString(TEXT("Invalid Biome Name. Please set a valid name for each biome."));
 
 			FMessageDialog::Open(EAppMsgType::Ok, DialogText, DialogTitle);
 			return;
@@ -361,16 +367,20 @@ void AOCGLevelGenerator::PreviewMaps()
 	}
 	bool bOriginalExportSetting = MapPreset->bExportMapTextures;
 	if (!bOriginalExportSetting)
+	{
 		MapPreset->bExportMapTextures = true;
+	}
 
 	if (MapPreset->HeightmapFilePath.FilePath.IsEmpty())
+	{
 		GetMapGenerateComponent()->GenerateMaps();
+	}
 	else
 	{
 		if (!OCGMapDataUtils::ImportMap(MapPreset->HeightMapData, MapPreset->MapResolution, MapPreset->HeightmapFilePath.FilePath))
 		{
 			const FText DialogTitle = FText::FromString(TEXT("Error"));
-			const FText DialogText = FText::FromString(TEXT("Failed to read Height Map texture."));
+			const FText DialogText  = FText::FromString(TEXT("Failed to read Height Map texture."));
 
 			FMessageDialog::Open(EAppMsgType::Ok, DialogText, DialogTitle);
 			return;
@@ -378,7 +388,7 @@ void AOCGLevelGenerator::PreviewMaps()
 		GetMapGenerateComponent()->GenerateMapsWithHeightMap();
 	}
 	DrawDebugLandscape(MapPreset->HeightMapData);
-	
+
 	MapPreset->bExportMapTextures = bOriginalExportSetting;
 }
 
@@ -386,4 +396,3 @@ void AOCGLevelGenerator::RegenerateOcean()
 {
 	AddWaterPlane(GetWorld());
 }
-

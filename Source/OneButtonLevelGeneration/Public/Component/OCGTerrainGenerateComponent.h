@@ -9,8 +9,7 @@
 class AOCGLandscapeVolume;
 class AOCGLevelGenerator;
 
-
-UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class ONEBUTTONLEVELGENERATION_API UOCGTerrainGenerateComponent : public UActorComponent
 {
 	GENERATED_BODY()

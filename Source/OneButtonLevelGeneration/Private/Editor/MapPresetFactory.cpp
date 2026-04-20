@@ -7,16 +7,14 @@
 #include "PCGGraph.h"
 #include "Data/MapPreset.h"
 
-
 UMapPresetFactory::UMapPresetFactory()
 {
 	SupportedClass = UMapPreset::StaticClass();
-	bCreateNew = true;
-	bEditAfterNew = true;
+	bCreateNew     = true;
+	bEditAfterNew  = true;
 }
 
-UObject* UMapPresetFactory::FactoryCreateNew(UClass* Class, UObject* InParent, FName Name, EObjectFlags Flags,
-	UObject* Context, FFeedbackContext* Warn)
+UObject* UMapPresetFactory::FactoryCreateNew(UClass* Class, UObject* InParent, FName Name, EObjectFlags Flags, UObject* Context, FFeedbackContext* Warn)
 {
 	UMapPreset* NewPreset = NewObject<UMapPreset>(InParent, Class, Name, Flags, Context);
 
@@ -25,7 +23,7 @@ UObject* UMapPresetFactory::FactoryCreateNew(UClass* Class, UObject* InParent, F
 	if (!Settings)
 	{
 		UE_LOG(LogOCGModule, Error, TEXT("UMapPreset::UMapPreset() Invalid OCGDeveloperSettings!"));
-		return NewPreset;		
+		return NewPreset;
 	}
 
 	UMaterialInstance* LandscapeMaterial = Settings->DefaultLandscapeMaterialPath.LoadSynchronous();

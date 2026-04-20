@@ -10,7 +10,6 @@
 #include "PCG/OCGLandscapeVolume.h"
 #include "Utils/OCGUtils.h"
 
-
 UOCGTerrainGenerateComponent::UOCGTerrainGenerateComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;
@@ -43,7 +42,7 @@ void UOCGTerrainGenerateComponent::GenerateTerrain(UWorld* World)
 	}
 
 	TArray<AOCGLandscapeVolume*> Volumes = FOCGUtils::GetAllActorsOfClass<AOCGLandscapeVolume>(World);
-	
+
 	// 삭제할 볼륨 수집
 	TArray<AOCGLandscapeVolume*> ToDestroy;
 	for (AOCGLandscapeVolume* Volume : Volumes)
@@ -53,7 +52,7 @@ void UOCGTerrainGenerateComponent::GenerateTerrain(UWorld* World)
 			ToDestroy.Add(Volume);
 		}
 	}
-	
+
 	// 변경(삭제 또는 생성)이 일어나면 더티 표시
 	const bool bNeedsCreation = !IsValid(OCGVolumeInstance);
 	if (ToDestroy.Num() > 0 || bNeedsCreation)
@@ -65,13 +64,13 @@ void UOCGTerrainGenerateComponent::GenerateTerrain(UWorld* World)
 			(void)Owner->MarkPackageDirty();
 		}
 	}
-	
+
 	TArray<AOCGLandscapeVolume*> VolumesToDestroy = ToDestroy; // 복사본 생성
 	for (AOCGLandscapeVolume* Vol : VolumesToDestroy)
 	{
 		World->EditorDestroyActor(Vol, true);
 	}
-	
+
 	// 인스턴스 없으면 새로 스폰
 	if (bNeedsCreation)
 	{
@@ -89,7 +88,7 @@ void UOCGTerrainGenerateComponent::GenerateTerrain(UWorld* World)
 	OCGVolumeInstance->SetActorLocation(LevelGenerator->GetVolumeOrigin());
 	OCGVolumeInstance->GetBoxComponent()->SetBoxExtent(LevelGenerator->GetVolumeExtent());
 
-	const UMapPreset* MapPreset = LevelGenerator->GetMapPreset();
+	const UMapPreset* MapPreset  = LevelGenerator->GetMapPreset();
 	OCGVolumeInstance->MapPreset = MapPreset;
 
 	if (UPCGGraph* PCGGraph = MapPreset->PCGGraph)
@@ -110,4 +109,3 @@ AOCGLevelGenerator* UOCGTerrainGenerateComponent::GetLevelGenerator() const
 {
 	return Cast<AOCGLevelGenerator>(GetOwner());
 }
-

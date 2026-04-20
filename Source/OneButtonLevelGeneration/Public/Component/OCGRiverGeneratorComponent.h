@@ -7,8 +7,8 @@
 #include "OCGRiverGeneratorComponent.generated.h"
 
 class AOCGLevelGenerator;
-class UMapPreset;
 class AWaterBodyRiver;
+class UMapPreset;
 
 USTRUCT()
 struct FMaskedWeight
@@ -19,13 +19,12 @@ struct FMaskedWeight
 	TArray<uint8> MaskedWeightMap;
 };
 
-
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class ONEBUTTONLEVELGENERATION_API UOCGRiverGenerateComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:	
+public:
 	UOCGRiverGenerateComponent();
 
 	UFUNCTION(CallInEditor, Category = "River Generation")
@@ -39,16 +38,17 @@ public:
 
 	UFUNCTION(CallInEditor, Category = "Actions")
 	void ApplyWaterWeight();
+
 private:
 	void ExportWaterEditLayerHeightMap(const uint16 MinDiffThreshold = 1);
-	
+
 	void ClearAllRivers();
 
 	FVector GetLandscapePointWorldPosition(const FIntPoint& MapPoint, const FVector& LandscapeOrigin, const FVector& LandscapeExtent) const;
-	
-	void SetDefaultRiverProperties(AWaterBodyRiver* InRiverActor, const TArray<FVector>& InRiverPath);
+
+	void      SetDefaultRiverProperties(AWaterBodyRiver* InRiverActor, const TArray<FVector>& InRiverPath);
 	// helper functions
-	FIntPoint GetRandomStartPoint(int RiverIndex);
+	FIntPoint GetRandomStartPoint(int32 RiverIndex);
 
 	void SimplifyPathRDP(const TArray<FVector>& InPoints, TArray<FVector>& OutPoints, float Epsilon);
 
@@ -56,7 +56,7 @@ private:
 
 	UPROPERTY(Transient)
 	TObjectPtr<UMapPreset> MapPreset;
-	
+
 	float SeaHeight = 0.0f;
 
 	// Generated rivers
@@ -68,8 +68,8 @@ private:
 
 	UPROPERTY(Transient)
 	TObjectPtr<ALandscape> TargetLandscape;
-	
-	TSet<FIntPoint> UsedRiverStartPoints;
+
+	TSet<FIntPoint>   UsedRiverStartPoints;
 	TArray<FIntPoint> CachedRiverStartPoints;
 
 	TArray<uint16> CachedRiverHeightMap;
@@ -89,6 +89,3 @@ private:
 	UPROPERTY()
 	int32 CurrentRiverSeed = 0;
 };
-
-
-

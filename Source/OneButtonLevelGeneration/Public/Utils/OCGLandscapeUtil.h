@@ -17,8 +17,9 @@ class ALandscapeProxy;
 class ULandscapeLayerInfoObject;
 struct FLandscapeImportLayerInfo;
 class ALandscape;
+
 /**
- * 
+ *
  */
 class ONEBUTTONLEVELGENERATION_API OCGLandscapeUtil
 {
@@ -27,25 +28,25 @@ public:
 	~OCGLandscapeUtil();
 
 	static void ExtractHeightMap(ALandscape* InLandscape, const FGuid InGuid, int32& OutWidth, int32& OutHeight, TArray<uint16>& OutHeightMap);
-	
+
 	static void AddWeightMap(ALandscape* InLandscape, int32 InTargetLayerIndex, const TArray<uint8>& InWeightMap);
 
 	static void AddWeightMap(ALandscape* InLandscape, ULandscapeLayerInfoObject* InLayerInfo, const TArray<uint8>& InWeightMap);
 
 	static void ApplyWeightMap(ALandscape* InLandscape, int32 InTargetLayerIndex, const TArray<uint8>& InWeightMap);
-	
+
 	static void ApplyWeightMap(ALandscape* InLandscape, ULandscapeLayerInfoObject* InLayerInfo, const TArray<uint8>& InWeightMap);
 
 	static void ApplyMaskedWeightMap(ALandscape* InLandscape, ULandscapeLayerInfoObject* InLayerInfo, const TArray<uint8>& OriginWeightMap, const TArray<uint8>& InMaskedWeightMap);
-	
+
 	static void GetWeightMap(ALandscape* InLandscape, int32 InTargetLayerIndex, TArray<uint8>& OutOriginWeightMap);
 
 	static void GetWeightMap(ALandscape* InLandscape, ULandscapeLayerInfoObject* InLayerInfo, TArray<uint8>& OutOriginWeightMap);
-	
+
 	static void GetMaskedWeightMap(ALandscape* InLandscape, int32 InTargetLayerIndex, const TArray<uint8>& Mask, TArray<uint8>& OutWeightMap);
 
 	static void GetMaskedWeightMap(ALandscape* InLandscape, ULandscapeLayerInfoObject* InLayerInfo, const TArray<uint8>& Mask, TArray<uint8>& OutWeightMap);
-	
+
 	static void CleanUpWeightMap(ALandscape* InLandscape);
 
 	static void MakeWeightMapFromHeightDiff(const TArray<uint16>& HeightDiff, TArray<uint8>& OutWeight, uint16 MinDiffThreshold = 0);
@@ -67,8 +68,9 @@ public:
 	static void RegenerateRiver(UWorld* World, AOCGLevelGenerator* LevelGenerator, UMapPreset* MapPreset);
 
 	static void ForceGeneratePCG(UWorld* World);
-	
+
 	static FGuid GetLandscapeLayerGuid(const ALandscape* Landscape, FName LayerName);
+
 private:
 	static FString LayerInfoSavePath;
 
@@ -87,7 +89,7 @@ private:
 
 	static void SaveLandscapeProxies(const UWorld* World, TArrayView<ALandscapeProxy*> Proxies);
 
-	template<typename T>
+	template <typename T>
 	static void SaveObjects(TArrayView<T*> InObjects)
 	{
 		TArray<UPackage*> Packages;
@@ -98,5 +100,4 @@ private:
 	static ALandscapeProxy* FindOrAddLandscapeStreamingProxy(UActorPartitionSubsystem* InActorPartitionSubsystem, const ULandscapeInfo* InLandscapeInfo, const UActorPartitionSubsystem::FCellCoord& InCellCoord);
 
 	static ULandscapeLayerInfoObject* CreateLayerInfo(const FString& InPackagePath, const FString& InAssetName, const ULandscapeLayerInfoObject* InTemplate = nullptr);
-
 };

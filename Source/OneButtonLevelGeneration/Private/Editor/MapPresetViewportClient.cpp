@@ -3,12 +3,10 @@
 #include "Editor/MapPresetViewportClient.h"
 #include "Editor/MapPresetEditorToolkit.h"
 
-
 FMapPresetViewportClient::FMapPresetViewportClient(
 	[[maybe_unused]] TSharedPtr<FMapPresetEditorToolkit> InToolkit,
-	UWorld* InWorld,
-	const TSharedPtr<SEditorViewport>& InEditorViewportWidget
-)
+	UWorld*                                              InWorld,
+	const TSharedPtr<SEditorViewport>&                   InEditorViewportWidget)
 	: FEditorViewportClient(nullptr, nullptr, InEditorViewportWidget)
 {
 	SetRealtime(true);

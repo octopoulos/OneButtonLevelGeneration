@@ -5,12 +5,12 @@
 #include "FileHelpers.h"
 
 #if WITH_EDITOR
-#include "Materials/MaterialExpressionLandscapeLayerBlend.h"
-#include "Materials/MaterialExpressionMaterialFunctionCall.h"
-#include "Materials/MaterialExpressionVectorParameter.h"
-#include "Materials/Material.h"
-#include "Materials/MaterialFunctionInterface.h"
-#include "Materials/MaterialExpressionFunctionInput.h"
+#	include "Materials/MaterialExpressionLandscapeLayerBlend.h"
+#	include "Materials/MaterialExpressionMaterialFunctionCall.h"
+#	include "Materials/MaterialExpressionVectorParameter.h"
+#	include "Materials/Material.h"
+#	include "Materials/MaterialFunctionInterface.h"
+#	include "Materials/MaterialExpressionFunctionInput.h"
 #endif
 
 OCGMaterialEditTool::OCGMaterialEditTool()
@@ -21,26 +21,28 @@ OCGMaterialEditTool::~OCGMaterialEditTool()
 {
 }
 
-void OCGMaterialEditTool::InsertMaterialFunctionIntoMaterial(UMaterial* TargetMaterial,
-	 TArray<UMaterialFunctionInterface*> FuncToInsert)
+void OCGMaterialEditTool::InsertMaterialFunctionIntoMaterial(UMaterial* TargetMaterial, TArray<UMaterialFunctionInterface*> FuncToInsert)
 {
 #if WITH_EDITOR
-	if (!TargetMaterial || FuncToInsert.IsEmpty()) return;
+	if (!TargetMaterial || FuncToInsert.IsEmpty())
+	{
+		return;
+	}
 
 	// 에디터용 트랜잭션(Undo/Redo) 지원
 	const FScopedTransaction Transaction(FText::FromString(TEXT("Reset and Insert Multiple Material Functions")));
-	
+
 	// 에디터용 트랜잭션 지원
 	TargetMaterial->Modify();
 
 	// Expressions 배열에서 기존 Blend 노드 찾기
 	// 삭제할 Blend 노드와 함수 호출 노드를 담을 배열
-	TArray<UMaterialExpression*> NodesToDelete;
+	TArray<UMaterialExpression*>            NodesToDelete;
 	UMaterialExpressionLandscapeLayerBlend* BlendNode = nullptr;
-	
+
 	// TargetMaterial에서 "MainTiling" 파라미터 노드 검색
 	UMaterialExpression* TilingParamNode = nullptr;
-	const FName TilingParamName = FName("MainTiling");
+	const FName          TilingParamName = FName("MainTiling");
 	for (UMaterialExpression* Expr : TargetMaterial->GetExpressions())
 	{
 		if (!BlendNode) // Blend 노드는 첫 번째 것 하나만 찾습니다.
@@ -53,7 +55,7 @@ void OCGMaterialEditTool::InsertMaterialFunctionIntoMaterial(UMaterial* TargetMa
 		{
 			NodesToDelete.Add(Expr);
 		}
-		
+
 		if (!TilingParamNode)
 		{
 			if (UMaterialExpressionParameter* ScalarParam = Cast<UMaterialExpressionParameter>(Expr))
@@ -69,12 +71,12 @@ void OCGMaterialEditTool::InsertMaterialFunctionIntoMaterial(UMaterial* TargetMa
 	// 2-2) (★핵심 변경★) Blend 노드의 기존 레이어를 모두 비웁니다.
 	BlendNode->Modify();
 	BlendNode->Layers.Empty(); // 노드를 삭제하는 대신, 내부 레이어 배열만 초기화합니다.
-	
+
 	for (UMaterialExpression* Node : NodesToDelete)
 	{
 		TargetMaterial->GetExpressionCollection().RemoveExpression(Node);
 	}
-	
+
 	// 2-1) Blend 노드가 없다면 새로 생성하고 최종 출력에 연결
 	if (!BlendNode)
 	{
@@ -90,14 +92,17 @@ void OCGMaterialEditTool::InsertMaterialFunctionIntoMaterial(UMaterial* TargetMa
 			TargetMaterial->GetEditorOnlyData()->MaterialAttributes.Expression = BlendNode;
 		}
 	}
-	
+
 	// 머티리얼 함수 호출 노드 생성
-	int32 NodeIndex = 0;
+	int32 NodeIndex         = 0;
 	float TotalYOfFuncNodes = 0.0f;
 	for (UMaterialFunctionInterface* MaterialFunction : FuncToInsert)
 	{
-		if (!MaterialFunction) continue; // 배열에 null 포인터가 있을 경우 건너뜀
-		
+		if (!MaterialFunction)
+		{
+			continue; // 배열에 null 포인터가 있을 경우 건너뜀
+		}
+
 		UMaterialExpressionMaterialFunctionCall* FuncNode = NewObject<UMaterialExpressionMaterialFunctionCall>(TargetMaterial);
 		FuncNode->SetMaterialFunction(MaterialFunction);
 		FuncNode->Desc = MaterialFunction->GetName();
@@ -126,24 +131,24 @@ void OCGMaterialEditTool::InsertMaterialFunctionIntoMaterial(UMaterial* TargetMa
 				}
 			}
 		}
-	
+
 		// Blend 노드에 새 레이어를 '생성'하고 FuncNode를 연결
 		FLayerBlendInput NewLayer;
-		NewLayer.LayerName = FName(*MaterialFunction->GetName());
-		NewLayer.BlendType = ELandscapeLayerBlendType::LB_WeightBlend;
+		NewLayer.LayerName             = FName(*MaterialFunction->GetName());
+		NewLayer.BlendType             = ELandscapeLayerBlendType::LB_WeightBlend;
 		NewLayer.LayerInput.Expression = FuncNode;
-		NewLayer.PreviewWeight = 1.0f;
+		NewLayer.PreviewWeight         = 1.0f;
 		BlendNode->Layers.Add(NewLayer);
-	
+
 		// D) 노드 위치 지정 (세로로 정렬하여 겹치지 않게 함)
-		const int32 CurrentY = 200 + (NodeIndex * 150);
+		const int32 CurrentY                = 200 + (NodeIndex * 150);
 		FuncNode->MaterialExpressionEditorX = 200;
 		FuncNode->MaterialExpressionEditorY = CurrentY;
-		
+
 		TotalYOfFuncNodes += CurrentY;
 		NodeIndex++;
 	}
-	
+
 	// 3-2) 노드 위치 지정 및 에셋 변경사항 커밋
 	if (NodeIndex > 0)
 	{
@@ -193,11 +198,17 @@ UMaterialExpression* OCGMaterialEditTool::GetResultNodeFromMaterialAttributes(UM
 void OCGMaterialEditTool::SaveMaterialAsset(UMaterial* TargetMaterial)
 {
 #if WITH_EDITOR
-	if (!TargetMaterial) return;
+	if (!TargetMaterial)
+	{
+		return;
+	}
 
 	// ① 트랜잭션 및 Modify/MarkPackageDirty() 이후에 호출
 	UPackage* Package = TargetMaterial->GetOutermost();
-	if (!Package) return;
+	if (!Package)
+	{
+		return;
+	}
 
 	// ② 저장할 패키지 목록 생성
 	TArray<UPackage*> PackagesToSave;
@@ -208,9 +219,8 @@ void OCGMaterialEditTool::SaveMaterialAsset(UMaterial* TargetMaterial)
 	// bPromptToSave=false: 별도 다이얼로그 없이 바로 저장
 	FEditorFileUtils::PromptForCheckoutAndSave(
 		PackagesToSave,
-		/*bCheckDirty=*/ false,
-		/*bPromptToSave=*/ false
-	);
+		/*bCheckDirty=*/false,
+		/*bPromptToSave=*/false);
 #endif
 }
 
@@ -218,31 +228,36 @@ TArray<FName> OCGMaterialEditTool::ExtractLandscapeLayerName(UMaterial* TargetMa
 {
 #if WITH_EDITOR
 	TArray<FName> LayerNames;
-	if (!TargetMaterial) return LayerNames;
+	if (!TargetMaterial)
+	{
+		return LayerNames;
+	}
 
 	// // 사용 중인 모든 표현식을 수집합니다.
 	// TSet<UMaterialExpression*> UsedExpressions;
 	// CollectUsedExpressions(TargetMaterial, UsedExpressions);
 
 	UMaterialExpressionLandscapeLayerBlend* UsedBlendNode = nullptr;
-	
+
 	// 머티리얼이 "Material Attributes" 모드를 사용하는지 확인합니다.
 	for (UMaterialExpression* Expr : TargetMaterial->GetExpressions())
 	{
 		if (UsedBlendNode == nullptr)
 		{
 			UMaterialExpressionLandscapeLayerBlend* CurBlendNode = Cast<UMaterialExpressionLandscapeLayerBlend>(Expr);
-			if (CurBlendNode/* && UsedExpressions.Contains(CurBlendNode)*/)
+			if (CurBlendNode /* && UsedExpressions.Contains(CurBlendNode)*/)
 			{
-				UsedBlendNode =  CurBlendNode;
+				UsedBlendNode = CurBlendNode;
 				break;
 			}
 		}
 	}
 
 	if (UsedBlendNode == nullptr)
+	{
 		return LayerNames;
-	
+	}
+
 	for (FLayerBlendInput LayerInput : UsedBlendNode->Layers)
 	{
 		LayerNames.Add(LayerInput.LayerName);
@@ -252,7 +267,7 @@ TArray<FName> OCGMaterialEditTool::ExtractLandscapeLayerName(UMaterial* TargetMa
 #endif
 }
 
-void OCGMaterialEditTool::CollectUsedExpressions(UMaterial* TargetMaterial,	TSet<UMaterialExpression*>& OutUsedExpressions)
+void OCGMaterialEditTool::CollectUsedExpressions(UMaterial* TargetMaterial, TSet<UMaterialExpression*>& OutUsedExpressions)
 {
 	if (!TargetMaterial)
 	{
@@ -284,7 +299,7 @@ void OCGMaterialEditTool::CollectUsedExpressions(UMaterial* TargetMaterial,	TSet
 	while (ExpressionsToProcess.Dequeue(CurrentExpr))
 	{
 		// FExpressionInputIterator를 사용하여 현재 표현식의 모든 입력을 순회합니다.
-		for (FExpressionInputIterator It{CurrentExpr}; It; ++It)
+		for (FExpressionInputIterator It { CurrentExpr }; It; ++It)
 		{
 			// 반복자가 자동으로 Reroute를 포함한 모든 유효한 입력을 찾아줍니다.
 			UMaterialExpression* InputExpr = It.Expression;
@@ -297,8 +312,7 @@ void OCGMaterialEditTool::CollectUsedExpressions(UMaterial* TargetMaterial,	TSet
 	}
 }
 
-void OCGMaterialEditTool::AddAttributeInput(const FExpressionInput& Input,
-	TSet<UMaterialExpression*>& OutUsedExpressions, TArray<UMaterialExpression*>& ExpressionsToProcess)
+void OCGMaterialEditTool::AddAttributeInput(const FExpressionInput& Input, TSet<UMaterialExpression*>& OutUsedExpressions, TArray<UMaterialExpression*>& ExpressionsToProcess)
 {
 	// GetTracedInput()은 Reroute 및 Named Reroute 노드를 자동으로 해석하여 실제 소스 표현식을 반환합니다.
 	if (UMaterialExpression* RootExpr = Input.GetTracedInput().Expression)

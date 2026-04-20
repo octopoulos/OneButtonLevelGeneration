@@ -33,15 +33,15 @@ struct FPropertyAndParent;
 
 class SMapPresetEnvironmentLightingViewer : public SCompoundWidget
 {
-	SLATE_BEGIN_ARGS(SMapPresetEnvironmentLightingViewer){}
-		SLATE_ARGUMENT(UWorld*, World)	
+	SLATE_BEGIN_ARGS(SMapPresetEnvironmentLightingViewer) {}
+	SLATE_ARGUMENT(UWorld*, World)
 	SLATE_END_ARGS()
 
 	/**
-	* Construct the widget
-	*
-	* @param	InArgs			A declaration from which to construct the widget
-	*/
+	 * Construct the widget
+	 *
+	 * @param	InArgs			A declaration from which to construct the widget
+	 */
 	void Construct(const FArguments& InArgs);
 
 	/** Gets the widget contents of the app */
@@ -54,13 +54,13 @@ class SMapPresetEnvironmentLightingViewer : public SCompoundWidget
 
 private:
 	TSharedPtr<IDetailsView> DetailsViews[ENVLIGHT_MAX_DETAILSVIEWS];
-	FLinearColor DefaultForegroundColor = FLinearColor::White;
+	FLinearColor             DefaultForegroundColor = FLinearColor::White;
 
 	TSharedPtr<SCheckBox> CheckBoxAtmosphericLightsOnly;
 
 	TSharedPtr<SComboBox<TSharedPtr<FString>>> ComboBoxDetailFilter;
-	TArray<TSharedPtr<FString>> ComboBoxDetailFilterOptions;
-	int32 SelectedComboBoxDetailFilterOptions = -1;
+	TArray<TSharedPtr<FString>>                ComboBoxDetailFilterOptions;
+	int32                                      SelectedComboBoxDetailFilterOptions = -1;
 
 	TSharedPtr<SButton> ButtonCreateSkyLight;
 	TSharedPtr<SButton> ButtonCreateAtmosphericLight0;
@@ -75,8 +75,8 @@ private:
 	FReply OnButtonCreateHeightFog();
 
 	TSharedRef<SWidget> ComboBoxDetailFilterWidget(TSharedPtr<FString> InItem);
-	void ComboBoxDetailFilterWidgetSelectionChanged(TSharedPtr<FString> NewSelection, ESelectInfo::Type SelectInfo);
-	FText GetSelectedComboBoxDetailFilterTextLabel() const;
+	void                ComboBoxDetailFilterWidgetSelectionChanged(TSharedPtr<FString> NewSelection, ESelectInfo::Type SelectInfo);
+	FText               GetSelectedComboBoxDetailFilterTextLabel() const;
 
 	bool GetIsPropertyVisible(const FPropertyAndParent& PropertyAndParent) const;
 

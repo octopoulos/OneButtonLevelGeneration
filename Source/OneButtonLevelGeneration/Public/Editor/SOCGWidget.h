@@ -24,11 +24,11 @@ private:
 	FReply OnPreviewMapClicked();
 	FReply OnGenerateLevelClicked();
 	FReply OnCreateNewMapPresetClicked();
-	void OnMapChanged(uint32 _);
+	void   OnMapChanged(uint32 _);
 
 	FString GetMapPresetPath() const;
-	void OnMapPresetChanged(const FAssetData& AssetData);
-	
+	void    OnMapPresetChanged(const FAssetData& AssetData);
+
 	void OnActorSelectionChanged(UObject* NewSelection);
 	void OnLevelActorDeleted(AActor* InActor);
 
@@ -40,7 +40,7 @@ private:
 
 	void RefreshDetailsView();
 	void ClearUI();
-	
+
 	void ShowMapPresetDetails();
 	void ClearDetailsView();
 
@@ -49,24 +49,24 @@ private:
 
 	void FindExistingLevelGenerator();
 
-	void CheckForExistingLevelGenerator();
-	FText GetGeneratorButtonText() const;
+	void   CheckForExistingLevelGenerator();
+	FText  GetGeneratorButtonText() const;
 	FReply OnGeneratorButtonClicked();
-	bool IsGeneratorButtonEnabled() const;
+	bool   IsGeneratorButtonEnabled() const;
 
 	FReply OnRegenerateRiverClicked();
-	bool IsRegenerateRiverButtonEnabled() const;
+	bool   IsRegenerateRiverButtonEnabled() const;
 
 	FReply OnForceGeneratePCGClicked();
-	bool IsForceGeneratePCGButtonEnabled() const;
+	bool   IsForceGeneratePCGButtonEnabled() const;
 
 	virtual FReply OnFocusReceived(const FGeometry& MyGeometry, const FFocusEvent& InFocusEvent) override;
 
-	TWeakObjectPtr<class UMapPreset> MapPreset;
+	TWeakObjectPtr<class UMapPreset>   MapPreset;
 	TWeakObjectPtr<AOCGLevelGenerator> LevelGeneratorActor;
-	TSharedPtr<IDetailsView> MapPresetDetailsView;
-	TSharedPtr<SBox> DetailsContainer;
-	FDelegateHandle OnLevelActorDeletedDelegateHandle;
+	TSharedPtr<IDetailsView>           MapPresetDetailsView;
+	TSharedPtr<SBox>                   DetailsContainer;
+	FDelegateHandle                    OnLevelActorDeletedDelegateHandle;
 
 	bool bLevelGeneratorExistsInLevel = false;
 };

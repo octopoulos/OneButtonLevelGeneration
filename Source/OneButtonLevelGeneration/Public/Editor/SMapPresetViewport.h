@@ -9,13 +9,12 @@ class FAdvancedPreviewScene;
 class FMapPresetEditorToolkit;
 class FMapPresetViewportClient;
 
-
 class SMapPresetViewport : public SEditorViewport
 {
 public:
 	SLATE_BEGIN_ARGS(SMapPresetViewport) {}
-		SLATE_ARGUMENT(TWeakPtr<FMapPresetEditorToolkit>, MapPresetEditorToolkit)
-		SLATE_ARGUMENT(UWorld*, World)
+	SLATE_ARGUMENT(TWeakPtr<FMapPresetEditorToolkit>, MapPresetEditorToolkit)
+	SLATE_ARGUMENT(UWorld*, World)
 	SLATE_END_ARGS()
 
 	void Construct(const FArguments& InArgs);
@@ -27,7 +26,7 @@ protected:
 	virtual TSharedRef<FEditorViewportClient> MakeEditorViewportClient() override;
 
 private:
-	TWeakObjectPtr<UWorld> MapPresetEditorWorld;
-	TWeakPtr<FMapPresetEditorToolkit> ToolkitPtr;
+	TWeakObjectPtr<UWorld>               MapPresetEditorWorld;
+	TWeakPtr<FMapPresetEditorToolkit>    ToolkitPtr;
 	TSharedPtr<FMapPresetViewportClient> ViewportClient;
 };

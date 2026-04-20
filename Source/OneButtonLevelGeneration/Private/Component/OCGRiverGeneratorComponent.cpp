@@ -1,6 +1,5 @@
 // Copyright (c) 2025 Code1133. All rights reserved.
 
-
 #include "Component/OCGRiverGeneratorComponent.h"
 
 #include "EngineUtils.h"
@@ -19,10 +18,10 @@
 #include "Utils/OCGMaterialEditTool.h"
 
 #if WITH_EDITOR
-#include "Landscape.h"
-#if ENGINE_MINOR_VERSION > 5
-#include "LandscapeEditLayer.h"
-#endif
+#	include "Landscape.h"
+#	if ENGINE_MINOR_VERSION > 5
+#		include "LandscapeEditLayer.h"
+#	endif
 #endif
 
 namespace Compat
@@ -30,14 +29,14 @@ namespace Compat
 #if ENGINE_MAJOR_VERSION == 5
 FORCEINLINE void ClearEditLayer(ALandscape* Landscape, FGuid LayerGuid)
 {
-#if ENGINE_MINOR_VERSION <= 6
+#	if ENGINE_MINOR_VERSION <= 6
 	Landscape->ClearLayer(LayerGuid);
-#else
+#	else
 	Landscape->ClearEditLayer(LayerGuid);
-#endif
+#	endif
 }
 #endif
-}
+} // namespace Compat
 
 UOCGRiverGenerateComponent::UOCGRiverGenerateComponent() = default;
 
@@ -84,7 +83,6 @@ void UOCGRiverGenerateComponent::GenerateRiver(UWorld* InWorld, ALandscape* InLa
 
 	MapPreset = GetLevelGenerator()->GetMapPreset();
 
-
 	ClearAllRivers();
 	if (bForceCleanUpPrevWaterWeightMap)
 	{
@@ -123,17 +121,17 @@ void UOCGRiverGenerateComponent::GenerateRiver(UWorld* InWorld, ALandscape* InLa
 	FVector LandscapeOrigin = InLandscape->GetActorLocation();
 	FVector LandscapeExtent = InLandscape->GetLoadedBounds().GetExtent();
 	// Generate River Spline
-	for (int RiverCount = 0; RiverCount < MapPreset->RiverCount; RiverCount++)
+	for (int32 RiverCount = 0; RiverCount < MapPreset->RiverCount; RiverCount++)
 	{
 		FIntPoint MapResolution = MapPreset->MapResolution;
-		FIntPoint StartPoint = GetRandomStartPoint(RiverCount);
+		FIntPoint StartPoint    = GetRandomStartPoint(RiverCount);
 
-		TSet<FIntPoint> VisitedNodes;
+		TSet<FIntPoint>            VisitedNodes;
 		TMap<FIntPoint, FIntPoint> CameFrom;
-		TMap<FIntPoint, float> CostSoFar;
+		TMap<FIntPoint, float>     CostSoFar;
 
 		TArray<TTuple<FIntPoint, float>> Frontier;
-		Frontier.Add({StartPoint, 0.f});
+		Frontier.Add({ StartPoint, 0.f });
 
 		CameFrom.Add(StartPoint, StartPoint);
 		CostSoFar.Add(StartPoint, 0.f);
@@ -162,25 +160,31 @@ void UOCGRiverGenerateComponent::GenerateRiver(UWorld* InWorld, ALandscape* InLa
 				break;
 			}
 
-			for (int dx = -1; dx <= 1; ++dx)
+			for (int32 dx = -1; dx <= 1; ++dx)
 			{
-				for (int dy = -1; dy <= 1; ++dy)
+				for (int32 dy = -1; dy <= 1; ++dy)
 				{
-					if (dx == 0 && dy == 0) continue;
+					if (dx == 0 && dy == 0)
+					{
+						continue;
+					}
 
 					FIntPoint Neighbor = FIntPoint(Current.X + dx, Current.Y + dy);
-					if (Neighbor.X < 0 || Neighbor.X >= MapResolution.X || Neighbor.Y < 0 || Neighbor.Y >= MapResolution.Y) continue;
+					if (Neighbor.X < 0 || Neighbor.X >= MapResolution.X || Neighbor.Y < 0 || Neighbor.Y >= MapResolution.Y)
+					{
+						continue;
+					}
 
 					float NewCost = CostSoFar[Current] + 1;
 
 					if (!CostSoFar.Contains(Neighbor) || NewCost < CostSoFar[Neighbor])
 					{
 						CostSoFar.Add(Neighbor, NewCost);
-						int32 nIdx = Neighbor.Y * MapResolution.X + Neighbor.X;
-						float Heuristic = HeightMapData[nIdx] - SeaHeight;
+						int32 nIdx        = Neighbor.Y * MapResolution.X + Neighbor.X;
+						float Heuristic   = HeightMapData[nIdx] - SeaHeight;
 						float NewPriority = NewCost + Heuristic;
-						//float NewPriority = HeightMapData[nIdx];
-						Frontier.Add({Neighbor, NewPriority});
+						// float NewPriority = HeightMapData[nIdx];
+						Frontier.Add({ Neighbor, NewPriority });
 						CameFrom.Add(Neighbor, Current);
 					}
 				}
@@ -190,7 +194,7 @@ void UOCGRiverGenerateComponent::GenerateRiver(UWorld* InWorld, ALandscape* InLa
 		if (GoalPoint != FIntPoint(-1, -1))
 		{
 			TArray<FVector> RiverPath;
-			FIntPoint Current = GoalPoint;
+			FIntPoint       Current = GoalPoint;
 			while (Current != StartPoint)
 			{
 				RiverPath.Add(GetLandscapePointWorldPosition(Current, LandscapeOrigin, LandscapeExtent));
@@ -203,7 +207,7 @@ void UOCGRiverGenerateComponent::GenerateRiver(UWorld* InWorld, ALandscape* InLa
 			SimplifyPathRDP(RiverPath, SimplifiedRiverPath, MapPreset->RiverSplineSimplifyEpsilon);
 
 			// Generate AWaterBodyRiver Actor
-			FVector WaterBodyPos = GetLandscapePointWorldPosition(StartPoint, LandscapeOrigin, LandscapeExtent);
+			FVector    WaterBodyPos       = GetLandscapePointWorldPosition(StartPoint, LandscapeOrigin, LandscapeExtent);
 			FTransform WaterBodyTransform = FTransform(WaterBodyPos);
 
 			// Spawn Water Body Actor
@@ -239,14 +243,13 @@ void UOCGRiverGenerateComponent::GenerateRiver(UWorld* InWorld, ALandscape* InLa
 			GeneratedRivers.Add(WaterBodyRiver);
 			CachedRivers.Add(TSoftObjectPtr<AWaterBodyRiver>(WaterBodyRiver));
 
-#if ENGINE_MINOR_VERSION > 5
+#	if ENGINE_MINOR_VERSION > 5
 			FGuid WaterLayerGuid = InLandscape->GetEditLayerConst(1)->GetGuid();
-#else
+#	else
 			FGuid WaterLayerGuid = InLandscape->GetLayerConst(1)->Guid;
-#endif
+#	endif
 
-			FScopedSetLandscapeEditingLayer Scope(InLandscape, WaterLayerGuid, [&]
-			{
+			FScopedSetLandscapeEditingLayer Scope(InLandscape, WaterLayerGuid, [&] {
 				check(InLandscape);
 				InLandscape->RequestLayersContentUpdate(ELandscapeLayerUpdateMode::Update_Heightmap_All);
 			});
@@ -271,121 +274,121 @@ void UOCGRiverGenerateComponent::SetMapData(const TArray<uint16>& InHeightMap, U
 
 void UOCGRiverGenerateComponent::AddRiverProperties(AWaterBodyRiver* InRiverActor, const TArray<FVector>& InRiverPath)
 {
-    if (!InRiverActor || !MapPreset)
-    {
-        return;
-    }
+	if (!InRiverActor || !MapPreset)
+	{
+		return;
+	}
 
-    UWaterSplineComponent* SplineComp = InRiverActor->GetWaterSpline();
-    UWaterBodyRiverComponent* RiverComp = Cast<UWaterBodyRiverComponent>(InRiverActor->GetWaterBodyComponent());
-    UWaterSplineMetadata* SplineMetadata = RiverComp ? RiverComp->GetWaterSplineMetadata() : nullptr;
+	UWaterSplineComponent*    SplineComp     = InRiverActor->GetWaterSpline();
+	UWaterBodyRiverComponent* RiverComp      = Cast<UWaterBodyRiverComponent>(InRiverActor->GetWaterBodyComponent());
+	UWaterSplineMetadata*     SplineMetadata = RiverComp ? RiverComp->GetWaterSplineMetadata() : nullptr;
 
-    UCurveFloat* RiverWidthCurve = MapPreset->RiverWidthCurve;
-    UCurveFloat* RiverDepthCurve = MapPreset->RiverDepthCurve;
-    UCurveFloat* RiverVelocityCurve = MapPreset->RiverVelocityCurve;
+	UCurveFloat* RiverWidthCurve    = MapPreset->RiverWidthCurve;
+	UCurveFloat* RiverDepthCurve    = MapPreset->RiverDepthCurve;
+	UCurveFloat* RiverVelocityCurve = MapPreset->RiverVelocityCurve;
 
-    if (!SplineComp || !RiverComp || !SplineMetadata)
-    {
-        return;
-    }
+	if (!SplineComp || !RiverComp || !SplineMetadata)
+	{
+		return;
+	}
 
-    const int32 NumPoints = SplineComp->GetNumberOfSplinePoints();
-    if (NumPoints < 2)
-    {
-        return;
-    }
+	const int32 NumPoints = SplineComp->GetNumberOfSplinePoints();
+	if (NumPoints < 2)
+	{
+		return;
+	}
 
 	// Calculate the minimum and maximum values only if each curve is valid.
-    float MinWidth = 0.f, MaxWidth = 1.f;
-    if (RiverWidthCurve)
-    {
-        RiverWidthCurve->GetValueRange(MinWidth, MaxWidth);
-    }
+	float MinWidth = 0.f, MaxWidth = 1.f;
+	if (RiverWidthCurve)
+	{
+		RiverWidthCurve->GetValueRange(MinWidth, MaxWidth);
+	}
 
-    float MinDepth = 0.f, MaxDepth = 1.f;
-    if (RiverDepthCurve)
-    {
-        RiverDepthCurve->GetValueRange(MinDepth, MaxDepth);
-    }
+	float MinDepth = 0.f, MaxDepth = 1.f;
+	if (RiverDepthCurve)
+	{
+		RiverDepthCurve->GetValueRange(MinDepth, MaxDepth);
+	}
 
-    float MinVelocity = 0.f, MaxVelocity = 1.f;
-    if (RiverVelocityCurve)
-    {
-        RiverVelocityCurve->GetValueRange(MinVelocity, MaxVelocity);
-    }
+	float MinVelocity = 0.f, MaxVelocity = 1.f;
+	if (RiverVelocityCurve)
+	{
+		RiverVelocityCurve->GetValueRange(MinVelocity, MaxVelocity);
+	}
 
 	// Calculate the Range to prevent division by zero.
-    const float WidthRange = MaxWidth - MinWidth;
-    const float DepthRange = MaxDepth - MinDepth;
-    const float VelocityRange = MaxVelocity - MinVelocity;
+	const float WidthRange    = MaxWidth - MinWidth;
+	const float DepthRange    = MaxDepth - MinDepth;
+	const float VelocityRange = MaxVelocity - MinVelocity;
 
-    for (int32 i = 0; i < NumPoints; ++i)
-    {
-    	// Calculate the normalized distance ranging from 0.0 to 1.0 from the start to the end of the spline.
-        const float NormalizedDistance = (NumPoints > 1) ? static_cast<float>(i) / (NumPoints - 1) : 0.0f;
+	for (int32 i = 0; i < NumPoints; ++i)
+	{
+		// Calculate the normalized distance ranging from 0.0 to 1.0 from the start to the end of the spline.
+		const float NormalizedDistance = (NumPoints > 1) ? static_cast<float>(i) / (NumPoints - 1) : 0.0f;
 
-        // 1. Calculate the width (Width) scale
-        float WidthMultiplier;
-        if (RiverWidthCurve)
-        {
-            const float RawWidth = RiverWidthCurve->GetFloatValue(NormalizedDistance);
-            WidthMultiplier = !FMath::IsNearlyZero(WidthRange) ? (RawWidth - MinWidth) / WidthRange : 1.0f;
-        }
-        else // If there is no width curve (linear increase)
-        {
-            WidthMultiplier = NormalizedDistance;
-        }
+		// 1. Calculate the width (Width) scale
+		float WidthMultiplier;
+		if (RiverWidthCurve)
+		{
+			const float RawWidth = RiverWidthCurve->GetFloatValue(NormalizedDistance);
+			WidthMultiplier      = !FMath::IsNearlyZero(WidthRange) ? (RawWidth - MinWidth) / WidthRange : 1.0f;
+		}
+		else // If there is no width curve (linear increase)
+		{
+			WidthMultiplier = NormalizedDistance;
+		}
 
-    	// --- 2. Calculate the depth (Depth) scale ---
-        float DepthMultiplier;
-        if (RiverDepthCurve)
-        {
-            const float RawDepth = RiverDepthCurve->GetFloatValue(NormalizedDistance);
-            DepthMultiplier = !FMath::IsNearlyZero(DepthRange) ? (RawDepth - MinDepth) / DepthRange : 1.0f;
-        }
-        else // If there is no depth curve (linear increase)
-        {
-            DepthMultiplier = NormalizedDistance;
-        }
+		// --- 2. Calculate the depth (Depth) scale ---
+		float DepthMultiplier;
+		if (RiverDepthCurve)
+		{
+			const float RawDepth = RiverDepthCurve->GetFloatValue(NormalizedDistance);
+			DepthMultiplier      = !FMath::IsNearlyZero(DepthRange) ? (RawDepth - MinDepth) / DepthRange : 1.0f;
+		}
+		else // If there is no depth curve (linear increase)
+		{
+			DepthMultiplier = NormalizedDistance;
+		}
 
-        // 3. Calculate the velocity (Velocity) scale
-        float VelocityMultiplier;
-        if (RiverVelocityCurve)
-        {
-            const float RawVelocity = RiverVelocityCurve->GetFloatValue(NormalizedDistance);
-            VelocityMultiplier = !FMath::IsNearlyZero(VelocityRange) ? (RawVelocity - MinVelocity) / VelocityRange : 1.0f;
-        }
-        else // If there is no velocity curve (linear increase)
-        {
-            VelocityMultiplier = NormalizedDistance;
-        }
+		// 3. Calculate the velocity (Velocity) scale
+		float VelocityMultiplier;
+		if (RiverVelocityCurve)
+		{
+			const float RawVelocity = RiverVelocityCurve->GetFloatValue(NormalizedDistance);
+			VelocityMultiplier      = !FMath::IsNearlyZero(VelocityRange) ? (RawVelocity - MinVelocity) / VelocityRange : 1.0f;
+		}
+		else // If there is no velocity curve (linear increase)
+		{
+			VelocityMultiplier = NormalizedDistance;
+		}
 
-    	// Calculate the final value: (base value * scale) + minimum value
-        const float DesiredWidth = ((MapPreset->RiverWidthBaseValue * WidthMultiplier) + MapPreset->RiverWidthMin) * MapPreset->LandscapeScale;
-        const float DesiredDepth = (MapPreset->RiverDepthBaseValue * DepthMultiplier) + MapPreset->RiverDepthMin;
-        const float DesiredVelocity = (MapPreset->RiverVelocityBaseValue * VelocityMultiplier) + MapPreset->RiverVelocityMin;
+		// Calculate the final value: (base value * scale) + minimum value
+		const float DesiredWidth    = ((MapPreset->RiverWidthBaseValue * WidthMultiplier) + MapPreset->RiverWidthMin) * MapPreset->LandscapeScale;
+		const float DesiredDepth    = (MapPreset->RiverDepthBaseValue * DepthMultiplier) + MapPreset->RiverDepthMin;
+		const float DesiredVelocity = (MapPreset->RiverVelocityBaseValue * VelocityMultiplier) + MapPreset->RiverVelocityMin;
 
-        if (SplineMetadata->RiverWidth.Points.IsValidIndex(i))
-        {
-            SplineMetadata->RiverWidth.Points[i].OutVal = DesiredWidth;
-            SplineMetadata->Depth.Points[i].OutVal = DesiredDepth;
-            SplineMetadata->WaterVelocityScalar.Points[i].OutVal = DesiredVelocity;
-        }
+		if (SplineMetadata->RiverWidth.Points.IsValidIndex(i))
+		{
+			SplineMetadata->RiverWidth.Points[i].OutVal          = DesiredWidth;
+			SplineMetadata->Depth.Points[i].OutVal               = DesiredDepth;
+			SplineMetadata->WaterVelocityScalar.Points[i].OutVal = DesiredVelocity;
+		}
 
-        // 스플라인 스케일 업데이트
-        if (SplineComp->SplineCurves.Scale.Points.IsValidIndex(i))
-        {
-            SplineComp->SetScaleAtSplinePoint(i, FVector(DesiredWidth, DesiredDepth, 1.0f), ESplineCoordinateSpace::Local);
-        }
-    }
+		// 스플라인 스케일 업데이트
+		if (SplineComp->SplineCurves.Scale.Points.IsValidIndex(i))
+		{
+			SplineComp->SetScaleAtSplinePoint(i, FVector(DesiredWidth, DesiredDepth, 1.0f), ESplineCoordinateSpace::Local);
+		}
+	}
 
 	// Update the spline and Water Body components
-    SplineComp->UpdateSpline();
+	SplineComp->UpdateSpline();
 
-    FOnWaterBodyChangedParams Params;
-    Params.bShapeOrPositionChanged = true;
-    Params.bUserTriggered = true;
-    RiverComp->OnWaterBodyChanged(Params);
+	FOnWaterBodyChangedParams Params;
+	Params.bShapeOrPositionChanged = true;
+	Params.bUserTriggered          = true;
+	RiverComp->OnWaterBodyChanged(Params);
 }
 
 AOCGLevelGenerator* UOCGRiverGenerateComponent::GetLevelGenerator() const
@@ -403,12 +406,15 @@ void UOCGRiverGenerateComponent::ExportWaterEditLayerHeightMap(const uint16 MinD
 	if (TargetLandscape)
 	{
 		const ULandscapeInfo* Info = TargetLandscape->GetLandscapeInfo();
-		if (!Info) return;
+		if (!Info)
+		{
+			return;
+		}
 
 		FGuid CurrentLayerGuid = OCGLandscapeUtil::GetLandscapeLayerGuid(TargetLandscape, FName(TEXT("Layer")));
 
 		TArray<uint16> BlendedHeightData;
-		int32 SizeX, SizeY;
+		int32          SizeX, SizeY;
 		OCGLandscapeUtil::ExtractHeightMap(TargetLandscape, FGuid(), SizeX, SizeY, BlendedHeightData);
 
 		TArray<uint16> BaseLayerHeightData;
@@ -417,16 +423,16 @@ void UOCGRiverGenerateComponent::ExportWaterEditLayerHeightMap(const uint16 MinD
 		CachedRiverHeightMap.Empty();
 		CachedRiverHeightMap.AddZeroed(SizeX * SizeY);
 
-		RiverHeightMapWidth = SizeX;
+		RiverHeightMapWidth  = SizeX;
 		RiverHeightMapHeight = SizeY;
 
-		const uint16*  BlendedData = BlendedHeightData.GetData();
-		uint16*        BaseData    = BaseLayerHeightData.GetData();
-		uint16*        CachedData  = CachedRiverHeightMap.GetData();
+		const uint16* BlendedData = BlendedHeightData.GetData();
+		uint16*       BaseData    = BaseLayerHeightData.GetData();
+		uint16*       CachedData  = CachedRiverHeightMap.GetData();
 
 		if (BlendedHeightData.Num() == BaseLayerHeightData.Num() && BlendedHeightData.Num() == SizeY * SizeY)
 		{
-			for (int i = 0; i < BlendedHeightData.Num(); ++i)
+			for (int32 i = 0; i < BlendedHeightData.Num(); ++i)
 			{
 				CachedData[i] = static_cast<uint16>((FMath::Abs(BaseData[i] - BlendedData[i]) > static_cast<uint16>(MinDiffThreshold)) * UINT16_MAX);
 			}
@@ -463,8 +469,8 @@ void UOCGRiverGenerateComponent::ApplyWaterWeight()
 
 		TArray<FName> LayerNames = OCGMaterialEditTool::ExtractLandscapeLayerName(CurrentLandscapeMaterial);
 
-		const ULandscapeInfo* LandscapeInfo = TargetLandscape->GetLandscapeInfo();
-		ULandscapeLayerInfoObject* FirstLayer = nullptr;
+		const ULandscapeInfo*      LandscapeInfo = TargetLandscape->GetLandscapeInfo();
+		ULandscapeLayerInfoObject* FirstLayer    = nullptr;
 		if (LandscapeInfo && !LayerNames.IsEmpty())
 		{
 			FirstLayer = LandscapeInfo->GetLayerInfoByName(LayerNames[0]);
@@ -477,7 +483,7 @@ void UOCGRiverGenerateComponent::ApplyWaterWeight()
 				if (LandscapeInfo && !LayerNames.IsEmpty())
 				{
 					ULandscapeLayerInfoObject* LanyerInfo = LandscapeInfo->GetLayerInfoByName(Item.Key);
-					TArray<uint8> OriginWeightMap;
+					TArray<uint8>              OriginWeightMap;
 					OCGLandscapeUtil::GetWeightMap(TargetLandscape, LanyerInfo, OriginWeightMap);
 					OCGLandscapeUtil::ApplyMaskedWeightMap(TargetLandscape, LanyerInfo, OriginWeightMap, Item.Value.MaskedWeightMap);
 				}
@@ -529,7 +535,10 @@ void UOCGRiverGenerateComponent::ClearAllRivers()
 	// 1) Destroy the already loaded GeneratedRivers
 	for (AWaterBodyRiver* River : GeneratedRivers)
 	{
-		if (!River) continue;
+		if (!River)
+		{
+			continue;
+		}
 #if WITH_EDITOR
 		GEditor->GetEditorWorldContext().World()->EditorDestroyActor(River, /*bShouldModifyLevel=*/true);
 #else
@@ -543,13 +552,19 @@ void UOCGRiverGenerateComponent::ClearAllRivers()
 	{
 		// 2-1) Check if the path is valid
 		const FSoftObjectPath& Path = RiverPtr.ToSoftObjectPath();
-		if (!Path.IsValid()) continue;
+		if (!Path.IsValid())
+		{
+			continue;
+		}
 
 		// 2-2) If there is an already loaded instance, use Get(); otherwise, use LoadSynchronous()
 		AWaterBodyRiver* RiverInst = RiverPtr.IsValid()
 			? RiverPtr.Get()
 			: Cast<AWaterBodyRiver>(RiverPtr.LoadSynchronous());
-		if (!RiverInst) continue;
+		if (!RiverInst)
+		{
+			continue;
+		}
 
 #if WITH_EDITOR
 		GEditor->GetEditorWorldContext().World()->EditorDestroyActor(RiverInst, /*bShouldModifyLevel=*/true);
@@ -558,7 +573,6 @@ void UOCGRiverGenerateComponent::ClearAllRivers()
 #endif
 	}
 	CachedRivers.Empty();
-
 
 	FGuid WaterLayerGuid = OCGLandscapeUtil::GetLandscapeLayerGuid(TargetLandscape, FName(TEXT("Water")));
 	if (TargetLandscape)
@@ -589,20 +603,15 @@ FVector UOCGRiverGenerateComponent::GetLandscapePointWorldPosition(const FIntPoi
 		return FVector::ZeroVector;
 	}
 
-	FVector WorldLocation = LandscapeOrigin + FVector(
-		2 * (MapPoint.X / static_cast<float>(MapPreset->MapResolution.X - 1)) * LandscapeExtent.X,
-		2 * (MapPoint.Y / static_cast<float>(MapPreset->MapResolution.Y - 1)) * LandscapeExtent.Y,
-		0.0f
-	);
+	FVector WorldLocation = LandscapeOrigin + FVector(2 * (MapPoint.X / static_cast<float>(MapPreset->MapResolution.X - 1)) * LandscapeExtent.X, 2 * (MapPoint.Y / static_cast<float>(MapPreset->MapResolution.Y - 1)) * LandscapeExtent.Y, 0.0f);
 
-	int Index = MapPoint.Y * MapPreset->MapResolution.X + MapPoint.X;
+	int32 Index          = MapPoint.Y * MapPreset->MapResolution.X + MapPoint.X;
 	float HeightMapValue = HeightMapData[Index];
 
 	TOptional<float> Height = TargetLandscape->GetHeightAtLocation(WorldLocation);
 	if (Height.IsSet())
 	{
 		WorldLocation.Z = Height.GetValue();
-
 	}
 	else
 	{
@@ -618,7 +627,7 @@ void UOCGRiverGenerateComponent::SetDefaultRiverProperties(AWaterBodyRiver* InRi
 
 	if (const FWaterBrushActorDefaults* WaterBrushActorDefaults = &GetDefault<UWaterEditorSettings>()->WaterBodyRiverDefaults.BrushDefaults)
 	{
-		WaterBodyComponent->CurveSettings = WaterBrushActorDefaults->CurveSettings;
+		WaterBodyComponent->CurveSettings          = WaterBrushActorDefaults->CurveSettings;
 		WaterBodyComponent->WaterHeightmapSettings = WaterBrushActorDefaults->HeightmapSettings;
 		WaterBodyComponent->LayerWeightmapSettings = WaterBrushActorDefaults->LayerWeightmapSettings;
 	}
@@ -631,7 +640,7 @@ void UOCGRiverGenerateComponent::SetDefaultRiverProperties(AWaterBodyRiver* InRi
 	if (const FWaterBodyDefaults* WaterBodyDefaults = &GetDefault<UWaterEditorSettings>()->WaterBodyRiverDefaults)
 	{
 		UWaterSplineComponent* WaterSpline = WaterBodyComponent->GetWaterSpline();
-		WaterSpline->WaterSplineDefaults = WaterBodyDefaults->SplineDefaults;
+		WaterSpline->WaterSplineDefaults   = WaterBodyDefaults->SplineDefaults;
 	}
 
 	// If the water body is spawned into a zone which is using local only tessellation, we must default to enabling static meshes.
@@ -656,7 +665,7 @@ void UOCGRiverGenerateComponent::SetDefaultRiverProperties(AWaterBodyRiver* InRi
 
 	FOnWaterBodyChangedParams Params;
 	Params.bShapeOrPositionChanged = true;
-	Params.bUserTriggered = true;
+	Params.bUserTriggered          = true;
 
 	InRiverActor->GetWaterBodyComponent()->GetWaterSpline()->GetSplinePointsMetadata();
 	InRiverActor->GetWaterBodyComponent()->UpdateAll(Params);
@@ -664,7 +673,7 @@ void UOCGRiverGenerateComponent::SetDefaultRiverProperties(AWaterBodyRiver* InRi
 	InRiverActor->GetWaterBodyComponent()->UpdateWaterBodyRenderData();
 }
 
-FIntPoint UOCGRiverGenerateComponent::GetRandomStartPoint(int RiverIndex)
+FIntPoint UOCGRiverGenerateComponent::GetRandomStartPoint(int32 RiverIndex)
 {
 	AOCGLevelGenerator* LevelGenerator = Cast<AOCGLevelGenerator>(GetOwner());
 
@@ -690,8 +699,7 @@ FIntPoint UOCGRiverGenerateComponent::GetRandomStartPoint(int RiverIndex)
 	return StartPoint;
 }
 
-void UOCGRiverGenerateComponent::SimplifyPathRDP(const TArray<FVector>& InPoints, TArray<FVector>& OutPoints,
-	float Epsilon)
+void UOCGRiverGenerateComponent::SimplifyPathRDP(const TArray<FVector>& InPoints, TArray<FVector>& OutPoints, float Epsilon)
 {
 	if (InPoints.Num() < 3)
 	{
@@ -699,9 +707,9 @@ void UOCGRiverGenerateComponent::SimplifyPathRDP(const TArray<FVector>& InPoints
 		return;
 	}
 
-	float dmax = 0.0f;
+	float dmax  = 0.0f;
 	int32 index = 0;
-	int32 end = InPoints.Num() - 1;
+	int32 end   = InPoints.Num() - 1;
 
 	for (int32 i = 1; i < end; i++)
 	{
@@ -709,7 +717,7 @@ void UOCGRiverGenerateComponent::SimplifyPathRDP(const TArray<FVector>& InPoints
 		if (d > dmax)
 		{
 			index = i;
-			dmax = d;
+			dmax  = d;
 		}
 	}
 
@@ -746,12 +754,10 @@ void UOCGRiverGenerateComponent::CacheRiverStartPoints()
 
 	// Ensure the multiplier is within a reasonable range
 	float StartPointThresholdMultiplier = FMath::Clamp(MapPreset->RiverSourceElevationRatio, 0.0f, 1.0f);
-	float MaxHeight = MapPreset->MaxHeight;
-	float MinHeight = MapPreset->MinHeight;
+	float MaxHeight                     = MapPreset->MaxHeight;
+	float MinHeight                     = MapPreset->MinHeight;
 
-
-	SeaHeight = MinHeight +
-		(MaxHeight - MinHeight) * MapPreset->SeaLevel - 5;
+	SeaHeight = MinHeight + (MaxHeight - MinHeight) * MapPreset->SeaLevel - 5;
 
 	uint16 HighThreshold = SeaHeight + (MaxHeight - SeaHeight) * StartPointThresholdMultiplier;
 	UE_LOG(LogOCGModule, Log, TEXT("High Threshold for River Start Point: %d"), HighThreshold);
@@ -770,5 +776,3 @@ void UOCGRiverGenerateComponent::CacheRiverStartPoints()
 		}
 	}
 }
-
-

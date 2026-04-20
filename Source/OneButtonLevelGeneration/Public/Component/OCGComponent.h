@@ -7,14 +7,12 @@
 #include "Data/OCGBiomeSettings.h"
 #include "OCGComponent.generated.h"
 
-
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class ONEBUTTONLEVELGENERATION_API
-UOCGComponent : public UActorComponent
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
+class ONEBUTTONLEVELGENERATION_API UOCGComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:	
+public:
 	// Sets default values for this component's properties
 	UOCGComponent();
 };

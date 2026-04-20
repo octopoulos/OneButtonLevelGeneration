@@ -1,2 +1,24 @@
+# Unreal Engine
 Binaries/
+Build/
+DerivedDataCache/
 Intermediate/
+Saved/
+
+# Mac specific
+.DS_Store
+*.dSYM/
+
+# Visual Studio / Rider
+.idea/
+.vs/
+.vscode/
+*.sln
+*.vcxproj
+*.vcxproj.user
+
+# Temporary / Log files
+*.ilk
+*.log
+*.pdb
+*.tmp

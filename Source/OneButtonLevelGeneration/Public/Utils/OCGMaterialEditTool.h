@@ -8,14 +8,14 @@ class UMaterial;
 class UMaterialFunction;
 
 /**
- * 
+ *
  */
 class ONEBUTTONLEVELGENERATION_API OCGMaterialEditTool
 {
 public:
 	OCGMaterialEditTool();
 	~OCGMaterialEditTool();
-	
+
 	static void InsertMaterialFunctionIntoMaterial(UMaterial* TargetMaterial, TArray<UMaterialFunctionInterface*> FuncToInsert);
 
 	static UMaterialExpression* GetResultNodeFromMaterialAttributes(UMaterial* TargetMaterial);

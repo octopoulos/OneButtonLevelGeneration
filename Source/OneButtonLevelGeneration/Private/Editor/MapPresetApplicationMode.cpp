@@ -4,8 +4,10 @@
 #include "Editor/MapPresetEditorToolkit.h"
 
 FMapPresetApplicationMode::FMapPresetApplicationMode(const TSharedPtr<FMapPresetEditorToolkit>& InEditorToolkit)
-	:FApplicationMode(TEXT("DefaultMode")), MyToolkit(InEditorToolkit)
+	: FApplicationMode(TEXT("DefaultMode"))
+	, MyToolkit(InEditorToolkit)
 {
+	// clang-format off
 	TabLayout = FTabManager::NewLayout("Standalone_MapPresetEditor_Layout_v2")
 		->AddArea
 		(
@@ -24,6 +26,7 @@ FMapPresetApplicationMode::FMapPresetApplicationMode(const TSharedPtr<FMapPreset
 				->AddTab(FMapPresetEditorConstants::DetailsTabId, ETabState::OpenedTab)
 			)
 		);
+	// clang-format on
 }
 
 void FMapPresetApplicationMode::RegisterTabFactories(TSharedPtr<FTabManager> InTabManager)
@@ -36,4 +39,3 @@ void FMapPresetApplicationMode::RegisterTabFactories(TSharedPtr<FTabManager> InT
 	}
 	FApplicationMode::RegisterTabFactories(InTabManager);
 }
-

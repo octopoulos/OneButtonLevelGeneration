@@ -17,53 +17,53 @@
 #include "Utils/OCGLandscapeUtil.h"
 
 #if WITH_EDITOR
-#include "Landscape.h"
-#include "LandscapeSettings.h"
-#if ENGINE_MINOR_VERSION > 5
-#include "LandscapeEditLayer.h"
-#endif
+#	include "Landscape.h"
+#	include "LandscapeSettings.h"
+#	if ENGINE_MINOR_VERSION > 5
+#		include "LandscapeEditLayer.h"
+#	endif
 
-#include "LandscapeProxy.h"
-#include "LocationVolume.h"
-#include "LandscapeStreamingProxy.h"
-#include "LandscapeEdit.h"
+#	include "LandscapeProxy.h"
+#	include "LocationVolume.h"
+#	include "LandscapeStreamingProxy.h"
+#	include "LandscapeEdit.h"
 
 #endif
 
 static void GetRuntimeVirtualTextureVolumes(ALandscape* InLandscapeActor, TArray<URuntimeVirtualTexture*>& OutVirtualTextures)
 {
-    UWorld* World = InLandscapeActor != nullptr ? InLandscapeActor->GetWorld() : nullptr;
-    if (World == nullptr)
-    {
-        return;
-    }
+	UWorld* World = InLandscapeActor != nullptr ? InLandscapeActor->GetWorld() : nullptr;
+	if (World == nullptr)
+	{
+		return;
+	}
 
-    TArray<URuntimeVirtualTexture*> FoundVolumes;
-    for (TObjectIterator<URuntimeVirtualTextureComponent> It(RF_ClassDefaultObject, false, EInternalObjectFlags::Garbage); It; ++It)
-    {
-        if (It->GetWorld() == World)
-        {
-            if (URuntimeVirtualTexture* VirtualTexture = It->GetVirtualTexture())
-            {
-                FoundVolumes.Add(VirtualTexture);
-            }
-        }
-    }
+	TArray<URuntimeVirtualTexture*> FoundVolumes;
+	for (TObjectIterator<URuntimeVirtualTextureComponent> It(RF_ClassDefaultObject, false, EInternalObjectFlags::Garbage); It; ++It)
+	{
+		if (It->GetWorld() == World)
+		{
+			if (URuntimeVirtualTexture* VirtualTexture = It->GetVirtualTexture())
+			{
+				FoundVolumes.Add(VirtualTexture);
+			}
+		}
+	}
 
-    for (URuntimeVirtualTexture* VirtualTexture : InLandscapeActor->RuntimeVirtualTextures)
-    {
-        if (VirtualTexture != nullptr && FoundVolumes.Find(VirtualTexture) == INDEX_NONE)
-        {
-            OutVirtualTextures.Add(VirtualTexture);
-        }
-    }
+	for (URuntimeVirtualTexture* VirtualTexture : InLandscapeActor->RuntimeVirtualTextures)
+	{
+		if (VirtualTexture != nullptr && FoundVolumes.Find(VirtualTexture) == INDEX_NONE)
+		{
+			OutVirtualTextures.Add(VirtualTexture);
+		}
+	}
 }
 
 static TArray<ALocationVolume*> GetLandscapeRegionVolumes(const ALandscape* InLandscape)
 {
 #if WITH_EDITOR
 	TArray<ALocationVolume*> LandscapeRegionVolumes;
-	TArray<AActor*> Children;
+	TArray<AActor*>          Children;
 	if (InLandscape)
 	{
 		InLandscape->GetAttachedActors(Children);
@@ -93,20 +93,16 @@ UOCGLandscapeGenerateComponent::UOCGLandscapeGenerateComponent()
 	PrimaryComponentTick.bCanEverTick = true;
 }
 
-
 // Called when the game starts
 void UOCGLandscapeGenerateComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
 	// ...
-	
 }
 
-
 // Called every frame
-void UOCGLandscapeGenerateComponent::TickComponent(float DeltaTime, ELevelTick TickType,
-                                                   FActorComponentTickFunction* ThisTickFunction)
+void UOCGLandscapeGenerateComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
@@ -132,27 +128,29 @@ ALandscape* UOCGLandscapeGenerateComponent::GetLandscape()
 
 void UOCGLandscapeGenerateComponent::GenerateLandscapeInEditor()
 {
-    GenerateLandscape(GetWorld());
+	GenerateLandscape(GetWorld());
 }
 
 void UOCGLandscapeGenerateComponent::GenerateLandscape(UWorld* World)
 {
 #if WITH_EDITOR
-    AOCGLevelGenerator* LevelGenerator = GetLevelGenerator();
-    UMapPreset* MapPreset = nullptr;
+	AOCGLevelGenerator* LevelGenerator = GetLevelGenerator();
+	UMapPreset*         MapPreset      = nullptr;
 	if (LevelGenerator)
 	{
 		MapPreset = LevelGenerator->GetMapPreset();
 	}
-	
-	if (MapPreset == nullptr)
-		return;
 
-    if (!World || World->IsGameWorld())
-    {
-        UE_LOG(LogOCGModule, Error, TEXT("유효한 에디터 월드가 아닙니다."));
-        return;
-    }
+	if (MapPreset == nullptr)
+	{
+		return;
+	}
+
+	if (!World || World->IsGameWorld())
+	{
+		UE_LOG(LogOCGModule, Error, TEXT("유효한 에디터 월드가 아닙니다."));
+		return;
+	}
 
 	bool IsCreateNewLandscape = false;
 	if (ShouldCreateNewLandscape(World))
@@ -162,7 +160,7 @@ void UOCGLandscapeGenerateComponent::GenerateLandscape(UWorld* World)
 		{
 			ALandscapeStreamingProxy* Proxy = *It;
 			if (Proxy && Proxy->GetLandscapeActor() == TargetLandscape)
-			{ 
+			{
 				ProxiesToDelete.Add(Proxy);
 			}
 		}
@@ -183,7 +181,7 @@ void UOCGLandscapeGenerateComponent::GenerateLandscape(UWorld* World)
 			{
 				Volume->Destroy();
 			}
-			
+
 			TargetLandscape->Destroy();
 		}
 
@@ -207,9 +205,9 @@ void UOCGLandscapeGenerateComponent::GenerateLandscape(UWorld* World)
 	else
 	{
 		ULandscapeInfo* LandscapeInfo = TargetLandscape->GetLandscapeInfo();
-		FIntRect LandscapeExtent;
+		FIntRect        LandscapeExtent;
 		LandscapeInfo->GetLandscapeExtent(LandscapeExtent);
-	
+
 		LandscapeExtent.Max.X += 1;
 		LandscapeExtent.Max.Y += 1;
 		int32 LandscapeResolution = LandscapeExtent.Max.X * LandscapeExtent.Max.Y;
@@ -220,7 +218,7 @@ void UOCGLandscapeGenerateComponent::GenerateLandscape(UWorld* World)
 			{
 				ALandscapeStreamingProxy* Proxy = *It;
 				if (Proxy && Proxy->GetLandscapeActor() == TargetLandscape)
-				{ 
+				{
 					ProxiesToDelete.Add(Proxy);
 				}
 			}
@@ -241,7 +239,7 @@ void UOCGLandscapeGenerateComponent::GenerateLandscape(UWorld* World)
 				{
 					Volume->Destroy();
 				}
-			
+
 				TargetLandscape->Destroy();
 			}
 
@@ -251,7 +249,7 @@ void UOCGLandscapeGenerateComponent::GenerateLandscape(UWorld* World)
 				Owner->Modify();
 				(void)Owner->MarkPackageDirty();
 			}
-			
+
 			TargetLandscape = World->SpawnActor<ALandscape>();
 			TargetLandscape->Modify();
 			TargetLandscapeAsset = TargetLandscape;
@@ -264,80 +262,81 @@ void UOCGLandscapeGenerateComponent::GenerateLandscape(UWorld* World)
 		}
 	}
 
-#if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION <= 6
-    TargetLandscape->bCanHaveLayersContent = true;
-#endif
+#	if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION <= 6
+	TargetLandscape->bCanHaveLayersContent = true;
+#	endif
 	if (TargetLandscape->LandscapeMaterial != MapPreset->LandscapeMaterial)
 	{
 		FScopedSlowTask SlowTask(5.0f, NSLOCTEXT("ONEBUTTONLEVELGENERATION_API", "ChangingMaterial", "Change Landscape Material"));
 		SlowTask.MakeDialog();
-		
+
 		FProperty* MaterialProperty = FindFProperty<FProperty>(ALandscapeProxy::StaticClass(), "LandscapeMaterial");
 		SlowTask.EnterProgressFrame(1.0f);
-		
+
 		TargetLandscape->PreEditChange(MaterialProperty);
 		SlowTask.EnterProgressFrame(1.0f);
-		
+
 		TargetLandscape->LandscapeMaterial = MapPreset->LandscapeMaterial;
 		SlowTask.EnterProgressFrame(1.0f);
-		
+
 		FPropertyChangedEvent MaterialPropertyChangedEvent(MaterialProperty);
 		SlowTask.EnterProgressFrame(1.0f);
-		
+
 		TargetLandscape->PostEditChangeProperty(MaterialPropertyChangedEvent);
 		SlowTask.EnterProgressFrame();
 	}
-	
+
 	FIntPoint MapResolution = MapPreset->MapResolution;
 
 	int32 PrevStaticLightingLOD = TargetLandscape->StaticLightingLOD;
-	int32 CurStaticLightingLOD = FMath::DivideAndRoundUp(FMath::CeilLogTwo((LandscapeSetting.SizeX * LandscapeSetting.SizeY) / (2048 * 2048) + 1), static_cast<uint32>(2));
+	int32 CurStaticLightingLOD  = FMath::DivideAndRoundUp(FMath::CeilLogTwo((LandscapeSetting.SizeX * LandscapeSetting.SizeY) / (2048 * 2048) + 1), static_cast<uint32>(2));
 	if (PrevStaticLightingLOD != CurStaticLightingLOD)
 	{
 		FProperty* StaticLightingLODProperty = FindFProperty<FProperty>(ALandscapeProxy::StaticClass(), "StaticLightingLOD");
-		TargetLandscape->StaticLightingLOD = CurStaticLightingLOD;
+		TargetLandscape->StaticLightingLOD   = CurStaticLightingLOD;
 		FPropertyChangedEvent StaticLightingLODPropertyChangedEvent(StaticLightingLODProperty);
 		TargetLandscape->PostEditChangeProperty(StaticLightingLODPropertyChangedEvent);
 	}
-	
+
 	// Package the heightmap data to be passed to the Import function as a TMap
 	// The key is the unique ID (GUID) of the layer, and the value is the heightmap data for that layer.
-    
-    TMap<FGuid, TArray<uint16>> HeightmapDataPerLayer;
-    FGuid LayerGuid = FGuid();
-    HeightmapDataPerLayer.Add(LayerGuid, LevelGenerator->GetHeightMapData());
-	
-    const TMap<FGuid, TArray<FLandscapeImportLayerInfo>> MaterialLayerDataPerLayer = OCGLandscapeUtil::PrepareLandscapeLayerData(TargetLandscape, LevelGenerator, MapPreset);
-	
-// Set the basic properties of the landscape// Set the basic properties of the landscape
-    float OffsetX = (-MapPreset->MapResolution.X / 2.f) * 100.f * MapPreset->LandscapeScale;
-    float OffsetY = (-MapPreset->MapResolution.Y / 2.f) * 100.f * MapPreset->LandscapeScale;
-    TargetLandscape->SetActorLocation(FVector(OffsetX, OffsetY, LandscapeZOffset));
-    TargetLandscape->SetActorScale3D(FVector(100.0f * MapPreset->LandscapeScale, 100.0f * MapPreset->LandscapeScale, LandscapeZScale));
+
+	TMap<FGuid, TArray<uint16>> HeightmapDataPerLayer;
+	FGuid                       LayerGuid = FGuid();
+	HeightmapDataPerLayer.Add(LayerGuid, LevelGenerator->GetHeightMapData());
+
+	const TMap<FGuid, TArray<FLandscapeImportLayerInfo>> MaterialLayerDataPerLayer = OCGLandscapeUtil::PrepareLandscapeLayerData(TargetLandscape, LevelGenerator, MapPreset);
+
+	// Set the basic properties of the landscape// Set the basic properties of the landscape
+	float OffsetX = (-MapPreset->MapResolution.X / 2.f) * 100.f * MapPreset->LandscapeScale;
+	float OffsetY = (-MapPreset->MapResolution.Y / 2.f) * 100.f * MapPreset->LandscapeScale;
+	TargetLandscape->SetActorLocation(FVector(OffsetX, OffsetY, LandscapeZOffset));
+	TargetLandscape->SetActorScale3D(FVector(100.0f * MapPreset->LandscapeScale, 100.0f * MapPreset->LandscapeScale, LandscapeZScale));
 
 	if (IsCreateNewLandscape)
 	{
 		TargetLandscape->Import(
 			FGuid::NewGuid(),
-			0, 0,
-			MapResolution.X - 1, MapResolution.Y - 1,
+			0,
+			0,
+			MapResolution.X - 1,
+			MapResolution.Y - 1,
 			MapPreset->Landscape_SectionsPerComponent,
 			LandscapeSetting.QuadsPerSection,
 			HeightmapDataPerLayer,
 			nullptr,
 			MaterialLayerDataPerLayer,
 			ELandscapeImportAlphamapType::Additive,
-			TArrayView<const FLandscapeLayer>()
-		);
+			TArrayView<const FLandscapeLayer>());
 
 		ULandscapeInfo* LandscapeInfo = TargetLandscape->GetLandscapeInfo();
-		
+
 		FActorLabelUtilities::SetActorLabelUnique(TargetLandscape, ALandscape::StaticClass()->GetName());
-		
+
 		LandscapeInfo->UpdateLayerInfoMap(TargetLandscape);
-	
+
 		OCGLandscapeUtil::AddTargetLayers(TargetLandscape, MaterialLayerDataPerLayer);
-	
+
 		OCGLandscapeUtil::ManageLandscapeRegions(World, TargetLandscape, MapPreset, LandscapeSetting);
 
 		FProperty* RuntimeVirtualTexturesProperty = FindFProperty<FProperty>(ALandscapeProxy::StaticClass(), "RuntimeVirtualTextures");
@@ -355,7 +354,7 @@ void UOCGLandscapeGenerateComponent::GenerateLandscape(UWorld* World)
 		OCGLandscapeUtil::AddTargetLayers(TargetLandscape, MaterialLayerDataPerLayer);
 		OCGLandscapeUtil::ImportMapDatas(World, TargetLandscape, LevelGenerator->GetHeightMapData(), *MaterialLayerDataPerLayer.Find(LayerGuid));
 	}
-	
+
 	TargetLandscape->ReregisterAllComponents();
 	CreateRuntimeVirtualTextureVolume(TargetLandscape);
 #endif
@@ -364,20 +363,20 @@ void UOCGLandscapeGenerateComponent::GenerateLandscape(UWorld* World)
 void UOCGLandscapeGenerateComponent::InitializeLandscapeSetting(const UWorld* World)
 {
 #if WITH_EDITOR
-    AOCGLevelGenerator* LevelGenerator = GetLevelGenerator();
-    const UMapPreset* MapPreset = LevelGenerator->GetMapPreset();
-	
-	LandscapeSetting.WorldPartitionGridSize = MapPreset->WorldPartitionGridSize;
+	AOCGLevelGenerator* LevelGenerator = GetLevelGenerator();
+	const UMapPreset*   MapPreset      = LevelGenerator->GetMapPreset();
+
+	LandscapeSetting.WorldPartitionGridSize   = MapPreset->WorldPartitionGridSize;
 	LandscapeSetting.WorldPartitionRegionSize = MapPreset->WorldPartitionRegionSize;
 
-	LandscapeSetting.QuadsPerSection = static_cast<uint32>(MapPreset->Landscape_QuadsPerSection);
-	LandscapeSetting.ComponentCountX = (MapPreset->MapResolution.X - 1) / (LandscapeSetting.QuadsPerSection * MapPreset->Landscape_SectionsPerComponent);
-	LandscapeSetting.ComponentCountY = (MapPreset->MapResolution.Y - 1) / (LandscapeSetting.QuadsPerSection * MapPreset->Landscape_SectionsPerComponent);
+	LandscapeSetting.QuadsPerSection   = static_cast<uint32>(MapPreset->Landscape_QuadsPerSection);
+	LandscapeSetting.ComponentCountX   = (MapPreset->MapResolution.X - 1) / (LandscapeSetting.QuadsPerSection * MapPreset->Landscape_SectionsPerComponent);
+	LandscapeSetting.ComponentCountY   = (MapPreset->MapResolution.Y - 1) / (LandscapeSetting.QuadsPerSection * MapPreset->Landscape_SectionsPerComponent);
 	LandscapeSetting.QuadsPerComponent = MapPreset->Landscape_SectionsPerComponent * LandscapeSetting.QuadsPerSection;
-	   
+
 	LandscapeSetting.SizeX = LandscapeSetting.ComponentCountX * LandscapeSetting.QuadsPerComponent + 1;
 	LandscapeSetting.SizeY = LandscapeSetting.ComponentCountY * LandscapeSetting.QuadsPerComponent + 1;
-	
+
 	if ((MapPreset->MapResolution.X - 1) % (LandscapeSetting.QuadsPerSection * MapPreset->Landscape_SectionsPerComponent) != 0 || (MapPreset->MapResolution.Y - 1) % (LandscapeSetting.QuadsPerSection * MapPreset->Landscape_SectionsPerComponent) != 0)
 	{
 		UE_LOG(LogOCGModule, Warning, TEXT("LandscapeSize is not a recommended value."));
@@ -387,21 +386,21 @@ void UOCGLandscapeGenerateComponent::InitializeLandscapeSetting(const UWorld* Wo
 
 AOCGLevelGenerator* UOCGLandscapeGenerateComponent::GetLevelGenerator() const
 {
-    return Cast<AOCGLevelGenerator>(GetOwner());
+	return Cast<AOCGLevelGenerator>(GetOwner());
 }
 
 bool UOCGLandscapeGenerateComponent::CreateRuntimeVirtualTextureVolume(ALandscape* InLandscapeActor)
 {
 #if WITH_EDITOR
-    if (InLandscapeActor == nullptr)
-    {
-        return false;
-    }
+	if (InLandscapeActor == nullptr)
+	{
+		return false;
+	}
 	for (auto RVTVolumeAsset : CachedRuntimeVirtualTextureVolumeAssets)
 	{
 		CachedRuntimeVirtualTextureVolumes.Add(RVTVolumeAsset.LoadSynchronous());
 	}
-	
+
 	for (ARuntimeVirtualTextureVolume* RVTVolume : CachedRuntimeVirtualTextureVolumes)
 	{
 		if (RVTVolume)
@@ -410,34 +409,34 @@ bool UOCGLandscapeGenerateComponent::CreateRuntimeVirtualTextureVolume(ALandscap
 		}
 	}
 	CachedRuntimeVirtualTextureVolumes.Empty();
-	
-    TArray<URuntimeVirtualTexture*> VirtualTextureVolumesToCreate;
-    GetRuntimeVirtualTextureVolumes(InLandscapeActor, VirtualTextureVolumesToCreate);
-    if (VirtualTextureVolumesToCreate.Num() == 0)
-    {
-        return false;
-    }
-    
-    for (URuntimeVirtualTexture* VirtualTexture : VirtualTextureVolumesToCreate)
-    {
-    	Modify();
-    	if (AActor* Owner = GetOwner())
-    	{
-    		Owner->Modify();
-    		(void)Owner->MarkPackageDirty();
-    	}
-    	
-    	ARuntimeVirtualTextureVolume* NewRVTVolume = InLandscapeActor->GetWorld()->SpawnActor<ARuntimeVirtualTextureVolume>();
-    	NewRVTVolume->Modify();
-    	CachedRuntimeVirtualTextureVolumeAssets.Add(NewRVTVolume);
-    	
-    	NewRVTVolume->VirtualTextureComponent->SetVirtualTexture(VirtualTexture);
-    	NewRVTVolume->VirtualTextureComponent->SetBoundsAlignActor(InLandscapeActor);
-    	NewRVTVolume->SetIsSpatiallyLoaded(false);
-  
-    	RuntimeVirtualTexture::SetBounds(NewRVTVolume->VirtualTextureComponent);
-    	CachedRuntimeVirtualTextureVolumes.Add(NewRVTVolume);
-    }
+
+	TArray<URuntimeVirtualTexture*> VirtualTextureVolumesToCreate;
+	GetRuntimeVirtualTextureVolumes(InLandscapeActor, VirtualTextureVolumesToCreate);
+	if (VirtualTextureVolumesToCreate.Num() == 0)
+	{
+		return false;
+	}
+
+	for (URuntimeVirtualTexture* VirtualTexture : VirtualTextureVolumesToCreate)
+	{
+		Modify();
+		if (AActor* Owner = GetOwner())
+		{
+			Owner->Modify();
+			(void)Owner->MarkPackageDirty();
+		}
+
+		ARuntimeVirtualTextureVolume* NewRVTVolume = InLandscapeActor->GetWorld()->SpawnActor<ARuntimeVirtualTextureVolume>();
+		NewRVTVolume->Modify();
+		CachedRuntimeVirtualTextureVolumeAssets.Add(NewRVTVolume);
+
+		NewRVTVolume->VirtualTextureComponent->SetVirtualTexture(VirtualTexture);
+		NewRVTVolume->VirtualTextureComponent->SetBoundsAlignActor(InLandscapeActor);
+		NewRVTVolume->SetIsSpatiallyLoaded(false);
+
+		RuntimeVirtualTexture::SetBounds(NewRVTVolume->VirtualTextureComponent);
+		CachedRuntimeVirtualTextureVolumes.Add(NewRVTVolume);
+	}
 
 	if (!CachedRuntimeVirtualTextureVolumes.IsEmpty())
 	{
@@ -448,8 +447,8 @@ bool UOCGLandscapeGenerateComponent::CreateRuntimeVirtualTextureVolume(ALandscap
 			VolumeOrigin = VolumeBox->GetComponentLocation();
 		}
 	}
-	
-    return true;
+
+	return true;
 #endif
 }
 
@@ -462,7 +461,7 @@ bool UOCGLandscapeGenerateComponent::ShouldCreateNewLandscape(const UWorld* Worl
 	{
 		return true;
 	}
-		
+
 	if (!TargetLandscape)
 	{
 		if (TargetLandscapeAsset.ToSoftObjectPath().IsValid())
@@ -483,46 +482,36 @@ bool UOCGLandscapeGenerateComponent::ShouldCreateNewLandscape(const UWorld* Worl
 		}
 		return true;
 	}
-	
+
 	return false;
 }
 
-bool UOCGLandscapeGenerateComponent::IsLandscapeSettingChanged(const FLandscapeSetting& Prev,
-	const FLandscapeSetting& Curr)
+bool UOCGLandscapeGenerateComponent::IsLandscapeSettingChanged(const FLandscapeSetting& Prev, const FLandscapeSetting& Curr)
 {
-	return Prev.WorldPartitionGridSize != Curr.WorldPartitionGridSize ||
-		   Prev.WorldPartitionRegionSize != Curr.WorldPartitionRegionSize ||
-		   Prev.QuadsPerSection != Curr.QuadsPerSection ||
-		   Prev.TotalLandscapeComponentSize != Curr.TotalLandscapeComponentSize ||
-		   Prev.ComponentCountX != Curr.ComponentCountX ||
-		   Prev.ComponentCountY != Curr.ComponentCountY ||
-		   Prev.QuadsPerComponent != Curr.QuadsPerComponent ||
-	       Prev.SizeX != Curr.SizeX ||
-	       Prev.SizeY != Curr.SizeY;
+	return Prev.WorldPartitionGridSize != Curr.WorldPartitionGridSize || Prev.WorldPartitionRegionSize != Curr.WorldPartitionRegionSize || Prev.QuadsPerSection != Curr.QuadsPerSection || Prev.TotalLandscapeComponentSize != Curr.TotalLandscapeComponentSize || Prev.ComponentCountX != Curr.ComponentCountX || Prev.ComponentCountY != Curr.ComponentCountY || Prev.QuadsPerComponent != Curr.QuadsPerComponent || Prev.SizeX != Curr.SizeX || Prev.SizeY != Curr.SizeY;
 }
 
 FVector UOCGLandscapeGenerateComponent::GetLandscapePointWorldPosition(const FIntPoint& MapPoint, const FVector& LandscapeOrigin, const FVector& LandscapeExtent) const
 {
-    if (!TargetLandscape || !GetLevelGenerator())
-    {
-        UE_LOG(LogOCGModule , Error, TEXT("TargetLandscape or MapPreset is not set. Cannot get world position."));
-        return FVector::ZeroVector;
-    }
+	if (!TargetLandscape || !GetLevelGenerator())
+	{
+		UE_LOG(LogOCGModule, Error, TEXT("TargetLandscape or MapPreset is not set. Cannot get world position."));
+		return FVector::ZeroVector;
+	}
 
-    const UMapPreset* MapPreset = GetLevelGenerator()->GetMapPreset();
+	const UMapPreset* MapPreset = GetLevelGenerator()->GetMapPreset();
 
-    float OffsetX = (-MapPreset->MapResolution.X / 2.f) * 100.f * MapPreset->LandscapeScale;
-    float OffsetY = (-MapPreset->MapResolution.Y / 2.f) * 100.f * MapPreset->LandscapeScale;
-	
-    FVector WorldLocation = LandscapeOrigin + FVector(
-        2 * (MapPoint.X / static_cast<float>(MapPreset->MapResolution.X)) * LandscapeExtent.X + OffsetX,
-        2 * (MapPoint.Y / static_cast<float>(MapPreset->MapResolution.Y)) * LandscapeExtent.Y + OffsetY,
-        0.0f 
-    );
+	const float OffsetX = (-MapPreset->MapResolution.X / 2.f) * 100.f * MapPreset->LandscapeScale;
+	const float OffsetY = (-MapPreset->MapResolution.Y / 2.f) * 100.f * MapPreset->LandscapeScale;
 
-    int Index = MapPoint.Y * MapPreset->MapResolution.X + MapPoint.X;
-    float HeightMapValue = GetLevelGenerator()->GetHeightMapData()[Index];
+	FVector WorldLocation = LandscapeOrigin + FVector(
+		2 * (MapPoint.X / static_cast<float>(MapPreset->MapResolution.X)) * LandscapeExtent.X + OffsetX,
+		2 * (MapPoint.Y / static_cast<float>(MapPreset->MapResolution.Y)) * LandscapeExtent.Y + OffsetY,
+		0.0f
+	);
 
+	const int32 Index          = MapPoint.Y * MapPreset->MapResolution.X + MapPoint.X;
+	const float HeightMapValue = GetLevelGenerator()->GetHeightMapData()[Index];
 
 	if (TOptional<float> Height = TargetLandscape->GetHeightAtLocation(WorldLocation))
 	{
@@ -530,19 +519,19 @@ FVector UOCGLandscapeGenerateComponent::GetLandscapePointWorldPosition(const FIn
 	}
 	else
 	{
-		WorldLocation.Z  = (HeightMapValue - 32768) / 128 * LandscapeZScale; // Adjust height based on the height map value and scale
+		WorldLocation.Z = (HeightMapValue - 32768) / 128 * LandscapeZScale; // Adjust height based on the height map value and scale
 	}
-    return WorldLocation;
+	return WorldLocation;
 }
 
 void UOCGLandscapeGenerateComponent::PostInitProperties()
 {
 	Super::PostInitProperties();
-	
+
 	if (!HasAnyFlags(RF_ClassDefaultObject))
 	{
-		ColorRVT = ColorRVTAsset.LoadSynchronous();
-		HeightRVT = HeightRVTAsset.LoadSynchronous();
+		ColorRVT        = ColorRVTAsset.LoadSynchronous();
+		HeightRVT       = HeightRVTAsset.LoadSynchronous();
 		DisplacementRVT = DisplacementRVTAsset.LoadSynchronous();
 		if (!ColorRVT)
 		{

@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "Framework/Commands/Commands.h"
 
-
 class FMapPresetEditorCommands : public TCommands<FMapPresetEditorCommands>
 {
 public:

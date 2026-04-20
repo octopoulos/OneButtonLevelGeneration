@@ -11,9 +11,8 @@ class UPCGGraph;
 class UPCGComponent;
 class UBoxComponent;
 
-
 UCLASS()
-class ONEBUTTONLEVELGENERATION_API AOCGLandscapeVolume: public AActor
+class ONEBUTTONLEVELGENERATION_API AOCGLandscapeVolume : public AActor
 {
 	GENERATED_BODY()
 
@@ -21,6 +20,7 @@ public:
 	AOCGLandscapeVolume();
 
 	UBoxComponent* GetBoxComponent() const { return BoxComponent; }
+
 	UPCGComponent* GetPCGComponent() const { return PCGComponent; }
 
 #if WITH_EDITOR

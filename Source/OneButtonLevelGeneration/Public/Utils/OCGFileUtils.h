@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 
 /**
- * 
+ *
  */
 struct ONEBUTTONLEVELGENERATION_API FOCGFileUtils
 {

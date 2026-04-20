@@ -37,11 +37,11 @@ void SMapPresetEnvironmentLightingViewer::Construct(const FArguments& InArgs)
 	World = InArgs._World;
 
 	FPropertyEditorModule& PropertyEditorModule = FModuleManager::GetModuleChecked<FPropertyEditorModule>("PropertyEditor");
-	FDetailsViewArgs DetailsViewArgs;
-	DetailsViewArgs.bAllowSearch = true;
+	FDetailsViewArgs       DetailsViewArgs;
+	DetailsViewArgs.bAllowSearch     = true;
 	DetailsViewArgs.NameAreaSettings = FDetailsViewArgs::ComponentsAndActorsUseNameArea;
 
-	for (int i = 0; i < ENVLIGHT_MAX_DETAILSVIEWS; ++i)
+	for (int32 i = 0; i < ENVLIGHT_MAX_DETAILSVIEWS; ++i)
 	{
 		DetailsViews[i] = PropertyEditorModule.CreateDetailView(DetailsViewArgs);
 		DetailsViews[i]->SetIsPropertyVisibleDelegate(FIsPropertyVisible::CreateSP(this, &SMapPresetEnvironmentLightingViewer::GetIsPropertyVisible));
@@ -49,9 +49,10 @@ void SMapPresetEnvironmentLightingViewer::Construct(const FArguments& InArgs)
 	}
 	DefaultForegroundColor = DetailsViews[0]->GetColorAndOpacity();
 
-	CheckBoxAtmosphericLightsOnly =	SNew(SCheckBox)
-									.Padding(5.0f)
-									.ToolTipText(LOCTEXT("CheckBoxAtmosphericLightsOnlyToolTip", "Wether to only present atmospheric lights."));
+	// clang-format off
+	CheckBoxAtmosphericLightsOnly = SNew(SCheckBox)
+		.Padding(5.0f)
+		.ToolTipText(LOCTEXT("CheckBoxAtmosphericLightsOnlyToolTip", "Wether to only present atmospheric lights."));
 
 	ComboBoxDetailFilterOptions.Add(MakeShared<FString>(TEXT("Minimal")));
 	ComboBoxDetailFilterOptions.Add(MakeShared<FString>(TEXT("Normal")));
@@ -59,37 +60,37 @@ void SMapPresetEnvironmentLightingViewer::Construct(const FArguments& InArgs)
 
 	SelectedComboBoxDetailFilterOptions = 0;
 	ComboBoxDetailFilter =	SNew(SComboBox<TSharedPtr<FString>>)
-							.ToolTipText(LOCTEXT("ComboBoxDetailFilterTooTip", "Select the amount of details desired."))
-							.OptionsSource(&ComboBoxDetailFilterOptions)
-							.InitiallySelectedItem(ComboBoxDetailFilterOptions[SelectedComboBoxDetailFilterOptions])
-							.OnSelectionChanged(this, &SMapPresetEnvironmentLightingViewer::ComboBoxDetailFilterWidgetSelectionChanged)
-							.OnGenerateWidget(this, &SMapPresetEnvironmentLightingViewer::ComboBoxDetailFilterWidget)
-							[
-								SNew(STextBlock)
-								.Text(this, &SMapPresetEnvironmentLightingViewer::GetSelectedComboBoxDetailFilterTextLabel)
-							];
+		.ToolTipText(LOCTEXT("ComboBoxDetailFilterTooTip", "Select the amount of details desired."))
+		.OptionsSource(&ComboBoxDetailFilterOptions)
+		.InitiallySelectedItem(ComboBoxDetailFilterOptions[SelectedComboBoxDetailFilterOptions])
+		.OnSelectionChanged(this, &SMapPresetEnvironmentLightingViewer::ComboBoxDetailFilterWidgetSelectionChanged)
+		.OnGenerateWidget(this, &SMapPresetEnvironmentLightingViewer::ComboBoxDetailFilterWidget)
+		[
+			SNew(STextBlock)
+			.Text(this, &SMapPresetEnvironmentLightingViewer::GetSelectedComboBoxDetailFilterTextLabel)
+		];
 
 	uint32 Zero = 0;
 	ButtonCreateSkyLight = SNew(SButton)
-					.HAlign(HAlign_Center)
-					.OnClicked(this, &SMapPresetEnvironmentLightingViewer::OnButtonCreateSkyLight)
-					.Text(LOCTEXT("CreateSkyLight", "Create Sky Light"));
+		.HAlign(HAlign_Center)
+		.OnClicked(this, &SMapPresetEnvironmentLightingViewer::OnButtonCreateSkyLight)
+		.Text(LOCTEXT("CreateSkyLight", "Create Sky Light"));
 	ButtonCreateAtmosphericLight0 = SNew(SButton)
-					.HAlign(HAlign_Center)
-					.OnClicked(this, &SMapPresetEnvironmentLightingViewer::OnButtonCreateDirectionalLight, Zero)
-					.Text(LOCTEXT("CreateAtmosphericLight0", "Create Directional Light"));
+		.HAlign(HAlign_Center)
+		.OnClicked(this, &SMapPresetEnvironmentLightingViewer::OnButtonCreateDirectionalLight, Zero)
+		.Text(LOCTEXT("CreateAtmosphericLight0", "Create Directional Light"));
 	ButtonCreateSkyAtmosphere = SNew(SButton)
-					.HAlign(HAlign_Center)
-					.OnClicked(this, &SMapPresetEnvironmentLightingViewer::OnButtonCreateSkyAtmosphere)
-					.Text(LOCTEXT("CreateSkyAtmosphere", "Create Sky Atmosphere"));
+		.HAlign(HAlign_Center)
+		.OnClicked(this, &SMapPresetEnvironmentLightingViewer::OnButtonCreateSkyAtmosphere)
+		.Text(LOCTEXT("CreateSkyAtmosphere", "Create Sky Atmosphere"));
 	ButtonCreateVolumetricCloud= SNew(SButton)
-					.HAlign(HAlign_Center)
-					.OnClicked(this, &SMapPresetEnvironmentLightingViewer::OnButtonCreateVolumetricCloud)
-					.Text(LOCTEXT("CreateVolumetricCloud", "Create Volumetric Cloud"));
+		.HAlign(HAlign_Center)
+		.OnClicked(this, &SMapPresetEnvironmentLightingViewer::OnButtonCreateVolumetricCloud)
+		.Text(LOCTEXT("CreateVolumetricCloud", "Create Volumetric Cloud"));
 	ButtonCreateHeightFog= SNew(SButton)
-					.HAlign(HAlign_Center)
-					.OnClicked(this, &SMapPresetEnvironmentLightingViewer::OnButtonCreateHeightFog)
-					.Text(LOCTEXT("CreateHeightFog", "Create Height Fog"));
+		.HAlign(HAlign_Center)
+		.OnClicked(this, &SMapPresetEnvironmentLightingViewer::OnButtonCreateHeightFog)
+		.Text(LOCTEXT("CreateHeightFog", "Create Height Fog"));
 
 	this->ChildSlot
 	[
@@ -226,7 +227,9 @@ void SMapPresetEnvironmentLightingViewer::Construct(const FArguments& InArgs)
 			]
 		]
 	];
+	// clang-format on
 }
+
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
 TSharedRef<SWidget> SMapPresetEnvironmentLightingViewer::GetContent()
@@ -236,7 +239,7 @@ TSharedRef<SWidget> SMapPresetEnvironmentLightingViewer::GetContent()
 
 SMapPresetEnvironmentLightingViewer::~SMapPresetEnvironmentLightingViewer()
 {
-	for (int i = 0; i < ENVLIGHT_MAX_DETAILSVIEWS; ++i)
+	for (int32 i = 0; i < ENVLIGHT_MAX_DETAILSVIEWS; ++i)
 	{
 		if (DetailsViews[i].IsValid())
 		{
@@ -245,34 +248,34 @@ SMapPresetEnvironmentLightingViewer::~SMapPresetEnvironmentLightingViewer()
 	}
 }
 
-void SMapPresetEnvironmentLightingViewer::Tick(const FGeometry& AllottedGeometry, const double InCurrentTime,
-	const float InDeltaTime)
+void SMapPresetEnvironmentLightingViewer::Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime)
 {
 	if (!World.IsValid())
 	{
 		return;
 	}
 
-	int NumDetailsView = 0;
+	int32 NumDetailsView = 0;
 
-	auto GetAtmosphericLight = [&](const uint8 DesiredLightIndex)
-	{
+	auto GetAtmosphericLight = [&](const uint8 DesiredLightIndex) {
 		UDirectionalLightComponent* SelectedAtmosphericLight = nullptr;
-		float SelectedLightLuminance = 0.0f;
+		float                       SelectedLightLuminance   = 0.0f;
 		for (TObjectIterator<UDirectionalLightComponent> ComponentIt; ComponentIt; ++ComponentIt)
 		{
 			if (ComponentIt->GetWorld() == World && ComponentIt->IsRenderStateCreated())
 			{
 				UDirectionalLightComponent* AtmosphericLight = *ComponentIt;
 
-				if ((CheckBoxAtmosphericLightsOnly->IsChecked() && !AtmosphericLight->IsUsedAsAtmosphereSunLight()) 
+				if ((CheckBoxAtmosphericLightsOnly->IsChecked() && !AtmosphericLight->IsUsedAsAtmosphereSunLight())
 					|| AtmosphericLight->GetAtmosphereSunLightIndex() != DesiredLightIndex || !AtmosphericLight->GetVisibleFlag()
 					/*|| AtmosphericLight->*/)
+				{
 					continue;
+				}
 
 				float LightLuminance = AtmosphericLight->GetColoredLightBrightness().GetLuminance();
-				if (!SelectedAtmosphericLight ||					// Set it if null
-					SelectedLightLuminance < LightLuminance)		// Or choose the brightest atmospheric light
+				if (!SelectedAtmosphericLight ||             // Set it if null
+					SelectedLightLuminance < LightLuminance) // Or choose the brightest atmospheric light
 				{
 					SelectedAtmosphericLight = AtmosphericLight;
 				}
@@ -286,8 +289,7 @@ void SMapPresetEnvironmentLightingViewer::Tick(const FGeometry& AllottedGeometry
 	FLinearColor SkyAtmosColor = DefaultForegroundColor + FLinearColor(0.0f, 0.0f, 1.0f, 0.0f);
 	FLinearColor VolCloudColor = DefaultForegroundColor;
 
-	auto AddComponentDetailView = [&](auto* InComponent, const char* ComponentName, FLinearColor& ColorAndOpacity)
-	{
+	auto AddComponentDetailView = [&](auto* InComponent, const char* ComponentName, FLinearColor& ColorAndOpacity) {
 		if (InComponent)
 		{
 			DetailsViews[NumDetailsView]->SetObject(InComponent);
@@ -347,7 +349,7 @@ void SMapPresetEnvironmentLightingViewer::Tick(const FGeometry& AllottedGeometry
 	AddComponentDetailView(HeightFogComp, "Height Fog", VolCloudColor);
 	ButtonCreateHeightFog->SetVisibility(HeightFogComp ? EVisibility::Collapsed : EVisibility::Visible);
 
-	for (int i = NumDetailsView; i < ENVLIGHT_MAX_DETAILSVIEWS; ++i)
+	for (int32 i = NumDetailsView; i < ENVLIGHT_MAX_DETAILSVIEWS; ++i)
 	{
 		// If the details view selection is already empty, don't call SetObject again.  Calling SetObject
 		// otherwise closes any active color picker (UE-121571).
@@ -366,7 +368,7 @@ FReply SMapPresetEnvironmentLightingViewer::OnButtonCreateSkyLight()
 	}
 
 	const FTransform Transform(FVector(0.0f, 0.0f, 0.0f));
-	ASkyLight* SkyLight = Cast<ASkyLight>(GEditor->AddActor(World->GetCurrentLevel(), ASkyLight::StaticClass(), Transform));
+	ASkyLight*       SkyLight = Cast<ASkyLight>(GEditor->AddActor(World->GetCurrentLevel(), ASkyLight::StaticClass(), Transform));
 	SkyLight->GetLightComponent()->SetMobility(EComponentMobility::Movable);
 	SkyLight->GetLightComponent()->SetRealTimeCaptureEnabled(true);
 
@@ -380,12 +382,12 @@ FReply SMapPresetEnvironmentLightingViewer::OnButtonCreateDirectionalLight(uint3
 		return FReply::Handled();
 	}
 
-	const FTransform Transform(FVector(0.0f, 0.0f, 0.0f));
+	const FTransform   Transform(FVector(0.0f, 0.0f, 0.0f));
 	ADirectionalLight* DirectionalLight = Cast<ADirectionalLight>(GEditor->AddActor(World->GetCurrentLevel(), ADirectionalLight::StaticClass(), Transform));
 	DirectionalLight->SetMobility(EComponentMobility::Movable);
 	DirectionalLight->SetActorRotation(FRotator(329, 346, -105));
 #if WITH_EDITORONLY_DATA
-	DirectionalLight->GetComponent()->bAtmosphereSunLight = 1;
+	DirectionalLight->GetComponent()->bAtmosphereSunLight     = 1;
 	DirectionalLight->GetComponent()->AtmosphereSunLightIndex = Index;
 	// The render proxy is create right after AddActor, so we need to mark the render state as dirty again to get the new values set on the render side too.
 	DirectionalLight->MarkComponentsRenderStateDirty();
@@ -440,8 +442,7 @@ TSharedRef<SWidget> SMapPresetEnvironmentLightingViewer::ComboBoxDetailFilterWid
 	return SNew(STextBlock).Text(FText::FromString(*ItemString));
 }
 
-void SMapPresetEnvironmentLightingViewer::ComboBoxDetailFilterWidgetSelectionChanged(TSharedPtr<FString> NewSelection,
-	[[maybe_unused]] ESelectInfo::Type SelectInfo)
+void SMapPresetEnvironmentLightingViewer::ComboBoxDetailFilterWidgetSelectionChanged(TSharedPtr<FString> NewSelection, [[maybe_unused]] ESelectInfo::Type SelectInfo)
 {
 	for (int32 i = 0; i < ComboBoxDetailFilterOptions.Num(); ++i)
 	{
@@ -451,7 +452,7 @@ void SMapPresetEnvironmentLightingViewer::ComboBoxDetailFilterWidgetSelectionCha
 			break;
 		}
 	}
-	for (int i = 0; i < ENVLIGHT_MAX_DETAILSVIEWS; ++i)
+	for (int32 i = 0; i < ENVLIGHT_MAX_DETAILSVIEWS; ++i)
 	{
 		DetailsViews[i]->Invalidate(EInvalidateWidgetReason::Paint);
 		DetailsViews[i]->ForceRefresh();
@@ -461,16 +462,16 @@ void SMapPresetEnvironmentLightingViewer::ComboBoxDetailFilterWidgetSelectionCha
 FText SMapPresetEnvironmentLightingViewer::GetSelectedComboBoxDetailFilterTextLabel() const
 {
 	int32 ComboBoxDetailFilterOptionsNum = ComboBoxDetailFilterOptions.Num();
-	int32 SelectionIndex = SelectedComboBoxDetailFilterOptions < 0 ? 0 : (SelectedComboBoxDetailFilterOptions < ComboBoxDetailFilterOptionsNum ? SelectedComboBoxDetailFilterOptions : ComboBoxDetailFilterOptionsNum-1);
+	int32 SelectionIndex                 = SelectedComboBoxDetailFilterOptions < 0 ? 0 : (SelectedComboBoxDetailFilterOptions < ComboBoxDetailFilterOptionsNum ? SelectedComboBoxDetailFilterOptions : ComboBoxDetailFilterOptionsNum - 1);
 	return FText::FromString(*ComboBoxDetailFilterOptions[SelectionIndex]);
 }
 
 bool SMapPresetEnvironmentLightingViewer::GetIsPropertyVisible(const FPropertyAndParent& PropertyAndParent) const
 {
-	const UClass* OwnerClass = PropertyAndParent.Property.GetOwner<UClass>();
+	const UClass*  OwnerClass  = PropertyAndParent.Property.GetOwner<UClass>();
 	const UStruct* OwnerStruct = PropertyAndParent.Property.GetOwner<UStruct>();
 
-	bool bShowAdvanced = SelectedComboBoxDetailFilterOptions == 0 || SelectedComboBoxDetailFilterOptions == 2;
+	bool bShowAdvanced    = SelectedComboBoxDetailFilterOptions == 0 || SelectedComboBoxDetailFilterOptions == 2;
 	bool bShowMinimalOnly = SelectedComboBoxDetailFilterOptions == 0;
 
 	if ((PropertyAndParent.Property.PropertyFlags & CPF_AdvancedDisplay) == CPF_AdvancedDisplay && !bShowAdvanced)
@@ -568,9 +569,7 @@ bool SMapPresetEnvironmentLightingViewer::GetIsPropertyVisible(const FPropertyAn
 		}
 		return true;
 	}
-	else if (OwnerClass == ULightComponent::StaticClass()
-		|| OwnerClass == ULightComponentBase::StaticClass()
-		|| OwnerClass == UDirectionalLightComponent::StaticClass())
+	else if (OwnerClass == ULightComponent::StaticClass() || OwnerClass == ULightComponentBase::StaticClass() || OwnerClass == UDirectionalLightComponent::StaticClass())
 	{
 		if (bShowMinimalOnly)
 		{

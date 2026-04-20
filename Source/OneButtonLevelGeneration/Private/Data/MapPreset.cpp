@@ -64,10 +64,8 @@ void UMapPreset::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEv
 		}
 	}
 
-	if (
-		PropertyName == GET_MEMBER_NAME_CHECKED(ThisClass, LandscapeMaterial)
-		|| PropertyName == GET_MEMBER_NAME_CHECKED(ThisClass, bContainWater)
-	)
+	if (PropertyName == GET_MEMBER_NAME_CHECKED(ThisClass, LandscapeMaterial)
+		|| PropertyName == GET_MEMBER_NAME_CHECKED(ThisClass, bContainWater))
 	{
 		UpdateInternalLandscapeFilterNames();
 	}
@@ -81,10 +79,7 @@ void UMapPreset::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEv
 	}
 
 	// Update Landscape Settings
-	if (PropertyName == GET_MEMBER_NAME_CHECKED(ThisClass, Landscape_QuadsPerSection) ||
-		PropertyName == GET_MEMBER_NAME_CHECKED(ThisClass, Landscape_ComponentCount) ||
-		PropertyName == GET_MEMBER_NAME_CHECKED(ThisClass, Landscape_SectionsPerComponent) ||
-		PropertyName == GET_MEMBER_NAME_CHECKED(ThisClass, MapResolution))
+	if (PropertyName == GET_MEMBER_NAME_CHECKED(ThisClass, Landscape_QuadsPerSection) || PropertyName == GET_MEMBER_NAME_CHECKED(ThisClass, Landscape_ComponentCount) || PropertyName == GET_MEMBER_NAME_CHECKED(ThisClass, Landscape_SectionsPerComponent) || PropertyName == GET_MEMBER_NAME_CHECKED(ThisClass, MapResolution))
 	{
 		// Deactivate script execution guard to prevent infinite loop
 		FEditorScriptExecutionGuard ScriptGuard;
@@ -127,19 +122,23 @@ void UMapPreset::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEv
 		LandscapeScale = LandscapeSize * 1000.f / MapResolution.X;
 
 		if (DebugGridSpacing > static_cast<int32>(Landscape_QuadsPerSection))
+		{
 			DebugGridSpacing = static_cast<int32>(Landscape_QuadsPerSection);
+		}
 	}
 
 	if (PropertyName == GET_MEMBER_NAME_CHECKED(ThisClass, HeightmapFilePath))
 	{
 		if (HeightmapFilePath.FilePath.IsEmpty())
+		{
 			return;
+		}
 		FIntPoint HeightmapResolution;
 		if (OCGMapDataUtils::GetImageResolution(HeightmapResolution, HeightmapFilePath.FilePath))
 		{
-			MapResolution = HeightmapResolution;
+			MapResolution             = HeightmapResolution;
 			const int32 ComponentSize = static_cast<float>(Landscape_QuadsPerSection) * Landscape_SectionsPerComponent;
-			FIntPoint NewComponentCount;
+			FIntPoint   NewComponentCount;
 			NewComponentCount.X = (MapResolution.X - 1) / ComponentSize;
 			NewComponentCount.Y = (MapResolution.Y - 1) / ComponentSize;
 
@@ -151,7 +150,7 @@ void UMapPreset::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEv
 		else
 		{
 			const FText DialogTitle = FText::FromString(TEXT("Error"));
-			const FText DialogText = FText::FromString(TEXT("Failed to read Height Map texture."));
+			const FText DialogText  = FText::FromString(TEXT("Failed to read Height Map texture."));
 
 			FMessageDialog::Open(EAppMsgType::Ok, DialogText, DialogTitle);
 			return;
@@ -160,7 +159,7 @@ void UMapPreset::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEv
 		LandscapeScale = LandscapeSize * 1000.f / MapResolution.X;
 	}
 
-	if (PropertyName==GET_MEMBER_NAME_CHECKED(ThisClass, LandscapeSize))
+	if (PropertyName == GET_MEMBER_NAME_CHECKED(ThisClass, LandscapeSize))
 	{
 		LandscapeScale = LandscapeSize * 1000.f / MapResolution.X;
 	}
@@ -168,9 +167,11 @@ void UMapPreset::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEv
 	if (PropertyName == GET_MEMBER_NAME_CHECKED(ThisClass, DebugGridSpacing))
 	{
 		if (DebugGridSpacing > static_cast<int32>(Landscape_QuadsPerSection))
+		{
 			DebugGridSpacing = static_cast<int32>(Landscape_QuadsPerSection);
+		}
 	}
-	
+
 	if (PropertyName == GET_MEMBER_NAME_CHECKED(ThisClass, Biomes))
 	{
 		UpdateInternalLandscapeFilterNames();
@@ -197,7 +198,7 @@ void UMapPreset::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEv
 	{
 		if (!bSmoothHeight)
 		{
-			bSmoothBySlope = false;
+			bSmoothBySlope        = false;
 			bSmoothByMediumHeight = false;
 		}
 	}
@@ -213,12 +214,8 @@ void UMapPreset::CalculateOptimalLooseness()
 			continue;
 		}
 
-		const float DesiredSpacing = 0.316 / FMath::Sqrt(Data.PointsPerSquareMeter);
-		const float OptimalLooseness = FMath::Clamp(
-			DesiredSpacing,
-			0.0f,
-			5.0f
-		);
+		const float DesiredSpacing   = 0.316 / FMath::Sqrt(Data.PointsPerSquareMeter);
+		const float OptimalLooseness = FMath::Clamp(DesiredSpacing, 0.0f, 5.0f);
 
 		Data.Looseness = OptimalLooseness;
 	}
@@ -290,7 +287,7 @@ void UMapPreset::UpdateInternalLandscapeFilterNames()
 		// Set LayerName to Layer{idx} for each Biome
 		if (const uint32* Index = NameToIndex.Find(Data.BiomeName))
 		{
-			const uint32 LayerIdx = *Index + 1;
+			const uint32 LayerIdx   = *Index + 1;
 			Data.LayerName_Internal = FName(*FString::Printf(TEXT("Layer%d"), LayerIdx));
 			continue;
 		}

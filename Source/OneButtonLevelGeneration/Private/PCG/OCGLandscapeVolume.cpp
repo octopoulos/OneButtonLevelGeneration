@@ -6,7 +6,6 @@
 #include "PCGComponent.h"
 #include "Components/BoxComponent.h"
 
-
 AOCGLandscapeVolume::AOCGLandscapeVolume()
 {
 	PrimaryActorTick.bCanEverTick = false;
@@ -14,7 +13,7 @@ AOCGLandscapeVolume::AOCGLandscapeVolume()
 	BoxComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxComponent"));
 	BoxComponent->SetCollisionProfileName(TEXT("NoCollision"));
 	BoxComponent->SetGenerateOverlapEvents(false);
-	BoxComponent->InitBoxExtent(FVector{2500.0f, 2500.0f, 1000.0f});
+	BoxComponent->InitBoxExtent(FVector { 2500.0f, 2500.0f, 1000.0f });
 	RootComponent = BoxComponent;
 
 	PCGComponent = CreateDefaultSubobject<UPCGComponent>(TEXT("PCGComponent"));
@@ -47,7 +46,7 @@ void AOCGLandscapeVolume::PostEditChangeProperty(FPropertyChangedEvent& Property
 
 void AOCGLandscapeVolume::SetEditorAutoGenerate(bool bEnable)
 {
-	bEditorAutoGenerate = bEnable;
+	bEditorAutoGenerate               = bEnable;
 	PCGComponent->bRegenerateInEditor = bEnable;
 }
 #endif

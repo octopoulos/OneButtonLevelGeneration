@@ -5,10 +5,7 @@
 #include "CoreMinimal.h"
 #include "OCGHierarchyDataStructure.generated.h"
 
-
-/**
- * A structure that defines a mesh and its spawn weight.
- */
+// A structure that defines a mesh and its spawn weight.
 USTRUCT(BlueprintType)
 struct FOCGMeshInfo
 {
@@ -31,26 +28,18 @@ struct FOCGMeshInfo
 	FName MeshFilterName_Internal;
 };
 
-/**
- * Defines slope angle limits in degrees for mesh generation. Retrieves meshes within the Min to Max angle range.
- */
+// Defines slope angle limits in degrees for mesh generation. Retrieves meshes within the Min to Max angle range.
 USTRUCT(BlueprintType)
 struct FSlopeLimitInfo
 {
 	GENERATED_BODY()
 
 	/** The minimum slope angle in degrees (0-90). */
-	UPROPERTY(
-		EditAnywhere, BlueprintReadOnly, Category = "OCG",
-		meta = (ClampMin = 0.0f, UIMin = 0.0f, ClampMax = 90.0f, UIMax = 90.0f, Units = "Degrees")
-	)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "OCG", meta = (ClampMin = 0.0f, UIMin = 0.0f, ClampMax = 90.0f, UIMax = 90.0f, Units = "Degrees"))
 	float MinAngle = 0.0f;
 
 	/** The maximum slope angle in degrees (0-90). */
-	UPROPERTY(
-		EditAnywhere, BlueprintReadOnly, Category = "OCG",
-		meta = (ClampMin = 0.0f, UIMin = 0.0f, ClampMax = 90.0f, UIMax = 90.0f, Units = "Degrees")
-	)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "OCG", meta = (ClampMin = 0.0f, UIMin = 0.0f, ClampMax = 90.0f, UIMax = 90.0f, Units = "Degrees"))
 	float MaxAngle = 45.0f;
 
 	/** If true, retrieves meshes outside the angle range instead of inside. */
@@ -58,9 +47,7 @@ struct FSlopeLimitInfo
 	bool bInvert = false;
 };
 
-/**
- * A structure that defines height limit parameters for mesh generation.
- */
+// A structure that defines height limit parameters for mesh generation.
 USTRUCT(BlueprintType)
 struct FHeightLimitInfo
 {
@@ -164,7 +151,7 @@ struct FLandscapeHierarchyData
 
 	/** Influence range (radius) of each point along X, Y, Z axes. */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "OCG")
-	FVector PointExtents = FVector{100.0f, 100.0f, 100.0f};
+	FVector PointExtents = FVector { 100.0f, 100.0f, 100.0f };
 
 	/** Controls point steepness. Values between 0 and 1, closer to 1 means steeper slopes. */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "OCG", meta = (ClampMin = 0.0f, ClampMax = 1.0f, UIMin = 0.0f, UIMax = 1.0f))
@@ -230,10 +217,7 @@ struct FLandscapeHierarchyData
 	bool bShowDebugPoint = false;
 
 	/** Color used to visualize this layer during debugging. */
-	UPROPERTY(
-		EditAnywhere, BlueprintReadOnly, DisplayName = "Point Debug Color", Category = "OCG|Debug",
-		meta = (EditCondition = "bShowDebugPoint")
-	)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, DisplayName = "Point Debug Color", Category = "OCG|Debug", meta = (EditCondition = "bShowDebugPoint"))
 	FLinearColor DebugColorLinear = FLinearColor::White;
 
 	FLandscapeHierarchyData()
