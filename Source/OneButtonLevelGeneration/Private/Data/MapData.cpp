@@ -156,7 +156,7 @@ UTexture2D* OCGMapDataUtils::ImportTextureFromPNG(const FString& FileName)
 	// Create Package
 	const FString PackageName = FPaths::Combine(ContentDir, SubDir, AssetName);
 	UPackage*     Package     = CreatePackage(*PackageName);
-	if (!Package)
+	if (Package == nullptr)
 	{
 		UE_LOG(LogOCGModule, Error, TEXT("Failed to create package for texture"));
 		return nullptr;

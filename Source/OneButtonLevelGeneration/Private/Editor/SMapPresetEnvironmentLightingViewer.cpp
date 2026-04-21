@@ -289,8 +289,9 @@ void SMapPresetEnvironmentLightingViewer::Tick(const FGeometry& AllottedGeometry
 	FLinearColor SkyAtmosColor = DefaultForegroundColor + FLinearColor(0.0f, 0.0f, 1.0f, 0.0f);
 	FLinearColor VolCloudColor = DefaultForegroundColor;
 
-	auto AddComponentDetailView = [&](auto* InComponent, const char* ComponentName, FLinearColor& ColorAndOpacity) {
-		if (InComponent)
+	auto AddComponentDetailView = [&](auto* InComponent, const char* ComponentName, FLinearColor& ColorAndOpacity)
+	{
+		if (InComponent != nullptr)
 		{
 			DetailsViews[NumDetailsView]->SetObject(InComponent);
 			NumDetailsView++;

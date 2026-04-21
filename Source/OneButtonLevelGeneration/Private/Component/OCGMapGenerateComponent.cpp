@@ -46,7 +46,7 @@ void UOCGMapGenerateComponent::GenerateMaps()
 	}
 
 	UMapPreset* MapPreset = LevelGenerator->GetMapPreset();
-	if (!MapPreset)
+	if (MapPreset == nullptr)
 	{
 		return;
 	}
@@ -118,7 +118,7 @@ void UOCGMapGenerateComponent::GenerateMapsWithHeightMap()
 	}
 
 	UMapPreset* MapPreset = LevelGenerator->GetMapPreset();
-	if (!MapPreset)
+	if (MapPreset == nullptr)
 	{
 		return;
 	}
@@ -1271,7 +1271,7 @@ void UOCGMapGenerateComponent::DecideBiome(const UMapPreset* MapPreset, const TA
 				}
 			}
 
-			if (CurrentBiome)
+			if (CurrentBiome != nullptr)
 			{
 				FName LayerName;
 				if (CurrentBiomeIndex != INDEX_NONE)
@@ -1354,7 +1354,7 @@ void UOCGMapGenerateComponent::FinalizeBiome(const UMapPreset* MapPreset, const 
 				}
 			}
 
-			if (CurrentBiome)
+			if (CurrentBiome != nullptr)
 			{
 				FName LayerName;
 				if (CurrentBiomeIndex != INDEX_NONE)

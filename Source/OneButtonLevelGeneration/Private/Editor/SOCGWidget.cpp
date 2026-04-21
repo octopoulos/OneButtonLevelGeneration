@@ -185,7 +185,7 @@ SOCGWidget::~SOCGWidget()
 FReply SOCGWidget::OnCreateLevelGeneratorClicked()
 {
 	UWorld* World = GEditor->GetEditorWorldContext().World();
-	if (World)
+	if (World != nullptr)
 	{
 		if (LevelGeneratorActor.IsValid())
 		{
@@ -368,7 +368,7 @@ void SOCGWidget::ClearDetailsView()
 
 void SOCGWidget::RegisterDelegates()
 {
-	if (GEngine)
+	if (GEngine != nullptr)
 	{
 		OnLevelActorDeletedDelegateHandle = GEngine->OnLevelActorDeleted().AddRaw(this, &SOCGWidget::OnLevelActorDeleted);
 	}
@@ -493,7 +493,7 @@ FReply SOCGWidget::OnFocusReceived(const FGeometry& MyGeometry, const FFocusEven
 {
 	SCompoundWidget::OnFocusReceived(MyGeometry, InFocusEvent);
 
-	if (GEditor)
+	if (GEditor != nullptr)
 	{
 		if (MapPreset.IsValid())
 		{

@@ -25,11 +25,14 @@ void FOneButtonLevelGenerationModule::StartupModule()
 
 	UToolMenus::RegisterStartupCallback(FSimpleMulticastDelegate::FDelegate::CreateRaw(this, &FOneButtonLevelGenerationModule::RegisterMenus));
 
-	FGlobalTabmanager::Get()->RegisterNomadTabSpawner(
-		OCGWindowTabName, FOnSpawnTab::CreateRaw(this, &FOneButtonLevelGenerationModule::OnSpawnPluginTab))
-	.SetDisplayName(FText::FromString("OCG Window"))
-	.SetMenuType(ETabSpawnerMenuType::Hidden)
-	.SetIcon(FSlateIcon("OneButtonLevelGenerationStyle", "OneButtonLevelGeneration.TabIcon"));
+	FGlobalTabmanager::Get()
+		->RegisterNomadTabSpawner(
+			OCGWindowTabName,
+			FOnSpawnTab::CreateRaw(this, &FOneButtonLevelGenerationModule::OnSpawnPluginTab)
+		)
+		.SetDisplayName(FText::FromString("OCG Window"))
+		.SetMenuType(ETabSpawnerMenuType::Hidden)
+		.SetIcon(FSlateIcon("OneButtonLevelGenerationStyle", "OneButtonLevelGeneration.TabIcon"));
 }
 
 void FOneButtonLevelGenerationModule::ShutdownModule()
@@ -72,7 +75,9 @@ TSharedRef<SDockTab> FOneButtonLevelGenerationModule::OnSpawnPluginTab([[maybe_u
 {
 	return SNew(SDockTab)
 		.TabRole(ETabRole::NomadTab)
-			[SNew(SOCGWidget)];
+		[
+			SNew(SOCGWidget)
+		];
 }
 
 void FOneButtonLevelGenerationModule::OnPluginButtonClicked()

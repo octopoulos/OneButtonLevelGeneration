@@ -134,10 +134,10 @@ OCGLandscapeUtil::~OCGLandscapeUtil()
 void OCGLandscapeUtil::ExtractHeightMap(ALandscape* InLandscape, const FGuid InGuid, int32& OutWidth, int32& OutHeight, TArray<uint16>& OutHeightMap)
 {
 #if WITH_EDITOR
-	if (InLandscape)
+	if (InLandscape != nullptr)
 	{
 		ULandscapeInfo* Info = InLandscape->GetLandscapeInfo();
-		if (!Info)
+		if (Info == nullptr)
 		{
 			return;
 		}
@@ -161,10 +161,10 @@ void OCGLandscapeUtil::ExtractHeightMap(ALandscape* InLandscape, const FGuid InG
 
 void OCGLandscapeUtil::AddWeightMap(ALandscape* InLandscape, const int32 InTargetLayerIndex, const TArray<uint8>& InWeightMap)
 {
-	if (InLandscape)
+	if (InLandscape != nullptr)
 	{
 		ULandscapeInfo* LandscapeInfo = InLandscape->GetLandscapeInfo();
-		if (!LandscapeInfo)
+		if (LandscapeInfo == nullptr)
 		{
 			return;
 		}
@@ -188,11 +188,11 @@ void OCGLandscapeUtil::AddWeightMap(ALandscape* InLandscape, ULandscapeLayerInfo
 		return;
 	}
 
-	if (InLandscape)
+	if (InLandscape != nullptr)
 	{
 		FGuid           CurrentLayerGuid = GetLandscapeLayerGuid(InLandscape, TEXT("Layer"));
 		ULandscapeInfo* LandscapeInfo    = InLandscape->GetLandscapeInfo();
-		if (!LandscapeInfo)
+		if (LandscapeInfo == nullptr)
 		{
 			return;
 		}
@@ -247,10 +247,10 @@ void OCGLandscapeUtil::ApplyWeightMap(ALandscape* InLandscape, const int32 InTar
 		return;
 	}
 
-	if (InLandscape)
+	if (InLandscape != nullptr)
 	{
 		ULandscapeInfo* LandscapeInfo = InLandscape->GetLandscapeInfo();
-		if (!LandscapeInfo)
+		if (LandscapeInfo == nullptr)
 		{
 			return;
 		}
@@ -275,11 +275,11 @@ void OCGLandscapeUtil::ApplyWeightMap(ALandscape* InLandscape, ULandscapeLayerIn
 		return;
 	}
 
-	if (InLandscape)
+	if (InLandscape != nullptr)
 	{
 		FGuid           CurrentLayerGuid = GetLandscapeLayerGuid(InLandscape, TEXT("Layer"));
 		ULandscapeInfo* LandscapeInfo    = InLandscape->GetLandscapeInfo();
-		if (!LandscapeInfo)
+		if (LandscapeInfo == nullptr)
 		{
 			return;
 		}
@@ -320,12 +320,12 @@ void OCGLandscapeUtil::ApplyMaskedWeightMap(ALandscape* InLandscape, ULandscapeL
 		return;
 	}
 
-	if (InLandscape)
+	if (InLandscape != nullptr)
 	{
 		FGuid CurrentLayerGuid = GetLandscapeLayerGuid(InLandscape, FName(TEXT("Layer")));
 
 		ULandscapeInfo* LandscapeInfo = InLandscape->GetLandscapeInfo();
-		if (!LandscapeInfo)
+		if (LandscapeInfo == nullptr)
 		{
 			return;
 		}
@@ -374,17 +374,17 @@ void OCGLandscapeUtil::ApplyMaskedWeightMap(ALandscape* InLandscape, ULandscapeL
 void OCGLandscapeUtil::GetWeightMap(ALandscape* InLandscape, const int32 InTargetLayerIndex, TArray<uint8>& OutOriginWeightMap)
 {
 #if WITH_EDITOR
-	if (InLandscape)
+	if (InLandscape != nullptr)
 	{
 		ULandscapeInfo* LandscapeInfo = InLandscape->GetLandscapeInfo();
-		if (!LandscapeInfo)
+		if (LandscapeInfo == nullptr)
 		{
 			return;
 		}
 
 		ULandscapeLayerInfoObject* LayerInfo = LandscapeInfo->Layers[InTargetLayerIndex].LayerInfoObj;
 
-		if (!LayerInfo)
+		if (LayerInfo == nullptr)
 		{
 			return;
 		}
@@ -397,16 +397,16 @@ void OCGLandscapeUtil::GetWeightMap(ALandscape* InLandscape, const int32 InTarge
 void OCGLandscapeUtil::GetWeightMap(ALandscape* InLandscape, ULandscapeLayerInfoObject* InLayerInfo, TArray<uint8>& OutOriginWeightMap)
 {
 #if WITH_EDITOR
-	if (InLandscape)
+	if (InLandscape != nullptr)
 	{
 		FGuid           CurrentLayerGuid = GetLandscapeLayerGuid(InLandscape, TEXT("Layer"));
 		ULandscapeInfo* LandscapeInfo    = InLandscape->GetLandscapeInfo();
-		if (!LandscapeInfo)
+		if (LandscapeInfo == nullptr)
 		{
 			return;
 		}
 
-		if (!InLayerInfo)
+		if (InLayerInfo == nullptr)
 		{
 			return;
 		}
@@ -438,17 +438,17 @@ void OCGLandscapeUtil::GetWeightMap(ALandscape* InLandscape, ULandscapeLayerInfo
 void OCGLandscapeUtil::GetMaskedWeightMap(ALandscape* InLandscape, const int32 InTargetLayerIndex, const TArray<uint8>& Mask, TArray<uint8>& OutWeightMap)
 {
 #if WITH_EDITOR
-	if (InLandscape)
+	if (InLandscape != nullptr)
 	{
 		ULandscapeInfo* LandscapeInfo = InLandscape->GetLandscapeInfo();
-		if (!LandscapeInfo)
+		if (LandscapeInfo == nullptr)
 		{
 			return;
 		}
 
 		ULandscapeLayerInfoObject* LayerInfo = LandscapeInfo->Layers[InTargetLayerIndex].LayerInfoObj;
 
-		if (!LayerInfo)
+		if (LayerInfo == nullptr)
 		{
 			return;
 		}
@@ -496,10 +496,10 @@ void OCGLandscapeUtil::GetMaskedWeightMap(ALandscape* InLandscape, ULandscapeLay
 void OCGLandscapeUtil::CleanUpWeightMap(ALandscape* InLandscape)
 {
 #if WITH_EDITOR
-	if (InLandscape)
+	if (InLandscape != nullptr)
 	{
 		ULandscapeInfo* LandscapeInfo = InLandscape->GetLandscapeInfo();
-		if (!LandscapeInfo)
+		if (LandscapeInfo == nullptr)
 		{
 			return;
 		}
@@ -594,7 +594,7 @@ void OCGLandscapeUtil::ClearTargetLayers(const ALandscape* InLandscape)
 
 	for (const FName& LayerName : LayerNames)
 	{
-		if (LandscapeInfo)
+		if (LandscapeInfo != nullptr)
 		{
 			if (InLandscape->GetTargetLayers().Contains(LayerName))
 			{
@@ -607,12 +607,12 @@ void OCGLandscapeUtil::ClearTargetLayers(const ALandscape* InLandscape)
 void OCGLandscapeUtil::UpdateTargetLayers(ALandscape* InLandscape, const TMap<FGuid, TArray<FLandscapeImportLayerInfo>>& MaterialLayerDataPerLayers)
 {
 #if WITH_EDITOR
-	if (!InLandscape)
+	if (InLandscape == nullptr)
 	{
 		return;
 	}
 	ULandscapeInfo* LandscapeInfo = InLandscape->GetLandscapeInfo();
-	if (LandscapeInfo)
+	if (LandscapeInfo != nullptr)
 	{
 		LandscapeInfo->UpdateLayerInfoMap(InLandscape);
 	}
@@ -626,26 +626,26 @@ void OCGLandscapeUtil::UpdateTargetLayers(ALandscape* InLandscape, const TMap<FG
 	{
 		ULandscapeLayerInfoObject* LayerInfoObj = ImportInfo.LayerInfo;
 		const FName                LayerName    = ImportInfo.LayerName;
-		if (!LayerInfoObj)
+		if (LayerInfoObj == nullptr)
 		{
 #	if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION > 5
 			LayerInfoObj = UE::Landscape::CreateTargetLayerInfo(*LayerName.ToString(), UE::Landscape::GetSharedAssetsPath(InLandscape->GetLevel()));
 #	else
 			LayerInfoObj = InLandscape->CreateLayerInfo(*LayerName.ToString(), DefaultLayerInfo);
 #	endif
-			if (LayerInfoObj)
+			if (LayerInfoObj != nullptr)
 			{
 				Compat::SetLayerUsageDebugColor(LayerInfoObj, LayerInfoObj->GenerateLayerUsageDebugColor());
 				(void)LayerInfoObj->MarkPackageDirty();
 			}
 		}
 
-		if (LayerInfoObj)
+		if (LayerInfoObj != nullptr)
 		{
 			if (!InLandscape->GetTargetLayers().Contains(LayerName))
 			{
 				InLandscape->AddTargetLayer(LayerName, FLandscapeTargetLayerSettings(LayerInfoObj));
-				if (LandscapeInfo)
+				if (LandscapeInfo != nullptr)
 				{
 					const int32 Index = LandscapeInfo->GetLayerInfoIndex(LayerName);
 					if (Index != INDEX_NONE)
@@ -658,7 +658,7 @@ void OCGLandscapeUtil::UpdateTargetLayers(ALandscape* InLandscape, const TMap<FG
 			else
 			{
 				InLandscape->UpdateTargetLayer(LayerName, FLandscapeTargetLayerSettings(LayerInfoObj));
-				if (LandscapeInfo)
+				if (LandscapeInfo != nullptr)
 				{
 					const int32 Index = LandscapeInfo->GetLayerInfoIndex(LayerName);
 					if (Index != INDEX_NONE)
@@ -678,12 +678,12 @@ void OCGLandscapeUtil::UpdateTargetLayers(ALandscape* InLandscape, const TMap<FG
 	{
 		const FName                LayerName       = TEXT("ErasePCG_Layer");
 		ULandscapeLayerInfoObject* LayerInfoObject = OCGLandscapeUtil::CreateLayerInfo(OCGLandscapeUtil::LayerInfoSavePath, LayerName.ToString(), DefaultLayerInfo);
-		if (LayerInfoObject)
+		if (LayerInfoObject != nullptr)
 		{
 			Compat::SetNoWeightBlend(LayerInfoObject, true);
 			(void)LayerInfoObject->MarkPackageDirty();
 			InLandscape->AddTargetLayer(LayerName, FLandscapeTargetLayerSettings(LayerInfoObject));
-			if (LandscapeInfo)
+			if (LandscapeInfo != nullptr)
 			{
 				const int32 Index = LandscapeInfo->GetLayerInfoIndex(LayerName);
 				if (Index != INDEX_NONE)
@@ -701,12 +701,12 @@ void OCGLandscapeUtil::UpdateTargetLayers(ALandscape* InLandscape, const TMap<FG
 void OCGLandscapeUtil::AddTargetLayers(ALandscape* InLandscape, const TMap<FGuid, TArray<FLandscapeImportLayerInfo>>& MaterialLayerDataPerLayers)
 {
 #if WITH_EDITOR
-	if (!InLandscape)
+	if (InLandscape == nullptr)
 	{
 		return;
 	}
 	ULandscapeInfo* LandscapeInfo = InLandscape->GetLandscapeInfo();
-	// if (LandscapeInfo)
+	// if (LandscapeInfo != nullptr)
 	//{
 	//	LandscapeInfo->UpdateLayerInfoMap(InLandscape);
 	// }
@@ -720,24 +720,24 @@ void OCGLandscapeUtil::AddTargetLayers(ALandscape* InLandscape, const TMap<FGuid
 	{
 		ULandscapeLayerInfoObject* LayerInfoObj = ImportInfo.LayerInfo;
 		const FName                LayerName    = ImportInfo.LayerName;
-		if (!LayerInfoObj)
+		if (LayerInfoObj == nullptr)
 		{
 #	if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION > 5
 			LayerInfoObj = UE::Landscape::CreateTargetLayerInfo(*LayerName.ToString(), UE::Landscape::GetSharedAssetsPath(InLandscape->GetLevel()));
 #	else
 			LayerInfoObj = InLandscape->CreateLayerInfo(*LayerName.ToString(), DefaultLayerInfo);
 #	endif
-			if (LayerInfoObj)
+			if (LayerInfoObj != nullptr)
 			{
 				Compat::SetLayerUsageDebugColor(LayerInfoObj, LayerInfoObj->GenerateLayerUsageDebugColor());
 				(void)LayerInfoObj->MarkPackageDirty();
 			}
 		}
 
-		if (LayerInfoObj)
+		if (LayerInfoObj != nullptr)
 		{
 			InLandscape->AddTargetLayer(LayerName, FLandscapeTargetLayerSettings(LayerInfoObj));
-			if (LandscapeInfo)
+			if (LandscapeInfo != nullptr)
 			{
 				const int32 Index = LandscapeInfo->GetLayerInfoIndex(LayerName);
 				if (Index != INDEX_NONE)
@@ -757,12 +757,12 @@ void OCGLandscapeUtil::AddTargetLayers(ALandscape* InLandscape, const TMap<FGuid
 	{
 		const FName                LayerName       = TEXT("ErasePCG_Layer");
 		ULandscapeLayerInfoObject* LayerInfoObject = OCGLandscapeUtil::CreateLayerInfo(OCGLandscapeUtil::LayerInfoSavePath, LayerName.ToString(), DefaultLayerInfo);
-		if (LayerInfoObject)
+		if (LayerInfoObject != nullptr)
 		{
 			Compat::SetNoWeightBlend(LayerInfoObject, true);
 			(void)LayerInfoObject->MarkPackageDirty();
 			InLandscape->AddTargetLayer(LayerName, FLandscapeTargetLayerSettings(LayerInfoObject));
-			if (LandscapeInfo)
+			if (LandscapeInfo != nullptr)
 			{
 				const int32 Index = LandscapeInfo->GetLayerInfoIndex(LayerName);
 				if (Index != INDEX_NONE)
@@ -789,7 +789,7 @@ void OCGLandscapeUtil::ManageLandscapeRegions(UWorld* World, const ALandscape* L
 	ULandscapeSubsystem* LandscapeSubsystem = World->GetSubsystem<ULandscapeSubsystem>();
 	ChangeGridSize(World, LandscapeInfo, InLandscapeSetting.WorldPartitionGridSize);
 
-	if (LandscapeInfo)
+	if (LandscapeInfo != nullptr)
 	{
 		LandscapeProxy = LandscapeInfo->GetLandscapeProxy();
 	}
@@ -802,7 +802,7 @@ void OCGLandscapeUtil::ManageLandscapeRegions(UWorld* World, const ALandscape* L
 
 	bool bLandscapeLargerThanRegion = false;
 
-	if (InMapPreset)
+	if (InMapPreset != nullptr)
 	{
 		bLandscapeLargerThanRegion = static_cast<int32>(InLandscapeSetting.WorldPartitionRegionSize) < InMapPreset->Landscape_ComponentCount.X || static_cast<int32>(InLandscapeSetting.WorldPartitionRegionSize) < InMapPreset->Landscape_ComponentCount.Y;
 	}
@@ -1096,7 +1096,7 @@ void OCGLandscapeUtil::AddLandscapeComponent(ULandscapeInfo* InLandscapeInfo, UL
 	for (const FIntPoint& ComponentCoordinate : InComponentCoordinates)
 	{
 		ULandscapeComponent* LandscapeComponent = InLandscapeInfo->XYtoComponentMap.FindRef(ComponentCoordinate);
-		if (LandscapeComponent)
+		if (LandscapeComponent != nullptr)
 		{
 			continue;
 		}
@@ -1105,7 +1105,7 @@ void OCGLandscapeUtil::AddLandscapeComponent(ULandscapeInfo* InLandscapeInfo, UL
 		FIntPoint ComponentBase = ComponentCoordinate * InLandscapeInfo->ComponentSizeQuads;
 
 		ALandscapeProxy* LandscapeProxy = InLandscapeSubsystem->FindOrAddLandscapeProxy(InLandscapeInfo, ComponentBase);
-		if (!LandscapeProxy)
+		if (LandscapeProxy == nullptr)
 		{
 			continue;
 		}
@@ -1179,7 +1179,7 @@ void OCGLandscapeUtil::AddLandscapeComponent(ULandscapeInfo* InLandscapeInfo, UL
 		}
 	}
 
-	if (Landscape)
+	if (Landscape != nullptr)
 	{
 		GEngine->BroadcastOnActorMoved(Landscape);
 	}
@@ -1224,7 +1224,7 @@ ALocationVolume* OCGLandscapeUtil::CreateLandscapeRegionVolume(UWorld* InWorld, 
 ULandscapeLayerInfoObject* OCGLandscapeUtil::CreateLayerInfo(ALandscape* InLandscape, const FString& InPackagePath, const FString& InAssetName, const ULandscapeLayerInfoObject* InTemplate)
 {
 #if WITH_EDITOR
-	if (!InLandscape)
+	if (InLandscape == nullptr)
 	{
 		UE_LOG(LogOCGModule, Error, TEXT("TargetLandscape is null."));
 		return nullptr;
@@ -1233,7 +1233,7 @@ ULandscapeLayerInfoObject* OCGLandscapeUtil::CreateLayerInfo(ALandscape* InLands
 	// Create a LayerInfo asset at the specified path.
 	ULandscapeLayerInfoObject* LayerInfo = CreateLayerInfo(InPackagePath, InAssetName, InTemplate);
 
-	if (LayerInfo)
+	if (LayerInfo != nullptr)
 	{
 		if (ULandscapeInfo* LandscapeInfo = InLandscape->GetLandscapeInfo())
 		{
@@ -1402,7 +1402,7 @@ TMap<FGuid, TArray<FLandscapeImportLayerInfo>> OCGLandscapeUtil::PrepareLandscap
 		}
 
 		ULandscapeLayerInfoObject* LayerInfoObject = nullptr;
-		if (LandscapeInfo)
+		if (LandscapeInfo != nullptr)
 		{
 			LayerInfoObject = LandscapeInfo->GetLayerInfoByName(LayerInfo.LayerName);
 		}
@@ -1418,7 +1418,7 @@ TMap<FGuid, TArray<FLandscapeImportLayerInfo>> OCGLandscapeUtil::PrepareLandscap
 			UE_LOG(LogOCGModule, Log, TEXT("Found and reused existing LayerInfo for '%s'."), *LayerInfo.LayerName.ToString());
 		}
 
-		if (LayerInfoObject)
+		if (LayerInfoObject != nullptr)
 		{
 			LayerInfo.LayerInfo = LayerInfoObject;
 			ImportLayerDataPerLayer.Add(LayerInfo);
@@ -1492,7 +1492,7 @@ ULandscapeLayerInfoObject* OCGLandscapeUtil::CreateLayerInfo(const FString& InPa
 	// 4. Using the safe path, attempt to load the asset to see if it already exists.
 	ULandscapeLayerInfoObject* FoundLayerInfo = LoadObject<ULandscapeLayerInfoObject>(nullptr, *ObjectPathToLoad);
 
-	if (FoundLayerInfo)
+	if (FoundLayerInfo != nullptr)
 	{
 		UE_LOG(LogOCGModule, Log, TEXT("Found and reused existing LayerInfo: %s"), *ObjectPathToLoad);
 		return FoundLayerInfo;
@@ -1511,14 +1511,14 @@ ULandscapeLayerInfoObject* OCGLandscapeUtil::CreateLayerInfo(const FString& InPa
 	const FName AssetFName(*SanitizedAssetName);
 
 	UPackage* Package = CreatePackage(*FullPackageName);
-	if (!Package)
+	if (Package == nullptr)
 	{
 		UE_LOG(LogOCGModule, Error, TEXT("Failed to create package: %s"), *FullPackageName);
 		return nullptr;
 	}
 
 	ULandscapeLayerInfoObject* NewLayerInfo;
-	if (InTemplate)
+	if (InTemplate != nullptr)
 	{
 		NewLayerInfo = DuplicateObject<ULandscapeLayerInfoObject>(InTemplate, Package, AssetFName);
 	}
@@ -1527,7 +1527,7 @@ ULandscapeLayerInfoObject* OCGLandscapeUtil::CreateLayerInfo(const FString& InPa
 		NewLayerInfo = NewObject<ULandscapeLayerInfoObject>(Package, AssetFName, RF_Public | RF_Standalone | RF_Transactional);
 	}
 
-	if (!NewLayerInfo)
+	if (NewLayerInfo == nullptr)
 	{
 		UE_LOG(LogOCGModule, Error, TEXT("Failed to create ULandscapeLayerInfoObject in package: %s"), *FullPackageName);
 		return nullptr;
@@ -1562,7 +1562,7 @@ FGuid OCGLandscapeUtil::GetLandscapeLayerGuid(const ALandscape* Landscape, FName
 void OCGLandscapeUtil::RegenerateRiver(UWorld* World, AOCGLevelGenerator* LevelGenerator, UMapPreset* MapPreset)
 {
 #if WITH_EDITOR
-	if (World && LevelGenerator && MapPreset)
+	if (World != nullptr && LevelGenerator != nullptr && MapPreset != nullptr)
 	{
 		LevelGenerator->GetRiverGenerateComponent()->GenerateRiver(World, LevelGenerator->GetLandscape(), false);
 	}

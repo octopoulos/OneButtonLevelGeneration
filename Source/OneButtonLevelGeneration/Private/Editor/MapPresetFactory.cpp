@@ -20,7 +20,7 @@ UObject* UMapPresetFactory::FactoryCreateNew(UClass* Class, UObject* InParent, F
 
 	const UOCGDeveloperSettings* Settings = GetDefault<UOCGDeveloperSettings>();
 
-	if (!Settings)
+	if (Settings == nullptr)
 	{
 		UE_LOG(LogOCGModule, Error, TEXT("UMapPreset::UMapPreset() Invalid OCGDeveloperSettings!"));
 		return NewPreset;
@@ -29,7 +29,7 @@ UObject* UMapPresetFactory::FactoryCreateNew(UClass* Class, UObject* InParent, F
 	UMaterialInstance* LandscapeMaterial = Settings->DefaultLandscapeMaterialPath.LoadSynchronous();
 	if (!Settings->DefaultLandscapeMaterialPath.IsNull())
 	{
-		if (LandscapeMaterial)
+		if (LandscapeMaterial != nullptr)
 		{
 			NewPreset->LandscapeMaterial = LandscapeMaterial;
 		}
@@ -42,7 +42,7 @@ UObject* UMapPresetFactory::FactoryCreateNew(UClass* Class, UObject* InParent, F
 	UPCGGraph* PCGGraph = Settings->DefaultPCGGraphPath.LoadSynchronous();
 	if (!Settings->DefaultPCGGraphPath.IsNull())
 	{
-		if (PCGGraph)
+		if (PCGGraph != nullptr)
 		{
 			NewPreset->PCGGraph = PCGGraph;
 		}

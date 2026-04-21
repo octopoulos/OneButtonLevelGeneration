@@ -251,7 +251,7 @@ void UMapPreset::UpdateInternalLandscapeFilterNames()
 
 	// Get Landscape Layer Names
 	TArray<FName> LandscapeLayerNames;
-	if (LandscapeMaterial)
+	if (LandscapeMaterial != nullptr)
 	{
 		if (const UMaterial* BaseMaterial = LandscapeMaterial->GetMaterial())
 		{

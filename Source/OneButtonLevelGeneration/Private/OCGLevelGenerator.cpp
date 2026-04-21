@@ -30,18 +30,18 @@ AOCGLevelGenerator::AOCGLevelGenerator()
 
 void AOCGLevelGenerator::Generate()
 {
-	if (MapGenerateComponent)
+	if (MapGenerateComponent != nullptr)
 	{
 		MapGenerateComponent->GenerateMaps();
 	}
 
-	if (LandscapeGenerateComponent)
+	if (LandscapeGenerateComponent != nullptr)
 	{
 		LandscapeGenerateComponent->SetLandscapeZValues(MapGenerateComponent->GetZScale(), MapGenerateComponent->GetZOffset());
 		LandscapeGenerateComponent->GenerateLandscape(GetWorld());
 	}
 
-	if (TerrainGenerateComponent)
+	if (TerrainGenerateComponent != nullptr)
 	{
 		TerrainGenerateComponent->GenerateTerrain(GetWorld());
 	}
@@ -51,13 +51,13 @@ void AOCGLevelGenerator::Generate()
 
 void AOCGLevelGenerator::OnClickGenerate(UWorld* InWorld)
 {
-	if (!MapPreset)
+	if (MapPreset == nullptr)
 	{
 		UE_LOG(LogOCGModule, Error, TEXT("MapPreset is not set! Please set a valid MapPreset before generating."));
 		return;
 	}
 
-	if (!MapPreset || MapPreset->Biomes.IsEmpty())
+	if (MapPreset == nullptr || MapPreset->Biomes.IsEmpty())
 	{
 		// Error message
 		const FText DialogTitle = FText::FromString(TEXT("Error"));
@@ -95,7 +95,7 @@ void AOCGLevelGenerator::OnClickGenerate(UWorld* InWorld)
 		bHasHeightMap = true;
 	}
 
-	if (MapGenerateComponent)
+	if (MapGenerateComponent != nullptr)
 	{
 		if (!bHasHeightMap)
 		{
@@ -107,20 +107,20 @@ void AOCGLevelGenerator::OnClickGenerate(UWorld* InWorld)
 		}
 	}
 
-	if (LandscapeGenerateComponent)
+	if (LandscapeGenerateComponent != nullptr)
 	{
 		LandscapeGenerateComponent->SetLandscapeZValues(MapGenerateComponent->GetZScale(), MapGenerateComponent->GetZOffset());
 		LandscapeGenerateComponent->GenerateLandscape(InWorld);
 	}
 
-	if (TerrainGenerateComponent)
+	if (TerrainGenerateComponent != nullptr)
 	{
 		TerrainGenerateComponent->GenerateTerrain(InWorld);
 	}
 
 	AddWaterPlane(InWorld);
 
-	if (RiverGenerateComponent && MapGenerateComponent && LandscapeGenerateComponent && MapPreset)
+	if (RiverGenerateComponent != nullptr && MapGenerateComponent != nullptr && LandscapeGenerateComponent != nullptr && MapPreset != nullptr)
 	{
 		RiverGenerateComponent->SetMapData(
 			MapPreset->HeightMapData,
@@ -164,7 +164,7 @@ ALandscape* AOCGLevelGenerator::GetLandscape()
 
 FVector AOCGLevelGenerator::GetVolumeExtent() const
 {
-	if (LandscapeGenerateComponent)
+	if (LandscapeGenerateComponent != nullptr)
 	{
 		return LandscapeGenerateComponent->GetVolumeExtent();
 	}
@@ -173,7 +173,7 @@ FVector AOCGLevelGenerator::GetVolumeExtent() const
 
 FVector AOCGLevelGenerator::GetVolumeOrigin() const
 {
-	if (LandscapeGenerateComponent)
+	if (LandscapeGenerateComponent != nullptr)
 	{
 		return LandscapeGenerateComponent->GetVolumeOrigin();
 	}
@@ -183,7 +183,7 @@ FVector AOCGLevelGenerator::GetVolumeOrigin() const
 void AOCGLevelGenerator::SetMapPreset(UMapPreset* InMapPreset)
 {
 	MapPreset = InMapPreset;
-	if (MapPreset)
+	if (MapPreset != nullptr)
 	{
 		MapPreset->LandscapeGenerator = this;
 	}
@@ -191,13 +191,13 @@ void AOCGLevelGenerator::SetMapPreset(UMapPreset* InMapPreset)
 
 void AOCGLevelGenerator::AddWaterPlane(UWorld* InWorld)
 {
-	if (SeaLevelWaterBody)
+	if (SeaLevelWaterBody != nullptr)
 	{
 		SeaLevelWaterBody->Destroy();
 		SeaLevelWaterBody = nullptr;
 	}
 
-	if (!InWorld || !MapPreset || !MapPreset->bContainWater)
+	if (InWorld == nullptr || MapPreset == nullptr || !MapPreset->bContainWater)
 	{
 		return;
 	}
@@ -213,7 +213,7 @@ void AOCGLevelGenerator::AddWaterPlane(UWorld* InWorld)
 	SeaLevelWaterBody->SetActorLocation(FVector(0.0f, 0.0f, SeaHeight));
 
 	ALandscape* Landscape = LandscapeGenerateComponent->GetLandscape();
-	if (Landscape)
+	if (Landscape != nullptr)
 	{
 		FVector LandscapeOrigin = GetVolumeOrigin();
 		FVector LandscapeExtent = GetVolumeExtent();
@@ -232,7 +232,7 @@ void AOCGLevelGenerator::AddWaterPlane(UWorld* InWorld)
 void AOCGLevelGenerator::SetDefaultWaterProperties(AWaterBody* InWaterBody)
 {
 	UWaterBodyComponent* WaterBodyComponent = CastChecked<AWaterBody>(InWaterBody)->GetWaterBodyComponent();
-	check(MapPreset && WaterBodyComponent);
+	check(MapPreset != nullptr && WaterBodyComponent != nullptr);
 
 	WaterBodyComponent->SetWaterMaterial(MapPreset->OceanWaterMaterial.LoadSynchronous());
 	WaterBodyComponent->SetWaterStaticMeshMaterial(MapPreset->OceanWaterStaticMeshMaterial.LoadSynchronous());
@@ -253,7 +253,7 @@ void AOCGLevelGenerator::SetDefaultWaterProperties(AWaterBody* InWaterBody)
 			WaterBodyComponent->SetWaterBodyStaticMeshEnabled(true);
 		}
 
-		if (GetLandscape())
+		if (GetLandscape() != nullptr)
 		{
 			FVector Extent = GetLandscape()->GetLoadedBounds().GetExtent();
 			WaterZone->SetZoneExtent(FVector2D(Extent.X * 2, Extent.Y * 2));
@@ -294,7 +294,7 @@ void AOCGLevelGenerator::SetDefaultWaterProperties(AWaterBody* InWaterBody)
 
 void AOCGLevelGenerator::DrawDebugLandscape(TArray<uint16>& HeightMapData)
 {
-	if (!MapPreset)
+	if (MapPreset == nullptr)
 	{
 		return;
 	}
@@ -339,7 +339,7 @@ void AOCGLevelGenerator::DrawDebugLandscape(TArray<uint16>& HeightMapData)
 
 void AOCGLevelGenerator::PreviewMaps()
 {
-	if (!MapPreset)
+	if (MapPreset == nullptr)
 	{
 		return;
 	}

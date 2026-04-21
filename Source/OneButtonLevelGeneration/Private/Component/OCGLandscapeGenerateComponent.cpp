@@ -64,7 +64,7 @@ static TArray<ALocationVolume*> GetLandscapeRegionVolumes(const ALandscape* InLa
 #if WITH_EDITOR
 	TArray<ALocationVolume*> LandscapeRegionVolumes;
 	TArray<AActor*>          Children;
-	if (InLandscape)
+	if (InLandscape != nullptr)
 	{
 		InLandscape->GetAttachedActors(Children);
 	}
@@ -136,7 +136,7 @@ void UOCGLandscapeGenerateComponent::GenerateLandscape(UWorld* World)
 #if WITH_EDITOR
 	AOCGLevelGenerator* LevelGenerator = GetLevelGenerator();
 	UMapPreset*         MapPreset      = nullptr;
-	if (LevelGenerator)
+	if (LevelGenerator != nullptr)
 	{
 		MapPreset = LevelGenerator->GetMapPreset();
 	}
@@ -152,7 +152,7 @@ void UOCGLandscapeGenerateComponent::GenerateLandscape(UWorld* World)
 		return;
 	}
 
-	bool IsCreateNewLandscape = false;
+	bool bIsCreateNewLandscape = false;
 	if (ShouldCreateNewLandscape(World))
 	{
 		TArray<ALandscapeStreamingProxy*> ProxiesToDelete;
@@ -168,14 +168,14 @@ void UOCGLandscapeGenerateComponent::GenerateLandscape(UWorld* World)
 		// 2. Delete Proxies
 		for (ALandscapeStreamingProxy* Proxy : ProxiesToDelete)
 		{
-			if (Proxy)
+			if (Proxy != nullptr)
 			{
 				Proxy->Destroy();
 			}
 		}
 
 		// 3. Delete Landscape
-		if (TargetLandscape)
+		if (TargetLandscape != nullptr)
 		{
 			for (ALocationVolume* Volume : GetLandscapeRegionVolumes(TargetLandscape))
 			{
@@ -195,12 +195,12 @@ void UOCGLandscapeGenerateComponent::GenerateLandscape(UWorld* World)
 		TargetLandscape = World->SpawnActor<ALandscape>();
 		TargetLandscape->Modify();
 		TargetLandscapeAsset = TargetLandscape;
-		if (!TargetLandscape)
+		if (TargetLandscape == nullptr)
 		{
 			UE_LOG(LogOCGModule, Error, TEXT("Failed to spawn ALandscape actor."));
 			return;
 		}
-		IsCreateNewLandscape = true;
+		bIsCreateNewLandscape = true;
 	}
 	else
 	{
@@ -226,14 +226,14 @@ void UOCGLandscapeGenerateComponent::GenerateLandscape(UWorld* World)
 			// 2. Delete Proxies
 			for (ALandscapeStreamingProxy* Proxy : ProxiesToDelete)
 			{
-				if (Proxy)
+				if (Proxy != nullptr)
 				{
 					Proxy->Destroy();
 				}
 			}
 
 			// 3. Delete Landscape
-			if (TargetLandscape)
+			if (TargetLandscape != nullptr)
 			{
 				for (ALocationVolume* Volume : GetLandscapeRegionVolumes(TargetLandscape))
 				{
@@ -253,12 +253,12 @@ void UOCGLandscapeGenerateComponent::GenerateLandscape(UWorld* World)
 			TargetLandscape = World->SpawnActor<ALandscape>();
 			TargetLandscape->Modify();
 			TargetLandscapeAsset = TargetLandscape;
-			if (!TargetLandscape)
+			if (TargetLandscape == nullptr)
 			{
 				UE_LOG(LogOCGModule, Error, TEXT("Failed to spawn ALandscape actor."));
 				return;
 			}
-			IsCreateNewLandscape = true;
+			bIsCreateNewLandscape = true;
 		}
 	}
 
@@ -313,7 +313,7 @@ void UOCGLandscapeGenerateComponent::GenerateLandscape(UWorld* World)
 	TargetLandscape->SetActorLocation(FVector(OffsetX, OffsetY, LandscapeZOffset));
 	TargetLandscape->SetActorScale3D(FVector(100.0f * MapPreset->LandscapeScale, 100.0f * MapPreset->LandscapeScale, LandscapeZScale));
 
-	if (IsCreateNewLandscape)
+	if (bIsCreateNewLandscape)
 	{
 		TargetLandscape->Import(
 			FGuid::NewGuid(),
@@ -327,7 +327,8 @@ void UOCGLandscapeGenerateComponent::GenerateLandscape(UWorld* World)
 			nullptr,
 			MaterialLayerDataPerLayer,
 			ELandscapeImportAlphamapType::Additive,
-			TArrayView<const FLandscapeLayer>());
+			TArrayView<const FLandscapeLayer>()
+		);
 
 		ULandscapeInfo* LandscapeInfo = TargetLandscape->GetLandscapeInfo();
 
@@ -403,7 +404,7 @@ bool UOCGLandscapeGenerateComponent::CreateRuntimeVirtualTextureVolume(ALandscap
 
 	for (ARuntimeVirtualTextureVolume* RVTVolume : CachedRuntimeVirtualTextureVolumes)
 	{
-		if (RVTVolume)
+		if (RVTVolume != nullptr)
 		{
 			RVTVolume->Destroy();
 		}
@@ -462,7 +463,7 @@ bool UOCGLandscapeGenerateComponent::ShouldCreateNewLandscape(const UWorld* Worl
 		return true;
 	}
 
-	if (!TargetLandscape)
+	if (TargetLandscape == nullptr)
 	{
 		if (TargetLandscapeAsset.ToSoftObjectPath().IsValid())
 		{
@@ -533,15 +534,15 @@ void UOCGLandscapeGenerateComponent::PostInitProperties()
 		ColorRVT        = ColorRVTAsset.LoadSynchronous();
 		HeightRVT       = HeightRVTAsset.LoadSynchronous();
 		DisplacementRVT = DisplacementRVTAsset.LoadSynchronous();
-		if (!ColorRVT)
+		if (ColorRVT == nullptr)
 		{
 			UE_LOG(LogOCGModule, Warning, TEXT("Failed to load ColorRVT from %s"), *ColorRVTAsset.ToString());
 		}
-		if (!HeightRVT)
+		if (HeightRVT == nullptr)
 		{
 			UE_LOG(LogOCGModule, Warning, TEXT("Failed to load HeightRVT from %s"), *HeightRVTAsset.ToString());
 		}
-		if (!DisplacementRVT)
+		if (DisplacementRVT == nullptr)
 		{
 			UE_LOG(LogOCGModule, Warning, TEXT("Failed to load DisplacementRVT from %s"), *DisplacementRVTAsset.ToString());
 		}
@@ -557,7 +558,7 @@ void UOCGLandscapeGenerateComponent::OnRegister()
 		if (TargetLandscapeAsset.ToSoftObjectPath().IsValid())
 		{
 			TargetLandscape = Cast<ALandscape>(TargetLandscapeAsset.Get());
-			if (!TargetLandscape)
+			if (TargetLandscape == nullptr)
 			{
 				TargetLandscape = Cast<ALandscape>(TargetLandscapeAsset.LoadSynchronous());
 			}

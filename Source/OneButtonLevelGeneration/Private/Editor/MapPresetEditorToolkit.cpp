@@ -48,7 +48,7 @@ void FMapPresetEditorToolkit::InitEditor(const EToolkitMode::Type Mode,
 
 	MapPresetEditorWorld = CreateEditorWorld();
 
-	if (MapPresetEditorWorld)
+	if (MapPresetEditorWorld != nullptr)
 	{
 		FWorldContext& Context = GEngine->CreateNewWorldContext(EWorldType::Editor);
 		Context.SetCurrentWorld(MapPresetEditorWorld.Get());
@@ -465,7 +465,7 @@ UWorld* FMapPresetEditorToolkit::CreateEditorWorld()
 
 void FMapPresetEditorToolkit::SetupDefaultActors()
 {
-	if (!MapPresetEditorWorld)
+	if (MapPresetEditorWorld == nullptr)
 	{
 		return;
 	}
@@ -487,7 +487,7 @@ void FMapPresetEditorToolkit::SetupDefaultActors()
 
 void FMapPresetEditorToolkit::ExportPreviewSceneToLevel()
 {
-	if (!MapPresetEditorWorld)
+	if (MapPresetEditorWorld == nullptr)
 	{
 		UE_LOG(LogOCGModule, Warning, TEXT("Toolkit or its EditorWorld is null, cannot export."));
 		return;
@@ -576,10 +576,10 @@ void FMapPresetEditorToolkit::ExportPreviewSceneToLevel()
 
 void FMapPresetEditorToolkit::Generate() const
 {
-	if (LevelGenerator.IsValid() && MapPresetEditorWorld)
+	if (LevelGenerator.IsValid() && MapPresetEditorWorld != nullptr)
 	{
 		LevelGenerator->OnClickGenerate(MapPresetEditorWorld);
-		if (LandscapeDetailsView)
+		if (LandscapeDetailsView != nullptr)
 		{
 			LandscapeDetailsView->SetObject(LevelGenerator->GetLandscape());
 			LandscapeDetailsView->ForceRefresh();

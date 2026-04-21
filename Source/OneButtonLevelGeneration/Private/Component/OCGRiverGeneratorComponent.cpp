@@ -93,14 +93,14 @@ void UOCGRiverGenerateComponent::GenerateRiver(UWorld* InWorld, ALandscape* InLa
 	// Clear WaterBrushManager actors
 	UClass* WaterBrushManagerClass = StaticLoadClass(UObject::StaticClass(), nullptr, TEXT("/Script/WaterEditor.WaterBrushManager"));
 
-	if (WaterBrushManagerClass)
+	if (WaterBrushManagerClass != nullptr)
 	{
 		TArray<AActor*> WaterBrushManagerActors;
 		UGameplayStatics::GetAllActorsOfClass(InWorld, WaterBrushManagerClass, WaterBrushManagerActors);
 
 		for (AActor* Actor : WaterBrushManagerActors)
 		{
-			if (Actor)
+			if (Actor != nullptr)
 			{
 				Actor->Destroy();
 			}
@@ -300,19 +300,19 @@ void UOCGRiverGenerateComponent::AddRiverProperties(AWaterBodyRiver* InRiverActo
 
 	// Calculate the minimum and maximum values only if each curve is valid.
 	float MinWidth = 0.f, MaxWidth = 1.f;
-	if (RiverWidthCurve)
+	if (RiverWidthCurve != nullptr)
 	{
 		RiverWidthCurve->GetValueRange(MinWidth, MaxWidth);
 	}
 
 	float MinDepth = 0.f, MaxDepth = 1.f;
-	if (RiverDepthCurve)
+	if (RiverDepthCurve != nullptr)
 	{
 		RiverDepthCurve->GetValueRange(MinDepth, MaxDepth);
 	}
 
 	float MinVelocity = 0.f, MaxVelocity = 1.f;
-	if (RiverVelocityCurve)
+	if (RiverVelocityCurve != nullptr)
 	{
 		RiverVelocityCurve->GetValueRange(MinVelocity, MaxVelocity);
 	}
@@ -329,7 +329,7 @@ void UOCGRiverGenerateComponent::AddRiverProperties(AWaterBodyRiver* InRiverActo
 
 		// 1. Calculate the width (Width) scale
 		float WidthMultiplier;
-		if (RiverWidthCurve)
+		if (RiverWidthCurve != nullptr)
 		{
 			const float RawWidth = RiverWidthCurve->GetFloatValue(NormalizedDistance);
 			WidthMultiplier      = !FMath::IsNearlyZero(WidthRange) ? (RawWidth - MinWidth) / WidthRange : 1.0f;
@@ -341,7 +341,7 @@ void UOCGRiverGenerateComponent::AddRiverProperties(AWaterBodyRiver* InRiverActo
 
 		// --- 2. Calculate the depth (Depth) scale ---
 		float DepthMultiplier;
-		if (RiverDepthCurve)
+		if (RiverDepthCurve != nullptr)
 		{
 			const float RawDepth = RiverDepthCurve->GetFloatValue(NormalizedDistance);
 			DepthMultiplier      = !FMath::IsNearlyZero(DepthRange) ? (RawDepth - MinDepth) / DepthRange : 1.0f;
@@ -353,7 +353,7 @@ void UOCGRiverGenerateComponent::AddRiverProperties(AWaterBodyRiver* InRiverActo
 
 		// 3. Calculate the velocity (Velocity) scale
 		float VelocityMultiplier;
-		if (RiverVelocityCurve)
+		if (RiverVelocityCurve != nullptr)
 		{
 			const float RawVelocity = RiverVelocityCurve->GetFloatValue(NormalizedDistance);
 			VelocityMultiplier      = !FMath::IsNearlyZero(VelocityRange) ? (RawVelocity - MinVelocity) / VelocityRange : 1.0f;
@@ -403,10 +403,10 @@ void UOCGRiverGenerateComponent::ExportWaterEditLayerHeightMap(const uint16 MinD
 		TargetLandscape = GetLevelGenerator()->GetLandscape();
 	}
 
-	if (TargetLandscape)
+	if (TargetLandscape != nullptr)
 	{
 		const ULandscapeInfo* Info = TargetLandscape->GetLandscapeInfo();
-		if (!Info)
+		if (Info == nullptr)
 		{
 			return;
 		}
@@ -459,7 +459,7 @@ void UOCGRiverGenerateComponent::ApplyWaterWeight()
 		TargetLandscape = GetLevelGenerator()->GetLandscape();
 	}
 
-	if (TargetLandscape)
+	if (TargetLandscape != nullptr)
 	{
 		UMaterial* CurrentLandscapeMaterial = nullptr;
 		if (GetLevelGenerator() && GetLevelGenerator()->GetMapPreset() && GetLevelGenerator()->GetMapPreset()->LandscapeMaterial)
@@ -535,7 +535,7 @@ void UOCGRiverGenerateComponent::ClearAllRivers()
 	// 1) Destroy the already loaded GeneratedRivers
 	for (AWaterBodyRiver* River : GeneratedRivers)
 	{
-		if (!River)
+		if (River == nullptr)
 		{
 			continue;
 		}
@@ -561,7 +561,7 @@ void UOCGRiverGenerateComponent::ClearAllRivers()
 		AWaterBodyRiver* RiverInst = RiverPtr.IsValid()
 			? RiverPtr.Get()
 			: Cast<AWaterBodyRiver>(RiverPtr.LoadSynchronous());
-		if (!RiverInst)
+		if (RiverInst == nullptr)
 		{
 			continue;
 		}
@@ -575,7 +575,7 @@ void UOCGRiverGenerateComponent::ClearAllRivers()
 	CachedRivers.Empty();
 
 	FGuid WaterLayerGuid = OCGLandscapeUtil::GetLandscapeLayerGuid(TargetLandscape, FName(TEXT("Water")));
-	if (TargetLandscape)
+	if (TargetLandscape != nullptr)
 	{
 		Compat::ClearEditLayer(TargetLandscape, WaterLayerGuid);
 		TargetLandscape->RequestLayersContentUpdate(ELandscapeLayerUpdateMode::Update_Heightmap_All);
@@ -584,7 +584,7 @@ void UOCGRiverGenerateComponent::ClearAllRivers()
 
 FVector UOCGRiverGenerateComponent::GetLandscapePointWorldPosition(const FIntPoint& MapPoint, const FVector& LandscapeOrigin, const FVector& LandscapeExtent) const
 {
-	if (!MapPreset)
+	if (MapPreset == nullptr)
 	{
 		return FVector::ZeroVector;
 	}
@@ -623,7 +623,7 @@ FVector UOCGRiverGenerateComponent::GetLandscapePointWorldPosition(const FIntPoi
 void UOCGRiverGenerateComponent::SetDefaultRiverProperties(AWaterBodyRiver* InRiverActor, const TArray<FVector>& InRiverPath)
 {
 	UWaterBodyComponent* WaterBodyComponent = CastChecked<AWaterBody>(InRiverActor)->GetWaterBodyComponent();
-	check(MapPreset && WaterBodyComponent);
+	check(MapPreset != nullptr && WaterBodyComponent != nullptr);
 
 	if (const FWaterBrushActorDefaults* WaterBrushActorDefaults = &GetDefault<UWaterEditorSettings>()->WaterBodyRiverDefaults.BrushDefaults)
 	{

@@ -45,7 +45,7 @@ void OCGMaterialEditTool::InsertMaterialFunctionIntoMaterial(UMaterial* TargetMa
 	const FName          TilingParamName = FName("MainTiling");
 	for (UMaterialExpression* Expr : TargetMaterial->GetExpressions())
 	{
-		if (!BlendNode) // Blend 노드는 첫 번째 것 하나만 찾습니다.
+		if (BlendNode == nullptr) // Blend 노드는 첫 번째 것 하나만 찾습니다.
 		{
 			BlendNode = Cast<UMaterialExpressionLandscapeLayerBlend>(Expr);
 		}
@@ -56,7 +56,7 @@ void OCGMaterialEditTool::InsertMaterialFunctionIntoMaterial(UMaterial* TargetMa
 			NodesToDelete.Add(Expr);
 		}
 
-		if (!TilingParamNode)
+		if (TilingParamNode == nullptr)
 		{
 			if (UMaterialExpressionParameter* ScalarParam = Cast<UMaterialExpressionParameter>(Expr))
 			{
@@ -78,7 +78,7 @@ void OCGMaterialEditTool::InsertMaterialFunctionIntoMaterial(UMaterial* TargetMa
 	}
 
 	// 2-1) Blend 노드가 없다면 새로 생성하고 최종 출력에 연결
-	if (!BlendNode)
+	if (BlendNode == nullptr)
 	{
 		BlendNode = NewObject<UMaterialExpressionLandscapeLayerBlend>(TargetMaterial);
 		TargetMaterial->GetExpressionCollection().AddExpression(BlendNode);
@@ -98,7 +98,7 @@ void OCGMaterialEditTool::InsertMaterialFunctionIntoMaterial(UMaterial* TargetMa
 	float TotalYOfFuncNodes = 0.0f;
 	for (UMaterialFunctionInterface* MaterialFunction : FuncToInsert)
 	{
-		if (!MaterialFunction)
+		if (MaterialFunction == nullptr)
 		{
 			continue; // 배열에 null 포인터가 있을 경우 건너뜀
 		}
@@ -110,7 +110,7 @@ void OCGMaterialEditTool::InsertMaterialFunctionIntoMaterial(UMaterial* TargetMa
 
 		// 5) 찾은 "MainTiling" 파라미터를 FuncNode의 입력에 연결
 		//    (여기서는 FuncNode의 입력 핀 이름이 "Tiling"이라고 가정합니다)
-		if (TilingParamNode)
+		if (TilingParamNode != nullptr)
 		{
 			const FName InputNameToFind = FName("Tiling"); // 연결할 함수의 입력 핀 이름
 
@@ -165,7 +165,7 @@ void OCGMaterialEditTool::InsertMaterialFunctionIntoMaterial(UMaterial* TargetMa
 UMaterialExpression* OCGMaterialEditTool::GetResultNodeFromMaterialAttributes(UMaterial* TargetMaterial)
 {
 #if WITH_EDITOR
-	if (!TargetMaterial)
+	if (TargetMaterial == nullptr)
 	{
 		return nullptr;
 	}
@@ -176,7 +176,7 @@ UMaterialExpression* OCGMaterialEditTool::GetResultNodeFromMaterialAttributes(UM
 		// MaterialAttributes 입력 핀에 연결된 표현식(노드)을 가져옵니다.
 		UMaterialExpression* ResultNode = TargetMaterial->GetEditorOnlyData()->MaterialAttributes.Expression;
 
-		if (ResultNode)
+		if (ResultNode != nullptr)
 		{
 			UE_LOG(LogTemp, Log, TEXT("Material Attributes에 연결된 노드를 찾았습니다: %s"), *ResultNode->GetName());
 			return ResultNode;
@@ -198,14 +198,14 @@ UMaterialExpression* OCGMaterialEditTool::GetResultNodeFromMaterialAttributes(UM
 void OCGMaterialEditTool::SaveMaterialAsset(UMaterial* TargetMaterial)
 {
 #if WITH_EDITOR
-	if (!TargetMaterial)
+	if (TargetMaterial == nullptr)
 	{
 		return;
 	}
 
 	// ① 트랜잭션 및 Modify/MarkPackageDirty() 이후에 호출
 	UPackage* Package = TargetMaterial->GetOutermost();
-	if (!Package)
+	if (Package == nullptr)
 	{
 		return;
 	}
@@ -228,7 +228,7 @@ TArray<FName> OCGMaterialEditTool::ExtractLandscapeLayerName(UMaterial* TargetMa
 {
 #if WITH_EDITOR
 	TArray<FName> LayerNames;
-	if (!TargetMaterial)
+	if (TargetMaterial == nullptr)
 	{
 		return LayerNames;
 	}
@@ -269,7 +269,7 @@ TArray<FName> OCGMaterialEditTool::ExtractLandscapeLayerName(UMaterial* TargetMa
 
 void OCGMaterialEditTool::CollectUsedExpressions(UMaterial* TargetMaterial, TSet<UMaterialExpression*>& OutUsedExpressions)
 {
-	if (!TargetMaterial)
+	if (TargetMaterial == nullptr)
 	{
 		return;
 	}
@@ -282,7 +282,7 @@ void OCGMaterialEditTool::CollectUsedExpressions(UMaterial* TargetMaterial, TSet
 	for (int32 PropertyId = 0; PropertyId < MP_MAX; ++PropertyId)
 	{
 		const FExpressionInput* Input = TargetMaterial->GetExpressionInputForProperty(static_cast<EMaterialProperty>(PropertyId));
-		if (Input)
+		if (Input != nullptr)
 		{
 			// GetTracedInput()을 사용하여 Reroute 노드를 건너뛰고 실제 소스 표현식을 가져옵니다.
 			UMaterialExpression* RootExpr = Input->GetTracedInput().Expression;

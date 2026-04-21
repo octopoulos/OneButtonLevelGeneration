@@ -26,7 +26,7 @@ bool FOCGPointHeightFilterElement::ExecuteInternal(FPCGContext* Context) const
 	for (const FPCGTaggedData& Input : Inputs)
 	{
 		const UPCGPointData* OriginalData = Cast<UPCGPointData>(Input.Data);
-		if (!OriginalData)
+		if (OriginalData == nullptr)
 		{
 			continue;
 		}
