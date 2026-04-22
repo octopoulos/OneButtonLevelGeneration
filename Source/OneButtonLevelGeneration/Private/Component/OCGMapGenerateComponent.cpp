@@ -156,7 +156,8 @@ void UOCGMapGenerateComponent::GenerateMapsWithHeightMap()
 
 FIntPoint UOCGMapGenerateComponent::FixToNearestValidResolution(const FIntPoint InResolution)
 {
-	auto Fix = [](int32 Value) {
+	auto Fix = [](int32 Value)
+	{
 		int32 Pow = FMath::RoundToInt(FMath::Log2(static_cast<float>(Value - 1)));
 		return FMath::Pow(2.f, static_cast<float>(Pow)) + 1;
 	};

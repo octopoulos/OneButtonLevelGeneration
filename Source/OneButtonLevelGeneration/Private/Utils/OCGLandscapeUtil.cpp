@@ -822,7 +822,8 @@ void OCGLandscapeUtil::ManageLandscapeRegions(UWorld* World, const ALandscape* L
 
 		TArray<ALocationVolume*> RegionVolumes;
 		FBox                     LandscapeBounds;
-		auto                     AddComponentsToRegion = [World, LandscapeProxy, LandscapeInfo, LandscapeSubsystem, &RegionVolumes, &LandscapeBounds, InMapPreset, InLandscapeSetting](const FIntPoint& RegionCoordinate, const TArray<FIntPoint>& NewComponents) {
+		auto                     AddComponentsToRegion = [World, LandscapeProxy, LandscapeInfo, LandscapeSubsystem, &RegionVolumes, &LandscapeBounds, InMapPreset, InLandscapeSetting](const FIntPoint& RegionCoordinate, const TArray<FIntPoint>& NewComponents)
+		{
 			TRACE_CPUPROFILER_EVENT_SCOPE(AddComponentsToRegion);
 
 			const int32  RegionSizeTexels = InLandscapeSetting.QuadsPerSection * InMapPreset->WorldPartitionRegionSize * InMapPreset->Landscape_SectionsPerComponent;
@@ -860,7 +861,8 @@ void OCGLandscapeUtil::ManageLandscapeRegions(UWorld* World, const ALandscape* L
 		TArray<ALandscapeProxy*> AllProxies;
 
 		// save the initial region & unload it
-		LandscapeInfo->ForEachLandscapeProxy([&AllProxies](ALandscapeProxy* Proxy) {
+		LandscapeInfo->ForEachLandscapeProxy([&AllProxies](ALandscapeProxy* Proxy)
+		{
 			if (Proxy->IsA<ALandscapeStreamingProxy>())
 			{
 				AllProxies.Add(Proxy);
@@ -917,7 +919,8 @@ void OCGLandscapeUtil::ImportMapDatas(UWorld* World, ALandscape* InLandscape, TA
 			FScopedSlowTask Progress(static_cast<float>(NumRegions), NSLOCTEXT("ONEBUTTONLEVELGENERATION_API", "Importing Landscape Regions", "Importing Landscape Regions"));
 			Progress.MakeDialog(/*bShowCancelButton = */ false);
 
-			auto RegionImporter = [&ImportHeightMap, &ImportLayers, &Progress, LandscapeInfo, CurrentLayerGuid, PaintRestriction](const FBox& RegionBounds, const TArray<ALandscapeProxy*>& Proxies) {
+			auto RegionImporter = [&ImportHeightMap, &ImportLayers, &Progress, LandscapeInfo, CurrentLayerGuid, PaintRestriction](const FBox& RegionBounds, const TArray<ALandscapeProxy*>& Proxies)
+			{
 				FIntRect LandscapeLoadedExtent;
 				LandscapeInfo->GetLandscapeExtent(LandscapeLoadedExtent);
 				LandscapeLoadedExtent.Max.X += 1;
@@ -1004,7 +1007,8 @@ bool OCGLandscapeUtil::ChangeGridSize(const UWorld* InWorld, ULandscapeInfo* InL
 
 	TArray<ULandscapeComponent*> LandscapeComponents;
 	LandscapeComponents.Reserve(InLandscapeInfo->XYtoComponentMap.Num());
-	InLandscapeInfo->ForAllLandscapeComponents([&LandscapeComponents](ULandscapeComponent* LandscapeComponent) {
+	InLandscapeInfo->ForAllLandscapeComponents([&LandscapeComponents](ULandscapeComponent* LandscapeComponent)
+	{
 		LandscapeComponents.Add(LandscapeComponent);
 	});
 
@@ -1022,7 +1026,8 @@ bool OCGLandscapeUtil::ChangeGridSize(const UWorld* InWorld, ULandscapeInfo* InL
 		FScopedSlowTask SlowTask(TotalSteps, NSLOCTEXT("ONEBUTTONLEVELGENERATION_API", "Create LandscapeStreamingProxy", "Creating LandscapeStreamingProxies..."));
 		SlowTask.MakeDialog(/*bShowCancelButton=*/false);
 
-		FActorPartitionGridHelper::ForEachIntersectingCell(ALandscapeStreamingProxy::StaticClass(), Extent, World->PersistentLevel, [&SlowTask, TotalSteps, ActorPartitionSubsystem, InLandscapeInfo, InNewGridSizeInComponents, &LandscapeComponents](const UActorPartitionSubsystem::FCellCoord& CellCoord, const FIntRect& CellBounds) {
+		FActorPartitionGridHelper::ForEachIntersectingCell(ALandscapeStreamingProxy::StaticClass(), Extent, World->PersistentLevel, [&SlowTask, TotalSteps, ActorPartitionSubsystem, InLandscapeInfo, InNewGridSizeInComponents, &LandscapeComponents](const UActorPartitionSubsystem::FCellCoord& CellCoord, const FIntRect& CellBounds)
+		{
 			// // 진행도 1 증가
 			SlowTask.EnterProgressFrame(1.0f, FText::Format(
 				NSLOCTEXT("Landscape", "ProcessingCell", "Processing Landscape cell {0}/{1}..."),
@@ -1279,7 +1284,8 @@ void OCGLandscapeUtil::ForEachComponentByRegion(int32 RegionSize, const TArray<F
 		}
 	}
 
-	auto Sorter = [](const FIntPoint& A, const FIntPoint& B) {
+	auto Sorter = [](const FIntPoint& A, const FIntPoint& B)
+	{
 		if (A.Y == B.Y)
 		{
 			return A.X < B.X;
@@ -1441,7 +1447,8 @@ ALandscapeProxy* OCGLandscapeUtil::FindOrAddLandscapeStreamingProxy(UActorPartit
 	ALandscape* Landscape = InLandscapeInfo->LandscapeActor.Get();
 	check(Landscape);
 
-	auto LandscapeProxyCreated = [InCellCoord, Landscape](APartitionActor* PartitionActor) {
+	auto LandscapeProxyCreated = [InCellCoord, Landscape](APartitionActor* PartitionActor)
+	{
 		const FIntPoint CellLocation(static_cast<int32>(InCellCoord.X) * Landscape->GetGridSize(), static_cast<int32>(InCellCoord.Y) * Landscape->GetGridSize());
 
 		ALandscapeProxy* LandscapeProxy = CastChecked<ALandscapeProxy>(PartitionActor);

@@ -257,7 +257,8 @@ void SMapPresetEnvironmentLightingViewer::Tick(const FGeometry& AllottedGeometry
 
 	int32 NumDetailsView = 0;
 
-	auto GetAtmosphericLight = [&](const uint8 DesiredLightIndex) {
+	auto GetAtmosphericLight = [&](const uint8 DesiredLightIndex)
+	{
 		UDirectionalLightComponent* SelectedAtmosphericLight = nullptr;
 		float                       SelectedLightLuminance   = 0.0f;
 		for (TObjectIterator<UDirectionalLightComponent> ComponentIt; ComponentIt; ++ComponentIt)
