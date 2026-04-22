@@ -70,7 +70,7 @@ void AOCGLevelGenerator::OnClickGenerate(UWorld* InWorld)
 
 	for (const auto& Biome : MapPreset->Biomes)
 	{
-		if (Biome.BiomeName == NAME_None)
+		if (Biome.BiomeName.IsNone())
 		{
 			const FText DialogTitle = FText::FromString(TEXT("Error"));
 			const FText DialogText  = FText::FromString(TEXT("Invalid Biome Name. Please set a valid name for each biome."));
@@ -356,7 +356,7 @@ void AOCGLevelGenerator::PreviewMaps()
 
 	for (const auto& Biome : MapPreset->Biomes)
 	{
-		if (Biome.BiomeName == NAME_None)
+		if (Biome.BiomeName.IsNone())
 		{
 			const FText DialogTitle = FText::FromString(TEXT("Error"));
 			const FText DialogText  = FText::FromString(TEXT("Invalid Biome Name. Please set a valid name for each biome."));

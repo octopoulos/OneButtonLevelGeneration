@@ -402,7 +402,7 @@ FReply FMapPresetEditorToolkit::OnGenerateClicked()
 	}
 	for (const auto& Biome : EditingPreset->Biomes)
 	{
-		if (Biome.BiomeName == NAME_None)
+		if (Biome.BiomeName.IsNone())
 		{
 			const FText DialogTitle = FText::FromString(TEXT("Error"));
 			const FText DialogText = FText::FromString(TEXT("Biome name cannot be empty. Please set a valid name for each biome."));
