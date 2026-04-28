@@ -142,7 +142,7 @@ struct FLandscapeHierarchyData
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "OCG")
 	float PointsPerSquareMeter = 0.1f;
 
-	UPROPERTY(EditAnywhere, Category = "OCG", meta = (InlineEditConditionToggle))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "OCG", meta = (InlineEditConditionToggle))
 	bool bOverrideLooseness = false;
 
 	/** Degree of irregularity or 'looseness' in point placement. Higher values spread points more widely. */

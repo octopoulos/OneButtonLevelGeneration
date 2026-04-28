@@ -32,7 +32,7 @@ public:
 private:
 	AOCGLevelGenerator* GetLevelGenerator() const;
 
-	// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Biome", meta = (AllowPrivateAccess="true"))
+	// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Biome", meta = (AllowPrivateAccess = "true"))
 	// TMap<FName, FOCGBiomeSettings> Biomes;
 
 	// NOTE : Moved to MapPreset

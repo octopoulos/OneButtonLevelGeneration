@@ -27,31 +27,31 @@ struct FLandscapeSetting
 {
 	GENERATED_BODY()
 
-	UPROPERTY(VisibleInstanceOnly, Category = "Landscape|Cache", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = "Landscape|Cache", meta = (AllowPrivateAccess = "true"))
 	int32 WorldPartitionGridSize = 2;
 
-	UPROPERTY(VisibleInstanceOnly, Category = "Landscape|Cache", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = "Landscape|Cache", meta = (AllowPrivateAccess = "true"))
 	int32 WorldPartitionRegionSize = 16;
 
-	UPROPERTY(VisibleInstanceOnly, Category = "Landscape|Cache", meta = (AllowPrivateAccess = "true"))
-	uint32 QuadsPerSection = 0;
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = "Landscape|Cache", meta = (AllowPrivateAccess = "true"))
+	int32 QuadsPerSection = 0;
 
-	UPROPERTY(VisibleInstanceOnly, Category = "Landscape|Cache", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = "Landscape|Cache", meta = (AllowPrivateAccess = "true"))
 	FIntPoint TotalLandscapeComponentSize = FIntPoint::ZeroValue;
 
-	UPROPERTY(VisibleInstanceOnly, Category = "Landscape|Cache", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = "Landscape|Cache", meta = (AllowPrivateAccess = "true"))
 	int32 ComponentCountX = 0;
 
-	UPROPERTY(VisibleInstanceOnly, Category = "Landscape|Cache", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = "Landscape|Cache", meta = (AllowPrivateAccess = "true"))
 	int32 ComponentCountY = 0;
 
-	UPROPERTY(VisibleInstanceOnly, Category = "Landscape|Cache", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = "Landscape|Cache", meta = (AllowPrivateAccess = "true"))
 	int32 QuadsPerComponent = 0;
 
-	UPROPERTY(VisibleInstanceOnly, Category = "Landscape|Cache", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = "Landscape|Cache", meta = (AllowPrivateAccess = "true"))
 	int32 SizeX = 0;
 
-	UPROPERTY(VisibleInstanceOnly, Category = "Landscape|Cache", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = "Landscape|Cache", meta = (AllowPrivateAccess = "true"))
 	int32 SizeY = 0;
 
 	bool operator==(FLandscapeSetting const& Other) const
@@ -111,7 +111,7 @@ private:
 	TSoftObjectPtr<ALandscape> TargetLandscapeAsset;
 
 private:
-	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = "Landscape|Cache", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleInstanceOnly, Category = "Landscape|Cache", meta = (AllowPrivateAccess = "true"))
 	FLandscapeSetting LandscapeSetting;
 
 	UPROPERTY(VisibleInstanceOnly, Category = "Landscape|Cache")
