@@ -14,7 +14,14 @@ UMapPresetFactory::UMapPresetFactory()
 	bEditAfterNew  = true;
 }
 
-UObject* UMapPresetFactory::FactoryCreateNew(UClass* Class, UObject* InParent, FName Name, EObjectFlags Flags, UObject* Context, FFeedbackContext* Warn)
+UObject* UMapPresetFactory::FactoryCreateNew(
+	UClass* Class,
+	UObject* InParent,
+	FName Name,
+	EObjectFlags Flags,
+	UObject* Context,
+	FFeedbackContext* Warn
+)
 {
 	UMapPreset* NewPreset = NewObject<UMapPreset>(InParent, Class, Name, Flags, Context);
 

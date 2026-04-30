@@ -102,7 +102,11 @@ void UOCGLandscapeGenerateComponent::BeginPlay()
 }
 
 // Called every frame
-void UOCGLandscapeGenerateComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UOCGLandscapeGenerateComponent::TickComponent(
+	float DeltaTime,
+	ELevelTick TickType,
+	FActorComponentTickFunction* ThisTickFunction
+)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
@@ -492,7 +496,11 @@ bool UOCGLandscapeGenerateComponent::IsLandscapeSettingChanged(const FLandscapeS
 	return Prev.WorldPartitionGridSize != Curr.WorldPartitionGridSize || Prev.WorldPartitionRegionSize != Curr.WorldPartitionRegionSize || Prev.QuadsPerSection != Curr.QuadsPerSection || Prev.TotalLandscapeComponentSize != Curr.TotalLandscapeComponentSize || Prev.ComponentCountX != Curr.ComponentCountX || Prev.ComponentCountY != Curr.ComponentCountY || Prev.QuadsPerComponent != Curr.QuadsPerComponent || Prev.SizeX != Curr.SizeX || Prev.SizeY != Curr.SizeY;
 }
 
-FVector UOCGLandscapeGenerateComponent::GetLandscapePointWorldPosition(const FIntPoint& MapPoint, const FVector& LandscapeOrigin, const FVector& LandscapeExtent) const
+FVector UOCGLandscapeGenerateComponent::GetLandscapePointWorldPosition(
+	const FIntPoint& MapPoint,
+	const FVector& LandscapeOrigin,
+	const FVector& LandscapeExtent
+) const
 {
 	if (!TargetLandscape || !GetLevelGenerator())
 	{

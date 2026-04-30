@@ -248,7 +248,11 @@ SMapPresetEnvironmentLightingViewer::~SMapPresetEnvironmentLightingViewer()
 	}
 }
 
-void SMapPresetEnvironmentLightingViewer::Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime)
+void SMapPresetEnvironmentLightingViewer::Tick(
+	const FGeometry& AllottedGeometry,
+	const double InCurrentTime,
+	const float InDeltaTime
+)
 {
 	if (!World.IsValid())
 	{
@@ -444,7 +448,10 @@ TSharedRef<SWidget> SMapPresetEnvironmentLightingViewer::ComboBoxDetailFilterWid
 	return SNew(STextBlock).Text(FText::FromString(*ItemString));
 }
 
-void SMapPresetEnvironmentLightingViewer::ComboBoxDetailFilterWidgetSelectionChanged(TSharedPtr<FString> NewSelection, [[maybe_unused]] ESelectInfo::Type SelectInfo)
+void SMapPresetEnvironmentLightingViewer::ComboBoxDetailFilterWidgetSelectionChanged(
+	TSharedPtr<FString> NewSelection,
+	[[maybe_unused]] ESelectInfo::Type SelectInfo
+)
 {
 	for (int32 i = 0; i < ComboBoxDetailFilterOptions.Num(); ++i)
 	{

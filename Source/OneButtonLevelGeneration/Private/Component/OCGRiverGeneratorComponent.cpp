@@ -582,7 +582,11 @@ void UOCGRiverGenerateComponent::ClearAllRivers()
 	}
 }
 
-FVector UOCGRiverGenerateComponent::GetLandscapePointWorldPosition(const FIntPoint& MapPoint, const FVector& LandscapeOrigin, const FVector& LandscapeExtent) const
+FVector UOCGRiverGenerateComponent::GetLandscapePointWorldPosition(
+	const FIntPoint& MapPoint,
+	const FVector& LandscapeOrigin,
+	const FVector& LandscapeExtent
+) const
 {
 	if (MapPreset == nullptr)
 	{

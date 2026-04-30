@@ -312,7 +312,11 @@ void OCGMaterialEditTool::CollectUsedExpressions(UMaterial* TargetMaterial, TSet
 	}
 }
 
-void OCGMaterialEditTool::AddAttributeInput(const FExpressionInput& Input, TSet<UMaterialExpression*>& OutUsedExpressions, TArray<UMaterialExpression*>& ExpressionsToProcess)
+void OCGMaterialEditTool::AddAttributeInput(
+	const FExpressionInput& Input,
+	TSet<UMaterialExpression*>& OutUsedExpressions,
+	TArray<UMaterialExpression*>& ExpressionsToProcess
+)
 {
 	// GetTracedInput()은 Reroute 및 Named Reroute 노드를 자동으로 해석하여 실제 소스 표현식을 반환합니다.
 	if (UMaterialExpression* RootExpr = Input.GetTracedInput().Expression)
