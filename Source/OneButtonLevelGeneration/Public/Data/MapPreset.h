@@ -405,7 +405,7 @@ public:
 
 public:
 	//~ Begin UPROPERTY PCG
-	/** The PCG graph to be used for generation. */
+	/** PCG graph to be used for generation. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PCG")
 	TObjectPtr<UPCGGraph> PCGGraph;
 

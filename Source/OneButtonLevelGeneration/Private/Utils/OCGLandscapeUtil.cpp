@@ -422,7 +422,7 @@ void OCGLandscapeUtil::GetWeightMap(ALandscape* InLandscape, ULandscapeLayerInfo
 			Compat::AlphamapAccessorType<false> AlphamapAccessor(LandscapeInfo, InLayerInfo);
 			int32                               RegionWidth  = Region.Width() + 1;
 			int32                               RegionHeight = Region.Height() + 1;
-			if (!OutOriginWeightMap.IsEmpty())
+			if (OutOriginWeightMap.Num() > 0)
 			{
 				OutOriginWeightMap.Empty();
 			}

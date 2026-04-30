@@ -392,7 +392,7 @@ void SOCGWidget::FindExistingLevelGenerator()
 	if (const UWorld* World = GEditor->GetEditorWorldContext().World())
 	{
 		TArray<AOCGLevelGenerator*> Generators = FOCGUtils::GetAllActorsOfClass<AOCGLevelGenerator>(World);
-		if (!Generators.IsEmpty())
+		if (Generators.Num() > 0)
 		{
 			AOCGLevelGenerator* Generator = Generators[0];
 
@@ -408,7 +408,7 @@ void SOCGWidget::CheckForExistingLevelGenerator()
 	if (UWorld* World = GEditor->GetEditorWorldContext().World())
 	{
 		TArray<AOCGLevelGenerator*> Generators = FOCGUtils::GetAllActorsOfClass<AOCGLevelGenerator>(World);
-		if (!Generators.IsEmpty())
+		if (Generators.Num() > 0)
 		{
 			bLevelGeneratorExistsInLevel = true;
 		}

@@ -471,7 +471,7 @@ void UOCGRiverGenerateComponent::ApplyWaterWeight()
 
 		const ULandscapeInfo*      LandscapeInfo = TargetLandscape->GetLandscapeInfo();
 		ULandscapeLayerInfoObject* FirstLayer    = nullptr;
-		if (LandscapeInfo && !LayerNames.IsEmpty())
+		if (LandscapeInfo && LayerNames.Num() > 0)
 		{
 			FirstLayer = LandscapeInfo->GetLayerInfoByName(LayerNames[0]);
 		}
@@ -480,7 +480,7 @@ void UOCGRiverGenerateComponent::ApplyWaterWeight()
 		{
 			for (auto Item : PrevRiverMaskedWeight)
 			{
-				if (LandscapeInfo && !LayerNames.IsEmpty())
+				if (LandscapeInfo && LayerNames.Num() > 0)
 				{
 					ULandscapeLayerInfoObject* LanyerInfo = LandscapeInfo->GetLayerInfoByName(Item.Key);
 					TArray<uint8>              OriginWeightMap;

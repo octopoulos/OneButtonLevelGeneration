@@ -413,7 +413,7 @@ bool UOCGLandscapeGenerateComponent::CreateRuntimeVirtualTextureVolume(ALandscap
 
 	TArray<URuntimeVirtualTexture*> VirtualTextureVolumesToCreate;
 	GetRuntimeVirtualTextureVolumes(InLandscapeActor, VirtualTextureVolumesToCreate);
-	if (VirtualTextureVolumesToCreate.Num() == 0)
+	if (VirtualTextureVolumesToCreate.IsEmpty())
 	{
 		return false;
 	}
@@ -439,7 +439,7 @@ bool UOCGLandscapeGenerateComponent::CreateRuntimeVirtualTextureVolume(ALandscap
 		CachedRuntimeVirtualTextureVolumes.Add(NewRVTVolume);
 	}
 
-	if (!CachedRuntimeVirtualTextureVolumes.IsEmpty())
+	if (CachedRuntimeVirtualTextureVolumes.Num() > 0)
 	{
 		if (UBoxComponent* VolumeBox = CachedRuntimeVirtualTextureVolumes[0]->Box)
 		{

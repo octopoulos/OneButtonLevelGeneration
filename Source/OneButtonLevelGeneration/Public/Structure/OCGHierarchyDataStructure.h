@@ -23,7 +23,7 @@ struct FOCGMeshInfo
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "OCG")
 	bool bEnableDefaultCollision = false;
 
-	/** The layer name this mesh belongs to. */
+	/** Layer name this mesh belongs to. */
 	UPROPERTY(BlueprintReadOnly, Category = "OCG")
 	FName MeshFilterName_Internal;
 };
@@ -34,11 +34,11 @@ struct FSlopeLimitInfo
 {
 	GENERATED_BODY()
 
-	/** The minimum slope angle in degrees (0-90). */
+	/** Minimum slope angle in degrees (0-90). */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "OCG", meta = (ClampMin = 0.0f, UIMin = 0.0f, ClampMax = 90.0f, UIMax = 90.0f, Units = "Degrees"))
 	float MinAngle = 0.0f;
 
-	/** The maximum slope angle in degrees (0-90). */
+	/** Maximum slope angle in degrees (0-90). */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "OCG", meta = (ClampMin = 0.0f, UIMin = 0.0f, ClampMax = 90.0f, UIMax = 90.0f, Units = "Degrees"))
 	float MaxAngle = 45.0f;
 
@@ -118,7 +118,7 @@ struct FLandscapeHierarchyData
 {
 	GENERATED_BODY()
 
-	/** The name of the layer that this hierarchy data represents. */
+	/** Name of the layer that this hierarchy data represents. */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "OCG")
 	FName BiomeName;
 
@@ -177,7 +177,7 @@ struct FLandscapeHierarchyData
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "OCG", meta = (InlineEditConditionToggle))
 	bool bOverrideTransformPoint = false;
 
-	/** The transform point information to use when overriding. */
+	/** Transform point information to use when overriding. */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "OCG", meta = (EditCondition = "bOverrideTransformPoint"))
 	FTransformPointInfo TransformPoint;
 
