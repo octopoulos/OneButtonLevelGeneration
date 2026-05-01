@@ -491,7 +491,10 @@ bool UOCGLandscapeGenerateComponent::ShouldCreateNewLandscape(const UWorld* Worl
 	return false;
 }
 
-bool UOCGLandscapeGenerateComponent::IsLandscapeSettingChanged(const FLandscapeSetting& Prev, const FLandscapeSetting& Curr)
+bool UOCGLandscapeGenerateComponent::IsLandscapeSettingChanged(
+	const FLandscapeSetting& Prev,
+	const FLandscapeSetting& Curr
+)
 {
 	return Prev.WorldPartitionGridSize != Curr.WorldPartitionGridSize || Prev.WorldPartitionRegionSize != Curr.WorldPartitionRegionSize || Prev.QuadsPerSection != Curr.QuadsPerSection || Prev.TotalLandscapeComponentSize != Curr.TotalLandscapeComponentSize || Prev.ComponentCountX != Curr.ComponentCountX || Prev.ComponentCountY != Curr.ComponentCountY || Prev.QuadsPerComponent != Curr.QuadsPerComponent || Prev.SizeX != Curr.SizeX || Prev.SizeY != Curr.SizeY;
 }

@@ -22,7 +22,11 @@ void UOCGMapGenerateComponent::BeginPlay()
 }
 
 // Called every frame
-void UOCGMapGenerateComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UOCGMapGenerateComponent::TickComponent(
+	float DeltaTime,
+	ELevelTick TickType,
+	FActorComponentTickFunction* ThisTickFunction
+)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
@@ -238,7 +242,11 @@ void UOCGMapGenerateComponent::InitializeNoiseOffsets(const UMapPreset* MapPrese
 	IslandNoiseOffset.Y = Stream.FRandRange(-StandardNoiseOffset, StandardNoiseOffset);
 }
 
-void UOCGMapGenerateComponent::GenerateHeightMap(const UMapPreset* MapPreset, const FIntPoint CurMapResolution, TArray<uint16>& OutHeightMap)
+void UOCGMapGenerateComponent::GenerateHeightMap(
+	const UMapPreset* MapPreset,
+	const FIntPoint CurMapResolution,
+	TArray<uint16>& OutHeightMap
+)
 {
 	OutHeightMap.SetNumUninitialized(CurMapResolution.X * CurMapResolution.Y);
 
@@ -257,7 +265,11 @@ void UOCGMapGenerateComponent::GenerateHeightMap(const UMapPreset* MapPreset, co
 	}
 }
 
-float UOCGMapGenerateComponent::CalculateHeightForCoordinate(const UMapPreset* MapPreset, const int32 InX, const int32 InY) const
+float UOCGMapGenerateComponent::CalculateHeightForCoordinate(
+	const UMapPreset* MapPreset,
+	const int32 InX,
+	const int32 InY
+) const
 {
 	// 1. Use Low frequency noise to generate large mountains
 	float MountainNoiseX = InX * MapPreset->ContinentNoiseScale * NoiseScale + MountainNoiseOffset.X;
@@ -712,7 +724,11 @@ void UOCGMapGenerateComponent::CalculateBiomeMinHeights(
 	}
 }
 
-void UOCGMapGenerateComponent::BlurBiomeMinHeights(TArray<float>& OutMinHeights, const TArray<float>& InMinHeights, const UMapPreset* MapPreset)
+void UOCGMapGenerateComponent::BlurBiomeMinHeights(
+	TArray<float>& OutMinHeights,
+	const TArray<float>& InMinHeights,
+	const UMapPreset* MapPreset
+)
 {
 	float     BlendRadius = MapPreset->BiomeHeightBlendRadius;
 	FIntPoint MapSize     = MapPreset->MapResolution;
@@ -868,7 +884,11 @@ void UOCGMapGenerateComponent::SmoothHeightMap(const UMapPreset* MapPreset, TArr
 	MedianSmooth(MapPreset, InOutHeightMap);
 }
 
-void UOCGMapGenerateComponent::ApplyGaussianBlur(const UMapPreset* MapPreset, TArray<uint16>& InOutHeightMap, TArray<uint16>& OutBlurredMap)
+void UOCGMapGenerateComponent::ApplyGaussianBlur(
+	const UMapPreset* MapPreset,
+	TArray<uint16>& InOutHeightMap,
+	TArray<uint16>& OutBlurredMap
+)
 {
 	int32 Radius = MapPreset->GaussianBlurRadius;
 
@@ -1017,7 +1037,11 @@ void UOCGMapGenerateComponent::ProcessPlane(
 	}
 }
 
-void UOCGMapGenerateComponent::GenerateTempMap(const UMapPreset* MapPreset, const TArray<uint16>& InHeightMap, TArray<uint16>& OutTempMap)
+void UOCGMapGenerateComponent::GenerateTempMap(
+	const UMapPreset* MapPreset,
+	const TArray<uint16>& InHeightMap,
+	TArray<uint16>& OutTempMap
+)
 {
 	const FIntPoint CurResolution = MapPreset->MapResolution;
 	if (OutTempMap.Num() != CurResolution.X * CurResolution.Y)
@@ -1602,7 +1626,11 @@ void UOCGMapGenerateComponent::BlendBiome(const UMapPreset* MapPreset)
 	}
 }
 
-void UOCGMapGenerateComponent::ExportMap(const UMapPreset* MapPreset, const TArray<uint16>& InMap, const FString& FileName) const
+void UOCGMapGenerateComponent::ExportMap(
+	const UMapPreset* MapPreset,
+	const TArray<uint16>& InMap,
+	const FString& FileName
+) const
 {
 	if (MapPreset->bExportMapTextures)
 	{
@@ -1610,7 +1638,11 @@ void UOCGMapGenerateComponent::ExportMap(const UMapPreset* MapPreset, const TArr
 	}
 }
 
-void UOCGMapGenerateComponent::ExportMap(const UMapPreset* MapPreset, const TArray<FColor>& InMap, const FString& FileName) const
+void UOCGMapGenerateComponent::ExportMap(
+	const UMapPreset* MapPreset,
+	const TArray<FColor>& InMap,
+	const FString& FileName
+) const
 {
 	if (MapPreset->bExportMapTextures)
 	{

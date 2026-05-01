@@ -165,7 +165,11 @@ void OCGLandscapeUtil::ExtractHeightMap(
 #endif
 }
 
-void OCGLandscapeUtil::AddWeightMap(ALandscape* InLandscape, const int32 InTargetLayerIndex, const TArray<uint8>& InWeightMap)
+void OCGLandscapeUtil::AddWeightMap(
+	ALandscape* InLandscape,
+	const int32 InTargetLayerIndex,
+	const TArray<uint8>& InWeightMap
+)
 {
 	if (InLandscape != nullptr)
 	{
@@ -181,7 +185,11 @@ void OCGLandscapeUtil::AddWeightMap(ALandscape* InLandscape, const int32 InTarge
 	}
 }
 
-void OCGLandscapeUtil::AddWeightMap(ALandscape* InLandscape, ULandscapeLayerInfoObject* InLayerInfo, const TArray<uint8>& InWeightMap)
+void OCGLandscapeUtil::AddWeightMap(
+	ALandscape* InLandscape,
+	ULandscapeLayerInfoObject* InLayerInfo,
+	const TArray<uint8>& InWeightMap
+)
 {
 #if WITH_EDITOR
 	if (InWeightMap.IsEmpty())
@@ -245,7 +253,11 @@ void OCGLandscapeUtil::AddWeightMap(ALandscape* InLandscape, ULandscapeLayerInfo
 #endif
 }
 
-void OCGLandscapeUtil::ApplyWeightMap(ALandscape* InLandscape, const int32 InTargetLayerIndex, const TArray<uint8>& InWeightMap)
+void OCGLandscapeUtil::ApplyWeightMap(
+	ALandscape* InLandscape,
+	const int32 InTargetLayerIndex,
+	const TArray<uint8>& InWeightMap
+)
 {
 #if WITH_EDITOR
 	if (InWeightMap.IsEmpty())
@@ -268,7 +280,11 @@ void OCGLandscapeUtil::ApplyWeightMap(ALandscape* InLandscape, const int32 InTar
 #endif
 }
 
-void OCGLandscapeUtil::ApplyWeightMap(ALandscape* InLandscape, ULandscapeLayerInfoObject* InLayerInfo, const TArray<uint8>& InWeightMap)
+void OCGLandscapeUtil::ApplyWeightMap(
+	ALandscape* InLandscape,
+	ULandscapeLayerInfoObject* InLayerInfo,
+	const TArray<uint8>& InWeightMap
+)
 {
 #if WITH_EDITOR
 	if (InWeightMap.IsEmpty())
@@ -382,7 +398,11 @@ void OCGLandscapeUtil::ApplyMaskedWeightMap(
 #endif
 }
 
-void OCGLandscapeUtil::GetWeightMap(ALandscape* InLandscape, const int32 InTargetLayerIndex, TArray<uint8>& OutOriginWeightMap)
+void OCGLandscapeUtil::GetWeightMap(
+	ALandscape* InLandscape,
+	const int32 InTargetLayerIndex,
+	TArray<uint8>& OutOriginWeightMap
+)
 {
 #if WITH_EDITOR
 	if (InLandscape != nullptr)
@@ -405,7 +425,11 @@ void OCGLandscapeUtil::GetWeightMap(ALandscape* InLandscape, const int32 InTarge
 #endif
 }
 
-void OCGLandscapeUtil::GetWeightMap(ALandscape* InLandscape, ULandscapeLayerInfoObject* InLayerInfo, TArray<uint8>& OutOriginWeightMap)
+void OCGLandscapeUtil::GetWeightMap(
+	ALandscape* InLandscape,
+	ULandscapeLayerInfoObject* InLayerInfo,
+	TArray<uint8>& OutOriginWeightMap
+)
 {
 #if WITH_EDITOR
 	if (InLandscape != nullptr)
@@ -536,7 +560,11 @@ void OCGLandscapeUtil::CleanUpWeightMap(ALandscape* InLandscape)
 #endif
 }
 
-void OCGLandscapeUtil::MakeWeightMapFromHeightDiff(const TArray<uint16>& HeightDiff, TArray<uint8>& OutWeight, const uint16 MinDiffThreshold)
+void OCGLandscapeUtil::MakeWeightMapFromHeightDiff(
+	const TArray<uint16>& HeightDiff,
+	TArray<uint8>& OutWeight,
+	const uint16 MinDiffThreshold
+)
 {
 #if WITH_EDITOR
 	const int32 Num = HeightDiff.Num();
@@ -553,7 +581,12 @@ void OCGLandscapeUtil::MakeWeightMapFromHeightDiff(const TArray<uint16>& HeightD
 #endif
 }
 
-void OCGLandscapeUtil::BlurWeightMap(const TArray<uint8>& InWeight, TArray<uint8>& OutWeight, const int32 Width, const int32 Height)
+void OCGLandscapeUtil::BlurWeightMap(
+	const TArray<uint8>& InWeight,
+	TArray<uint8>& OutWeight,
+	const int32 Width,
+	const int32 Height
+)
 {
 	const int32 Num = Width * Height;
 	OutWeight.SetNumUninitialized(Num);
@@ -1013,7 +1046,11 @@ void OCGLandscapeUtil::ImportMapDatas(
 #endif
 }
 
-bool OCGLandscapeUtil::ChangeGridSize(const UWorld* InWorld, ULandscapeInfo* InLandscapeInfo, uint32 InNewGridSizeInComponents)
+bool OCGLandscapeUtil::ChangeGridSize(
+	const UWorld* InWorld,
+	ULandscapeInfo* InLandscapeInfo,
+	uint32 InNewGridSizeInComponents
+)
 {
 	TRACE_CPUPROFILER_EVENT_SCOPE(UOCGLandscapeGenerateComponent::ChangeGridSize);
 
@@ -1424,7 +1461,10 @@ void OCGLandscapeUtil::SaveLandscapeProxies(const UWorld* World, const TArrayVie
 }
 
 TMap<FGuid, TArray<FLandscapeImportLayerInfo>> OCGLandscapeUtil::PrepareLandscapeLayerData(
-	ALandscape* InTargetLandscape, AOCGLevelGenerator* InLevelGenerator, const UMapPreset* InMapPreset)
+	ALandscape* InTargetLandscape,
+	AOCGLevelGenerator* InLevelGenerator,
+	const UMapPreset* InMapPreset
+)
 {
 #if WITH_EDITOR
 	TMap<FGuid, TArray<FLandscapeImportLayerInfo>> MaterialLayerDataPerLayer;

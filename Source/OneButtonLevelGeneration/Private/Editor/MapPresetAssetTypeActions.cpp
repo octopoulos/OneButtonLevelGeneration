@@ -57,7 +57,10 @@ uint32 FMapPresetAssetTypeActions::GetCategories()
 	return AssetTools.RegisterAdvancedAssetCategory(FName(TEXT("OCG")), FText::FromString(TEXT("OCG")));
 }
 
-void FMapPresetAssetTypeActions::OpenAssetEditor(const TArray<UObject*>& InObjects, TSharedPtr<IToolkitHost> EditWithinLevelEditor)
+void FMapPresetAssetTypeActions::OpenAssetEditor(
+	const TArray<UObject*>& InObjects,
+	TSharedPtr<IToolkitHost> EditWithinLevelEditor
+)
 {
 	if (OpenedEditorInstance.IsValid())
 	{

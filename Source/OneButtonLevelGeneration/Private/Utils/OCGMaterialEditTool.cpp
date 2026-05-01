@@ -21,7 +21,10 @@ OCGMaterialEditTool::~OCGMaterialEditTool()
 {
 }
 
-void OCGMaterialEditTool::InsertMaterialFunctionIntoMaterial(UMaterial* TargetMaterial, TArray<UMaterialFunctionInterface*> FuncToInsert)
+void OCGMaterialEditTool::InsertMaterialFunctionIntoMaterial(
+	UMaterial* TargetMaterial,
+	TArray<UMaterialFunctionInterface*> FuncToInsert
+)
 {
 #if WITH_EDITOR
 	if (!TargetMaterial || FuncToInsert.IsEmpty())
@@ -267,7 +270,10 @@ TArray<FName> OCGMaterialEditTool::ExtractLandscapeLayerName(UMaterial* TargetMa
 #endif
 }
 
-void OCGMaterialEditTool::CollectUsedExpressions(UMaterial* TargetMaterial, TSet<UMaterialExpression*>& OutUsedExpressions)
+void OCGMaterialEditTool::CollectUsedExpressions(
+	UMaterial* TargetMaterial,
+	TSet<UMaterialExpression*>& OutUsedExpressions
+)
 {
 	if (TargetMaterial == nullptr)
 	{

@@ -40,7 +40,11 @@ FORCEINLINE void ClearEditLayer(ALandscape* Landscape, FGuid LayerGuid)
 
 UOCGRiverGenerateComponent::UOCGRiverGenerateComponent() = default;
 
-void UOCGRiverGenerateComponent::GenerateRiver(UWorld* InWorld, ALandscape* InLandscape, bool bForceCleanUpPrevWaterWeightMap)
+void UOCGRiverGenerateComponent::GenerateRiver(
+	UWorld* InWorld,
+	ALandscape* InLandscape,
+	bool bForceCleanUpPrevWaterWeightMap
+)
 {
 #if WITH_EDITOR
 	if (InWorld == nullptr)
@@ -267,12 +271,20 @@ void UOCGRiverGenerateComponent::GenerateRiver(UWorld* InWorld, ALandscape* InLa
 #endif
 }
 
-void UOCGRiverGenerateComponent::SetMapData(const TArray<uint16>& InHeightMap, UMapPreset* InMapPreset, float InMinHeight, float InMaxHeight)
+void UOCGRiverGenerateComponent::SetMapData(
+	const TArray<uint16>& InHeightMap,
+	UMapPreset* InMapPreset,
+	float InMinHeight,
+	float InMaxHeight
+)
 {
 	MapPreset = InMapPreset;
 }
 
-void UOCGRiverGenerateComponent::AddRiverProperties(AWaterBodyRiver* InRiverActor, const TArray<FVector>& InRiverPath)
+void UOCGRiverGenerateComponent::AddRiverProperties(
+	AWaterBodyRiver* InRiverActor,
+	const TArray<FVector>& InRiverPath
+)
 {
 	if (!InRiverActor || !MapPreset)
 	{
@@ -624,7 +636,10 @@ FVector UOCGRiverGenerateComponent::GetLandscapePointWorldPosition(
 	return WorldLocation;
 }
 
-void UOCGRiverGenerateComponent::SetDefaultRiverProperties(AWaterBodyRiver* InRiverActor, const TArray<FVector>& InRiverPath)
+void UOCGRiverGenerateComponent::SetDefaultRiverProperties(
+	AWaterBodyRiver* InRiverActor,
+	const TArray<FVector>& InRiverPath
+)
 {
 	UWaterBodyComponent* WaterBodyComponent = CastChecked<AWaterBody>(InRiverActor)->GetWaterBodyComponent();
 	check(MapPreset != nullptr && WaterBodyComponent != nullptr);
@@ -703,7 +718,11 @@ FIntPoint UOCGRiverGenerateComponent::GetRandomStartPoint(int32 RiverIndex)
 	return StartPoint;
 }
 
-void UOCGRiverGenerateComponent::SimplifyPathRDP(const TArray<FVector>& InPoints, TArray<FVector>& OutPoints, float Epsilon)
+void UOCGRiverGenerateComponent::SimplifyPathRDP(
+	const TArray<FVector>& InPoints,
+	TArray<FVector>& OutPoints,
+	float Epsilon
+)
 {
 	if (InPoints.Num() < 3)
 	{
