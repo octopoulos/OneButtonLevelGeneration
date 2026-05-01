@@ -58,7 +58,7 @@ uint32 FMapPresetAssetTypeActions::GetCategories()
 }
 
 void FMapPresetAssetTypeActions::OpenAssetEditor(
-	const TArray<UObject*>& InObjects,
+	const TArray<UObject*>&  InObjects,
 	TSharedPtr<IToolkitHost> EditWithinLevelEditor
 )
 {

@@ -132,10 +132,10 @@ OCGLandscapeUtil::~OCGLandscapeUtil()
 }
 
 void OCGLandscapeUtil::ExtractHeightMap(
-	ALandscape* InLandscape,
-	const FGuid InGuid,
-	int32& OutWidth,
-	int32& OutHeight,
+	ALandscape*     InLandscape,
+	const FGuid     InGuid,
+	int32&          OutWidth,
+	int32&          OutHeight,
 	TArray<uint16>& OutHeightMap
 )
 {
@@ -166,8 +166,8 @@ void OCGLandscapeUtil::ExtractHeightMap(
 }
 
 void OCGLandscapeUtil::AddWeightMap(
-	ALandscape* InLandscape,
-	const int32 InTargetLayerIndex,
+	ALandscape*          InLandscape,
+	const int32          InTargetLayerIndex,
 	const TArray<uint8>& InWeightMap
 )
 {
@@ -186,9 +186,9 @@ void OCGLandscapeUtil::AddWeightMap(
 }
 
 void OCGLandscapeUtil::AddWeightMap(
-	ALandscape* InLandscape,
+	ALandscape*                InLandscape,
 	ULandscapeLayerInfoObject* InLayerInfo,
-	const TArray<uint8>& InWeightMap
+	const TArray<uint8>&       InWeightMap
 )
 {
 #if WITH_EDITOR
@@ -254,8 +254,8 @@ void OCGLandscapeUtil::AddWeightMap(
 }
 
 void OCGLandscapeUtil::ApplyWeightMap(
-	ALandscape* InLandscape,
-	const int32 InTargetLayerIndex,
+	ALandscape*          InLandscape,
+	const int32          InTargetLayerIndex,
 	const TArray<uint8>& InWeightMap
 )
 {
@@ -281,9 +281,9 @@ void OCGLandscapeUtil::ApplyWeightMap(
 }
 
 void OCGLandscapeUtil::ApplyWeightMap(
-	ALandscape* InLandscape,
+	ALandscape*                InLandscape,
 	ULandscapeLayerInfoObject* InLayerInfo,
-	const TArray<uint8>& InWeightMap
+	const TArray<uint8>&       InWeightMap
 )
 {
 #if WITH_EDITOR
@@ -330,10 +330,10 @@ void OCGLandscapeUtil::ApplyWeightMap(
 }
 
 void OCGLandscapeUtil::ApplyMaskedWeightMap(
-	ALandscape* InLandscape,
+	ALandscape*                InLandscape,
 	ULandscapeLayerInfoObject* InLayerInfo,
-	const TArray<uint8>& OriginWeightMap,
-	const TArray<uint8>& InMaskedWeightMap
+	const TArray<uint8>&       OriginWeightMap,
+	const TArray<uint8>&       InMaskedWeightMap
 )
 {
 #if WITH_EDITOR
@@ -399,8 +399,8 @@ void OCGLandscapeUtil::ApplyMaskedWeightMap(
 }
 
 void OCGLandscapeUtil::GetWeightMap(
-	ALandscape* InLandscape,
-	const int32 InTargetLayerIndex,
+	ALandscape*    InLandscape,
+	const int32    InTargetLayerIndex,
 	TArray<uint8>& OutOriginWeightMap
 )
 {
@@ -426,9 +426,9 @@ void OCGLandscapeUtil::GetWeightMap(
 }
 
 void OCGLandscapeUtil::GetWeightMap(
-	ALandscape* InLandscape,
+	ALandscape*                InLandscape,
 	ULandscapeLayerInfoObject* InLayerInfo,
-	TArray<uint8>& OutOriginWeightMap
+	TArray<uint8>&             OutOriginWeightMap
 )
 {
 #if WITH_EDITOR
@@ -471,10 +471,10 @@ void OCGLandscapeUtil::GetWeightMap(
 }
 
 void OCGLandscapeUtil::GetMaskedWeightMap(
-	ALandscape* InLandscape,
-	const int32 InTargetLayerIndex,
+	ALandscape*          InLandscape,
+	const int32          InTargetLayerIndex,
 	const TArray<uint8>& Mask,
-	TArray<uint8>& OutWeightMap
+	TArray<uint8>&       OutWeightMap
 )
 {
 #if WITH_EDITOR
@@ -499,10 +499,10 @@ void OCGLandscapeUtil::GetMaskedWeightMap(
 }
 
 void OCGLandscapeUtil::GetMaskedWeightMap(
-	ALandscape* InLandscape,
+	ALandscape*                InLandscape,
 	ULandscapeLayerInfoObject* InLayerInfo,
-	const TArray<uint8>& Mask,
-	TArray<uint8>& OutWeightMap
+	const TArray<uint8>&       Mask,
+	TArray<uint8>&             OutWeightMap
 )
 {
 #if WITH_EDITOR
@@ -562,8 +562,8 @@ void OCGLandscapeUtil::CleanUpWeightMap(ALandscape* InLandscape)
 
 void OCGLandscapeUtil::MakeWeightMapFromHeightDiff(
 	const TArray<uint16>& HeightDiff,
-	TArray<uint8>& OutWeight,
-	const uint16 MinDiffThreshold
+	TArray<uint8>&        OutWeight,
+	const uint16          MinDiffThreshold
 )
 {
 #if WITH_EDITOR
@@ -583,9 +583,9 @@ void OCGLandscapeUtil::MakeWeightMapFromHeightDiff(
 
 void OCGLandscapeUtil::BlurWeightMap(
 	const TArray<uint8>& InWeight,
-	TArray<uint8>& OutWeight,
-	const int32 Width,
-	const int32 Height
+	TArray<uint8>&       OutWeight,
+	const int32          Width,
+	const int32          Height
 )
 {
 	const int32 Num = Width * Height;
@@ -659,7 +659,7 @@ void OCGLandscapeUtil::ClearTargetLayers(const ALandscape* InLandscape)
 }
 
 void OCGLandscapeUtil::UpdateTargetLayers(
-	ALandscape* InLandscape,
+	ALandscape*                                           InLandscape,
 	const TMap<FGuid, TArray<FLandscapeImportLayerInfo>>& MaterialLayerDataPerLayers
 )
 {
@@ -756,7 +756,7 @@ void OCGLandscapeUtil::UpdateTargetLayers(
 }
 
 void OCGLandscapeUtil::AddTargetLayers(
-	ALandscape* InLandscape,
+	ALandscape*                                           InLandscape,
 	const TMap<FGuid, TArray<FLandscapeImportLayerInfo>>& MaterialLayerDataPerLayers
 )
 {
@@ -837,9 +837,9 @@ void OCGLandscapeUtil::AddTargetLayers(
 }
 
 void OCGLandscapeUtil::ManageLandscapeRegions(
-	UWorld* World,
-	const ALandscape* Landscape,
-	UMapPreset* InMapPreset,
+	UWorld*                  World,
+	const ALandscape*        Landscape,
+	UMapPreset*              InMapPreset,
 	const FLandscapeSetting& InLandscapeSetting
 )
 {
@@ -941,9 +941,9 @@ void OCGLandscapeUtil::ManageLandscapeRegions(
 }
 
 void OCGLandscapeUtil::ImportMapDatas(
-	UWorld* World,
-	ALandscape* InLandscape,
-	TArray<uint16> ImportHeightMap,
+	UWorld*                           World,
+	ALandscape*                       InLandscape,
+	TArray<uint16>                    ImportHeightMap,
 	TArray<FLandscapeImportLayerInfo> ImportLayers
 )
 {
@@ -1047,9 +1047,9 @@ void OCGLandscapeUtil::ImportMapDatas(
 }
 
 bool OCGLandscapeUtil::ChangeGridSize(
-	const UWorld* InWorld,
+	const UWorld*   InWorld,
 	ULandscapeInfo* InLandscapeInfo,
-	uint32 InNewGridSizeInComponents
+	uint32          InNewGridSizeInComponents
 )
 {
 	TRACE_CPUPROFILER_EVENT_SCOPE(UOCGLandscapeGenerateComponent::ChangeGridSize);
@@ -1168,9 +1168,9 @@ bool OCGLandscapeUtil::ChangeGridSize(
 }
 
 void OCGLandscapeUtil::AddLandscapeComponent(
-	ULandscapeInfo* InLandscapeInfo,
-	ULandscapeSubsystem* InLandscapeSubsystem,
-	const TArray<FIntPoint>& InComponentCoordinates,
+	ULandscapeInfo*           InLandscapeInfo,
+	ULandscapeSubsystem*      InLandscapeSubsystem,
+	const TArray<FIntPoint>&  InComponentCoordinates,
 	TArray<ALandscapeProxy*>& OutCreatedStreamingProxies
 )
 {
@@ -1270,10 +1270,10 @@ void OCGLandscapeUtil::AddLandscapeComponent(
 }
 
 ALocationVolume* OCGLandscapeUtil::CreateLandscapeRegionVolume(
-	UWorld* InWorld,
+	UWorld*          InWorld,
 	ALandscapeProxy* InParentLandscapeActor,
 	const FIntPoint& InRegionCoordinate,
-	const double InRegionSize
+	const double     InRegionSize
 )
 {
 #if WITH_EDITOR
@@ -1311,9 +1311,9 @@ ALocationVolume* OCGLandscapeUtil::CreateLandscapeRegionVolume(
 }
 
 ULandscapeLayerInfoObject* OCGLandscapeUtil::CreateLayerInfo(
-	ALandscape* InLandscape,
-	const FString& InPackagePath,
-	const FString& InAssetName,
+	ALandscape*                      InLandscape,
+	const FString&                   InPackagePath,
+	const FString&                   InAssetName,
 	const ULandscapeLayerInfoObject* InTemplate
 )
 {
@@ -1350,8 +1350,8 @@ ULandscapeLayerInfoObject* OCGLandscapeUtil::CreateLayerInfo(
 }
 
 void OCGLandscapeUtil::ForEachComponentByRegion(
-	int32 RegionSize,
-	const TArray<FIntPoint>& ComponentCoordinates,
+	int32                                                                 RegionSize,
+	const TArray<FIntPoint>&                                              ComponentCoordinates,
 	const TFunctionRef<bool(const FIntPoint&, const TArray<FIntPoint>&)>& RegionFn
 )
 {
@@ -1399,9 +1399,9 @@ void OCGLandscapeUtil::ForEachComponentByRegion(
 }
 
 void OCGLandscapeUtil::ForEachRegion_LoadProcessUnload(
-	ULandscapeInfo* InLandscapeInfo,
-	const FIntRect& InDomain,
-	const UWorld* InWorld,
+	ULandscapeInfo*                                                        InLandscapeInfo,
+	const FIntRect&                                                        InDomain,
+	const UWorld*                                                          InWorld,
 	const TFunctionRef<bool(const FBox&, const TArray<ALandscapeProxy*>)>& InRegionFn
 )
 {
@@ -1461,9 +1461,9 @@ void OCGLandscapeUtil::SaveLandscapeProxies(const UWorld* World, const TArrayVie
 }
 
 TMap<FGuid, TArray<FLandscapeImportLayerInfo>> OCGLandscapeUtil::PrepareLandscapeLayerData(
-	ALandscape* InTargetLandscape,
+	ALandscape*         InTargetLandscape,
 	AOCGLevelGenerator* InLevelGenerator,
-	const UMapPreset* InMapPreset
+	const UMapPreset*   InMapPreset
 )
 {
 #if WITH_EDITOR
@@ -1544,8 +1544,8 @@ TMap<FGuid, TArray<FLandscapeImportLayerInfo>> OCGLandscapeUtil::PrepareLandscap
 }
 
 ALandscapeProxy* OCGLandscapeUtil::FindOrAddLandscapeStreamingProxy(
-	UActorPartitionSubsystem* InActorPartitionSubsystem,
-	const ULandscapeInfo* InLandscapeInfo,
+	UActorPartitionSubsystem*                   InActorPartitionSubsystem,
+	const ULandscapeInfo*                       InLandscapeInfo,
 	const UActorPartitionSubsystem::FCellCoord& InCellCoord
 )
 {
@@ -1580,8 +1580,8 @@ ALandscapeProxy* OCGLandscapeUtil::FindOrAddLandscapeStreamingProxy(
 }
 
 ULandscapeLayerInfoObject* OCGLandscapeUtil::CreateLayerInfo(
-	const FString& InPackagePath,
-	const FString& InAssetName,
+	const FString&                   InPackagePath,
+	const FString&                   InAssetName,
 	const ULandscapeLayerInfoObject* InTemplate
 )
 {

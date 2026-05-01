@@ -103,8 +103,8 @@ void UOCGLandscapeGenerateComponent::BeginPlay()
 
 // Called every frame
 void UOCGLandscapeGenerateComponent::TickComponent(
-	float DeltaTime,
-	ELevelTick TickType,
+	float                        DeltaTime,
+	ELevelTick                   TickType,
 	FActorComponentTickFunction* ThisTickFunction
 )
 {
@@ -501,8 +501,8 @@ bool UOCGLandscapeGenerateComponent::IsLandscapeSettingChanged(
 
 FVector UOCGLandscapeGenerateComponent::GetLandscapePointWorldPosition(
 	const FIntPoint& MapPoint,
-	const FVector& LandscapeOrigin,
-	const FVector& LandscapeExtent
+	const FVector&   LandscapeOrigin,
+	const FVector&   LandscapeExtent
 ) const
 {
 	if (!TargetLandscape || !GetLevelGenerator())

@@ -41,9 +41,9 @@ FORCEINLINE void ClearEditLayer(ALandscape* Landscape, FGuid LayerGuid)
 UOCGRiverGenerateComponent::UOCGRiverGenerateComponent() = default;
 
 void UOCGRiverGenerateComponent::GenerateRiver(
-	UWorld* InWorld,
+	UWorld*     InWorld,
 	ALandscape* InLandscape,
-	bool bForceCleanUpPrevWaterWeightMap
+	bool        bForceCleanUpPrevWaterWeightMap
 )
 {
 #if WITH_EDITOR
@@ -273,16 +273,16 @@ void UOCGRiverGenerateComponent::GenerateRiver(
 
 void UOCGRiverGenerateComponent::SetMapData(
 	const TArray<uint16>& InHeightMap,
-	UMapPreset* InMapPreset,
-	float InMinHeight,
-	float InMaxHeight
+	UMapPreset*           InMapPreset,
+	float                 InMinHeight,
+	float                 InMaxHeight
 )
 {
 	MapPreset = InMapPreset;
 }
 
 void UOCGRiverGenerateComponent::AddRiverProperties(
-	AWaterBodyRiver* InRiverActor,
+	AWaterBodyRiver*       InRiverActor,
 	const TArray<FVector>& InRiverPath
 )
 {
@@ -596,8 +596,8 @@ void UOCGRiverGenerateComponent::ClearAllRivers()
 
 FVector UOCGRiverGenerateComponent::GetLandscapePointWorldPosition(
 	const FIntPoint& MapPoint,
-	const FVector& LandscapeOrigin,
-	const FVector& LandscapeExtent
+	const FVector&   LandscapeOrigin,
+	const FVector&   LandscapeExtent
 ) const
 {
 	if (MapPreset == nullptr)
@@ -637,7 +637,7 @@ FVector UOCGRiverGenerateComponent::GetLandscapePointWorldPosition(
 }
 
 void UOCGRiverGenerateComponent::SetDefaultRiverProperties(
-	AWaterBodyRiver* InRiverActor,
+	AWaterBodyRiver*       InRiverActor,
 	const TArray<FVector>& InRiverPath
 )
 {
@@ -720,8 +720,8 @@ FIntPoint UOCGRiverGenerateComponent::GetRandomStartPoint(int32 RiverIndex)
 
 void UOCGRiverGenerateComponent::SimplifyPathRDP(
 	const TArray<FVector>& InPoints,
-	TArray<FVector>& OutPoints,
-	float Epsilon
+	TArray<FVector>&       OutPoints,
+	float                  Epsilon
 )
 {
 	if (InPoints.Num() < 3)

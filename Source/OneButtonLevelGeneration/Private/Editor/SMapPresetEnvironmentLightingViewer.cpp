@@ -250,8 +250,8 @@ SMapPresetEnvironmentLightingViewer::~SMapPresetEnvironmentLightingViewer()
 
 void SMapPresetEnvironmentLightingViewer::Tick(
 	const FGeometry& AllottedGeometry,
-	const double InCurrentTime,
-	const float InDeltaTime
+	const double     InCurrentTime,
+	const float      InDeltaTime
 )
 {
 	if (!World.IsValid())
@@ -449,7 +449,7 @@ TSharedRef<SWidget> SMapPresetEnvironmentLightingViewer::ComboBoxDetailFilterWid
 }
 
 void SMapPresetEnvironmentLightingViewer::ComboBoxDetailFilterWidgetSelectionChanged(
-	TSharedPtr<FString> NewSelection,
+	TSharedPtr<FString>                NewSelection,
 	[[maybe_unused]] ESelectInfo::Type SelectInfo
 )
 {

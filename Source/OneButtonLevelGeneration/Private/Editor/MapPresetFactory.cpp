@@ -15,11 +15,11 @@ UMapPresetFactory::UMapPresetFactory()
 }
 
 UObject* UMapPresetFactory::FactoryCreateNew(
-	UClass* Class,
-	UObject* InParent,
-	FName Name,
-	EObjectFlags Flags,
-	UObject* Context,
+	UClass*           Class,
+	UObject*          InParent,
+	FName             Name,
+	EObjectFlags      Flags,
+	UObject*          Context,
 	FFeedbackContext* Warn
 )
 {
