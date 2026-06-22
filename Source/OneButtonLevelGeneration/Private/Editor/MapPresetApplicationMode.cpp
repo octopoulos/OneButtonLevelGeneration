@@ -37,5 +37,14 @@ void FMapPresetApplicationMode::RegisterTabFactories(TSharedPtr<FTabManager> InT
 		// Register the tab spawners with the toolkit
 		Toolkit->RegisterTabSpawners(InTabManager.ToSharedRef());
 	}
+	// UE5.8 made the base RegisterTabFactories private; derived overrides call this protected helper instead.
+	// - Pre-5.8 still uses the old base call.
+#if ENGINE_MAJOR_VERSION > 5 || (ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION >= 8)
+	if (InTabManager.IsValid())
+	{
+		RegisterTabFactoriesWithAppAndManager(GetHost().Get(), InTabManager.ToSharedRef());
+	}
+#else
 	FApplicationMode::RegisterTabFactories(InTabManager);
+#endif
 }
