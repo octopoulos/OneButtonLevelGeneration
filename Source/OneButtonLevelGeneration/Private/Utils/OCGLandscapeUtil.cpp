@@ -1,4 +1,4 @@
-// Copyright (c) 2025 Code1133. All rights reserved.
+﻿// Copyright (c) 2025 Code1133. All rights reserved.
 
 #include "Utils/OCGLandscapeUtil.h"
 
@@ -510,7 +510,7 @@ void OCGLandscapeUtil::GetMaskedWeightMap(
 
 	if (OutWeightMap.IsEmpty())
 	{
-		UE_LOG(LogOCGModule, Warning, TEXT("GetMaskedWeightMap : %s's WeightMap is empty"), *InLayerInfo->GetLayerName().ToString());
+		UE_LOG(LogOCGModule, Warning, TEXT("GetMaskedWeightMap : %s's WeightMap is empty"), *Compat::GetLayerName(InLayerInfo).ToString());
 		return;
 	}
 
@@ -522,7 +522,7 @@ void OCGLandscapeUtil::GetMaskedWeightMap(
 
 	if (OutWeightMap.Num() != Mask.Num())
 	{
-		UE_LOG(LogOCGModule, Warning, TEXT("%s: WeightMap size (%d) != Mask size (%d)"), *InLayerInfo->GetLayerName().ToString(), OutWeightMap.Num(), Mask.Num());
+		UE_LOG(LogOCGModule, Warning, TEXT("%s: WeightMap size (%d) != Mask size (%d)"), *Compat::GetLayerName(InLayerInfo).ToString(), OutWeightMap.Num(), Mask.Num());
 		return;
 	}
 
